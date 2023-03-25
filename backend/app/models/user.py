@@ -13,6 +13,17 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(40), nullable=False, unique=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
+    created_at =db.Column(db.DateTime,nullable=False)
+    updated_at =db.Column(db.DateTime,nullable=False)
+
+    #relationship
+    user_questions=db.relationship("Question",back_populates="user")
+
+    user_answers=db.relationship("Answer",back_populates="user")
+
+    question_votes=db.relationship("QuestionVote",back_populates="user")
+
+    answer_votes=db.relationship("AnswerVote",back_populates="user")
 
     @property
     def password(self):
@@ -29,5 +40,7 @@ class User(db.Model, UserMixin):
         return {
             'id': self.id,
             'username': self.username,
-            'email': self.email
+            'email': self.email,
+            'createdAt':self.created_at,
+            'updatedAt':self.updated_at
         }
