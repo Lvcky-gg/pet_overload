@@ -1,8 +1,12 @@
 .env
 __pycache__/
+.pytest_cache/
 *.py[cod]
 .venv
 .DS_Store
 .vscode/
 .flaskenv
 dev.db
+*.db
+instance/
+app/instance/
