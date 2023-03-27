@@ -6,3 +6,6 @@ __pycache__/
 .vscode/
 .flaskenv
 dev.db
+*.db
+instance/
+app/instance/
