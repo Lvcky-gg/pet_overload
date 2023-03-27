@@ -5,7 +5,7 @@ from .answers import seed_answers, undo_answers
 from .question_votes import seed_question_votes,undo_question_votes
 from .answer_votes import seed_answer_votes,undo_answer_votes
 
-from backend.app.models.db import db, environment, SCHEMA
+from ..models import environment
 
 # Creates a seed group to hold our commands
 # So we can type `flask seed --help`
