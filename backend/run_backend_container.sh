@@ -1,4 +1,7 @@
-docker stop $(docker ps -a -q)
-docker rm $(docker ps -a -q)
+#!/bin/bash
 
+# Stop any previously running containers
+docker-compose down
+
+# Build and start the containers
 docker-compose up -d --build
