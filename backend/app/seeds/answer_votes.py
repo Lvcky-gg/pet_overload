@@ -1,4 +1,4 @@
-from backend.app.models import db, AnswerVote, environment, SCHEMA
+from ..models import db, AnswerVote, environment, SCHEMA
 from sqlalchemy.sql import text
 from datetime import datetime
 

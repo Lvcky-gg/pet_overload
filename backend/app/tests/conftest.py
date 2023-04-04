@@ -1,5 +1,5 @@
 import pytest
-from backend.app.models.db import db as _db
+from ..models.db import db as _db
 from backend.app import create_app
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker

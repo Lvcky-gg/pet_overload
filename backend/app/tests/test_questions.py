@@ -1,6 +1,6 @@
 import pytest
-from backend.app.models.question import Question
-from backend.app.models.db import db as _db
+from ..models.question import Question
+from ..models.db import db as _db
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from .conftest import app

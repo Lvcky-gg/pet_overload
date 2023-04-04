@@ -1,14 +1,15 @@
 import datetime
 from typing import Any, Union
-from flask_login import current_user, login_required
+from flask_login import current_user
 from werkzeug import Response
-from backend.app.models.answer import Answer
-from backend.app.models.question_vote import QuestionVote
 from .db import db, environment, SCHEMA, add_prefix_for_prod
-from .utils import bad_request, unauthorized, forbidden, not_found, success
+from .utils import bad_request, forbidden, not_found, success
 
 
 class Question(db.Model):
+    '''
+    Question Model
+    '''
     __tablename__='questions'
 
     if environment == "production":
@@ -37,6 +38,9 @@ class Question(db.Model):
         
     @classmethod
     def get_all_questions(cls) -> list[Any]:
+        '''
+        Returns a list of all questions on the app
+        '''
         question_records = cls.query.all()
         all_questions = []
         
@@ -57,6 +61,9 @@ class Question(db.Model):
     
     @classmethod
     def get_question_by_id(cls, id: int) -> Union[dict[str, Any], None]:
+        '''
+        Returns a question by id and all answers on that question
+        '''
         question = cls.query.filter_by(id=id).first()
         
         if not question:
@@ -78,6 +85,9 @@ class Question(db.Model):
 
     @classmethod 
     def create_question(cls, title: str, details: str, user_id: int) -> Union[Response, dict[str, Any]]:
+        '''
+        Creates a new question
+        '''
         if not title:
             return bad_request('Title cannot be empty.')
         if not details:
@@ -91,6 +101,9 @@ class Question(db.Model):
     
     @classmethod
     def update_question(cls, id: int, title: str, details: str) -> Union[Response, dict]:
+        '''
+        Updates a question by id, if the user is the author of the question
+        '''
         question = cls.query.filter_by(id=id).first()
         
         if not question:
@@ -113,6 +126,9 @@ class Question(db.Model):
     
     @classmethod
     def delete_question(cls, id: int) -> Response:
+        '''
+        Deletes a question by id if the current user is the author of the question
+        '''
         question = cls.query.filter_by(id=id).first()
         
         if not question:
@@ -125,6 +141,9 @@ class Question(db.Model):
     
     @property
     def question_vote_score(self) -> Union[Response, int]:
+        '''
+        Returns vote score for this question
+        '''
         votes = self.question_answers
         
         if not votes:
