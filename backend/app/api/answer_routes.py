@@ -1,7 +1,20 @@
 from flask import Blueprint, jsonify, session, request
 from ..models import Answer, db, User
+from flask_login import login_required
 
 answer_routes = Blueprint("answer", __name__)
+
+
+@answer_routes.route('/current')
+@login_required
+def current_answer():
+    print(session["_user_id"])
+    id = int(session["_user_id"])
+    answers = Answer.query.filter_by(user_id = id).all()
+    if answers:
+        return {'answers': [answer.to_dict() for answer in answers]}
+    else:
+        return jsonify({'message':'Answers could not be found', 'statusCode':404}), 404
 
 @answer_routes.route('/<int:id>')
 def specific_answer(id):
