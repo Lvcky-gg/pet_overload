@@ -8,6 +8,8 @@ from .models import db, User
 from .api.user_routes import user_routes
 from .api.auth_routes import auth_routes
 from .api.answer_routes import answer_routes
+from .api.question_votes import question_votes_routes
+from .api.answer_votes import answer_votes_routes
 from .seeds import seed_commands
 from .config import Config
 
@@ -29,6 +31,8 @@ def create_app():
     app.register_blueprint(user_routes, url_prefix='/api/users')
     app.register_blueprint(auth_routes, url_prefix='/api/auth')
     app.register_blueprint(answer_routes, url_prefix='/api/answer')
+    app.register_blueprint(question_votes_routes,url_prefix="/api/question_votes")
+    app.register_blueprint(answer_votes_routes,url_prefix="/api/answer_votes")
     db.init_app(app)
     Migrate(app, db)
 

@@ -4,9 +4,10 @@ from backend.app import create_app
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
+
 @pytest.fixture(scope="function")
 def sqlalchemy_session(request, app):
-    engine = create_engine('sqlite://')
+    engine = create_engine("sqlite://")
     Session = sessionmaker(bind=engine)
     session = Session()
 
@@ -22,10 +23,11 @@ def sqlalchemy_session(request, app):
 
     return session
 
-@pytest.fixture(scope='session')
+
+@pytest.fixture(scope="session")
 def app():
     app = create_app()
-    app.config['TESTING'] = True
+    app.config["TESTING"] = True
 
     with app.app_context():
         _db.create_all()
