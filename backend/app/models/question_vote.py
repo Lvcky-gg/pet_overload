@@ -1,29 +1,29 @@
-#question_vote.py
+# question_vote.py
 from typing import Union
 from datetime import datetime
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 
 
 class QuestionVote(db.Model):
-    __tablename__="question_votes"
+    __tablename__ = "question_votes"
 
     if environment == "production":
-        __table_args__ = {'schema': SCHEMA}
+        __table_args__ = {"schema": SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    is_liked=db.Column(db.Boolean,nullable=False)
-    created_at =db.Column(db.DateTime,nullable=False, default=datetime.utcnow())
-    updated_at =db.Column(db.DateTime,nullable=False, default=datetime.utcnow())
-    user_id=db.Column(
-        db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")),nullable=False
-        )
-    question_id=db.Column(
-        db.Integer,db.ForeignKey(add_prefix_for_prod("questions.id")),nullable=False
-        )
+    is_liked = db.Column(db.Boolean, nullable=False)
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow())
+    updated_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow())
+    user_id = db.Column(
+        db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False
+    )
+    question_id = db.Column(
+        db.Integer, db.ForeignKey(add_prefix_for_prod("questions.id")), nullable=False
+    )
 
-    #relationship
-    user=db.relationship("User",back_populates="question_votes")
-    question=db.relationship("Question",back_populates="question_votes")
+    # relationship
+    user = db.relationship("User", back_populates="question_votes")
+    question = db.relationship("Question", back_populates="question_votes")   
 
     @classmethod
     def get_question_vote_by_id(cls, id: int, session=None) -> Union['QuestionVote', None]:
@@ -81,10 +81,10 @@ class QuestionVote(db.Model):
 
     def to_dict(self):
         return {
-            'id': self.id,
-            'isLiked': self.is_liked,
-            'createdAt':self.created_at,
-            'updatedAt':self.updated_at,
-            'userId':self.user_id,
-            'questionId':self.question_id
+            "id": self.id,
+            "isLiked": self.is_liked,
+            "createdAt": self.created_at,
+            "updatedAt": self.updated_at,
+            "userId": self.user_id,
+            "questionId": self.question_id,
         }
