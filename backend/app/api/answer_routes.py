@@ -42,6 +42,22 @@ def specific_answer(id):
         return jsonify(dictionary)
     else:
         return jsonify({'message':'Answer could not be found', 'statusCode':404}), 404
+    
+@answer_routes.route('/<int:id>', methods=["DELETE"])
+@login_required
+def remove_answer(id):
+    answer = Answer.query.get(id)
+    if answer:
+        user_id = int(answer.user_id)
+        check_user_id = int(session["_user_id"])
+        if user_id == check_user_id:
+            Answer.query.filter_by(id=id).delete()
+            db.session.commit()
+            return {"message": "Answer deleted"}
+        else:
+            return jsonify({"message": "Unauthorized User", "status":"403"}),403
+    else:
+        return jsonify({"message": "Answer couldn't be found","statusCode": 404}),404
 @answer_routes.route('/')
 def root():
     print('hello')
