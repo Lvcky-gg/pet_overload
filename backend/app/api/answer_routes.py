@@ -58,6 +58,24 @@ def remove_answer(id):
             return jsonify({"message": "Unauthorized User", "status":"403"}),403
     else:
         return jsonify({"message": "Answer couldn't be found","statusCode": 404}),404
+    
+@answer_routes.route('/<int:id>', methods=["PUT"])
+@login_required
+def update_answer(id):
+    answer = Answer.query.get(id)
+    if answer:
+        user_id = int(answer.user_id)
+        check_user_id = int(session["_user_id"])
+        if user_id == check_user_id:
+            answer.details = request.form["details"]
+            db.session.commit()
+            answercheck = Answer.query.get(id)
+            return jsonify(answer.to_dict())
+        else:
+            return jsonify({"message": "Unauthorized User", "status":"403"}),403
+    else:
+        return jsonify({"message": "Answer couldn't be found","statusCode": 404}),404
+
 @answer_routes.route('/')
 def root():
     print('hello')
