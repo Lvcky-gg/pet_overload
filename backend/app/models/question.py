@@ -1,9 +1,8 @@
 import datetime
 from typing import Any, Union
-from flask_login import current_user
 from werkzeug import Response
 from .db import db, environment, SCHEMA, add_prefix_for_prod
-from .utils import bad_request, forbidden, not_found, success
+from .utils import ValidationException, NotFoundException, ForbiddenException
 
 
 class Question(db.Model):
@@ -19,8 +18,18 @@ class Question(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255), nullable=False)
     details = db.Column(db.String(), nullable=False)
-    created_at = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow())
-    updated_at = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow())
+    created_at = db.Column(
+        db.DateTime,
+        nullable=False,
+        default=datetime.datetime.utcnow,
+        onupdate=datetime.datetime.utcnow(),
+    )
+    updated_at = db.Column(
+        db.DateTime,
+        nullable=False,
+        default=datetime.datetime.utcnow,
+        onupdate=datetime.datetime.utcnow(),
+    )
     user_id = db.Column(
         db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False
     )
@@ -45,24 +54,8 @@ class Question(db.Model):
         Returns a list of all questions on the app
         """
         question_records = cls.query.all()
-        all_questions = []
 
-        for question in question_records:
-            answers = question.question_answers
-            vote_score = question.vote_score
-
-            all_questions.append(
-                {
-                    "id": question.id,
-                    "title": question.title,
-                    "author": question.user.username,
-                    "createdAt": question.created_at,
-                    "answerCount": len(answers),
-                    "voteScore": vote_score,
-                }
-            )
-
-        return all_questions
+        return [question.to_dict() for question in question_records]
 
     @classmethod
     def get_question_by_id(cls, id: int) -> Union[dict[str, Any], None]:
@@ -72,7 +65,7 @@ class Question(db.Model):
         question = cls.query.filter_by(id=id).first()
 
         if not question:
-            return None
+            raise NotFoundException("Question not found.")
 
         answers = question.question_answers
         vote_score = question.vote_score
@@ -96,9 +89,9 @@ class Question(db.Model):
         Creates a new question
         """
         if not title:
-            return bad_request("Title cannot be empty.")
+            raise ValidationException("Title is required.")
         if not details:
-            return bad_request("Details cannot be empty.")
+            raise ValidationException("Details are required")
 
         question = cls(title=title, details=details, user_id=user_id)
         db.session.add(question)
@@ -108,7 +101,7 @@ class Question(db.Model):
 
     @classmethod
     def update_question(
-        cls, id: int, title: str, details: str
+        cls, id: int, title: str, details: str, user_id: int
     ) -> Union[Response, dict]:
         """
         Updates a question by id, if the user is the author of the question
@@ -116,14 +109,14 @@ class Question(db.Model):
         question = cls.query.filter_by(id=id).first()
 
         if not question:
-            return not_found("Question not found")
+            raise NotFoundException("Question couldn't found.")
         if not title:
-            return bad_request("Title cannot be empty.")
+            raise ValidationException("Title is required.")
         if not details:
-            return bad_request("Details cannot be empty.")
+            raise ValidationException("Details are required.")
 
-        if current_user.get_id() != question.user_id:
-            return forbidden("You are not the author of this question.")
+        if user_id != question.user_id:
+            raise ForbiddenException("You are not the author of this question.")
 
         question.title = title
         question.details = details
@@ -134,22 +127,25 @@ class Question(db.Model):
         return question.to_dict()
 
     @classmethod
-    def delete_question(cls, id: int) -> Response:
+    def delete_question(cls, id: int, user_id: int) -> bool:
         """
         Deletes a question by id if the current user is the author of the question
         """
         question = cls.query.filter_by(id=id).first()
 
         if not question:
-            return not_found("Question not found.")
+            raise NotFoundException("Question couldn't be found.")
+
+        if user_id != question.user_id:
+            raise ForbiddenException("You are not the author of this question.")
 
         db.session.delete(question)
         db.session.commit()
 
-        return success("Question deleted successfully.")
+        return True
 
     @property
-    def question_vote_score(self) -> Union[Response, int]:
+    def question_vote_score(self) -> int:
         """
         Returns vote score for this question
         """
@@ -158,5 +154,4 @@ class Question(db.Model):
         if not votes:
             return 0
 
-        vote_score = sum([1 if vote.is_liked else -1 for vote in votes])
-        return vote_score
+        return sum([1 if vote.is_liked else -1 for vote in votes])
