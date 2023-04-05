@@ -29,7 +29,7 @@ def add_vote(id):
         db.session.commit()
         return vote.to_dict()
     else:
-        return jsonify({"message": "Answer couldn't be found","statusCode": 404})
+        return jsonify({"message": "Answer couldn't be found","statusCode": 404}), 404
 
 
 @answer_routes.route('/<int:id>')
