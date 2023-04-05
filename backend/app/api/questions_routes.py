@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from ..models import Question
-from ..models.utils import BaseException, handle_error
+from ..models import Question,QuestionVote
+from ..models.utils import BaseException,ValidationException,NotFoundException, handle_error
 
 questions_routes_blueprint = Blueprint("questions", __name__)
 
@@ -67,3 +67,25 @@ def delete_question(id: int):
 
     except BaseException as e:
         return handle_error(e)
+
+@questions_routes_blueprint.route("/<int:question_id>/votes",methods=['POST'])
+@login_required
+def create_question_vote(question_id):
+    '''
+    Create a vote to a question by id
+    '''
+    try:
+        is_liked=request.json.get("isLiked",None)
+        if is_liked is None:
+            raise ValidationException("Is_liked is required.")
+        if not isinstance(is_liked, bool):
+            raise ValidationException("Is_liked must be a boolean value.")
+        user_id=current_user.id
+        question = Question.query.filter(Question.id==question_id).first()
+        if question is None:
+            raise NotFoundException("Question couldn't be found.")
+    except BaseException as err:
+        return handle_error(err)
+
+    new_vote = QuestionVote.add_question_vote(is_liked=is_liked, user_id=user_id, question_id=question_id)
+    return new_vote.to_dict()
