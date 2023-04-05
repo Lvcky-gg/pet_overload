@@ -39,15 +39,17 @@ def remove_question_vote(vote_id):
     '''
     Delete a current user's vote of a question by id
     '''
-    vote=QuestionVote.query.filter(QuestionVote.id==vote_id).first()
-    if vote is None:
-        raise NotFoundException("Vote couldn't be found.")
-    #check if vote belongs to current user
-    user_id=current_user.id
-    if not user_id==vote.user_id:
-        raise ForbiddenException("Forbidden")
-    vote.delete_question_vote()
-    return jsonify("Question_vote successfully deleted"),200
+    try:
+        vote=QuestionVote.query.filter(QuestionVote.id==vote_id).first()
+        if vote is None:
+            raise NotFoundException("Vote couldn't be found.")
+        #check if vote belongs to current user
+        user_id=current_user.id
+        if not user_id==vote.user_id:
+            raise ForbiddenException("Forbidden")
+    except BaseException as err:
+        return handle_error(err)
+
 
 @question_votes_routes.route("/current")
 @login_required
