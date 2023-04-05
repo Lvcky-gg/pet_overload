@@ -7,6 +7,7 @@ from flask_login import LoginManager
 from .models import db, User
 from .api.user_routes import user_routes
 from .api.auth_routes import auth_routes
+from .api.questions_routes import questions_routes_blueprint
 from .api.answer_routes import answer_routes
 from .api.question_votes import question_votes_routes
 from .api.answer_votes import answer_votes_routes
@@ -30,6 +31,7 @@ def create_app():
     app.config.from_object(Config)
     app.register_blueprint(user_routes, url_prefix='/api/users')
     app.register_blueprint(auth_routes, url_prefix='/api/auth')
+    app.register_blueprint(questions_routes_blueprint, url_prefix='/api/questions')
     app.register_blueprint(answer_routes, url_prefix='/api/answer')
     app.register_blueprint(question_votes_routes,url_prefix="/api/question_votes")
     app.register_blueprint(answer_votes_routes,url_prefix="/api/answer_votes")
@@ -41,31 +43,10 @@ def create_app():
 
     return app
 
-app = Flask(__name__, static_folder='../../frontend/build', static_url_path='/')
-
-# Setup login manager
-login = LoginManager(app)
-login.login_view = 'auth.unauthorized'
-
-
-@login.user_loader
-def load_user(id):
-    return User.query.get(int(id))
-
-
-# Tell flask about our seed commands
-app.cli.add_command(seed_commands)
-
-app.config.from_object(Config)
-app.register_blueprint(user_routes, url_prefix='/api/users')
-app.register_blueprint(auth_routes, url_prefix='/api/auth')
-app.register_blueprint(answer_routes, url_prefix='/api/answer')
-db.init_app(app)
-Migrate(app, db)
+app = create_app()
 
 # Application Security
 CORS(app)
-
 
 # Since we are deploying with Docker and Flask,
 # we won't be using a buildpack when we deploy to Heroku.
