@@ -1,37 +1,60 @@
 from flask import jsonify
+from werkzeug import Response
 
 
-def bad_request(message: str) -> tuple:
-    '''
-    Returns a 400 Bad Request response with the provided message
-    '''
-    response = jsonify({'message': message})
-    response.status_code = 400
-    return response
+class BaseException(Exception):
+    """
+    Base exception class that handles status codes and messages
+    """
+
+    def __init__(self, message: str, status_code: int) -> None:
+        self.message = message
+        self.status_code = status_code
+
+        super().__init__(message)
 
 
-def forbidden(message: str) -> tuple:
-    '''
-    Returns a 403 Forbidden response with the provided message
-    '''
-    response = jsonify({'message': message})
-    response.status_code = 403
-    return response
+class ValidationException(BaseException):
+    """
+    Exception raised by the model for validation errors
+    """
+
+    def __init__(self, message: str) -> None:
+        super().__init__(message, 400)
 
 
-def not_found(message: str) -> tuple:
-    '''
-    Returns a 404 Not Found response with the provided message
-    '''
-    response = jsonify({'message': message})
-    response.status_code = 404
-    return response
+class NotFoundException(BaseException):
+    """
+    Exception raised by the model for not found errors
+    """
+
+    def __init__(self, message: str) -> None:
+        super().__init__(message, 404)
 
 
-def success(message: str) -> tuple:
-    '''
-    Returns a 200 OK response with the provided message
-    '''
-    response = jsonify({'message': message})
-    response.status_code = 200
+class ForbiddenException(BaseException):
+    """
+    Exception raised by the model for forbidden errors
+    """
+
+    def __init__(self, message: str) -> None:
+        super().__init__(message, 403)
+
+
+class UnauthorizedException(BaseException):
+    """
+    Exception raised by the model for unauthorized errors
+    """
+
+    def __init__(self, message: str) -> None:
+        super().__init__(message, 401)
+
+
+def handle_error(exception: BaseException) -> Response:
+    """
+    Handles the exceptions and returns a JSON response
+    """
+    response = jsonify({"error": exception.message})
+    response.status_code = exception.status_code
+
     return response
