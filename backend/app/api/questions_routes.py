@@ -1,11 +1,34 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, session
 from flask_login import login_required, current_user
-from ..models import Question,QuestionVote
+from ..models import Question, QuestionVote, Answer, db
 from ..models.utils import BaseException,ValidationException,NotFoundException, handle_error
+from datetime import datetime
 
 questions_routes_blueprint = Blueprint("questions", __name__)
 
-@questions_routes_blueprint.route("", methods=["GET"])
+@questions_routes_blueprint.route("/<int:id>/answers", methods=["POST"])
+@login_required
+def create_answers(id):
+    question = Question.query.get(id)
+    if question:
+        answer = Answer(details=request.form["details"],created_at =datetime.now(),updated_at=datetime.now(),user_id = int(session["_user_id"]),question_id = id)
+        db.session.add(answer)
+        db.session.commit()
+        return answer.to_dict()
+    else:
+        return jsonify({"message": "Question couldn't be found","statusCode": 404}), 404
+
+@questions_routes_blueprint.route("/<int:id>/answers", methods=["GET"])
+def get_answers(id):
+    question = Question.query.get(id)
+    if question:
+       answer_list = Answer.query.filter_by(question_id=int(id)).all()
+       print([answer.to_dict() for answer in answer_list])
+       return jsonify({"answers":[answer.to_dict() for answer in answer_list]})
+    else:
+        return jsonify({"message": "Question couldn't be found","statusCode": 404}),404 
+
+
 @questions_routes_blueprint.route("/", methods=["GET"])
 def get_all_questions():
     try:
