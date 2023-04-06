@@ -5,11 +5,15 @@ from ..models.utils import BaseException,ValidationException,NotFoundException, 
 
 questions_routes_blueprint = Blueprint("questions", __name__)
 
-
+@questions_routes_blueprint.route("", methods=["GET"])
 @questions_routes_blueprint.route("/", methods=["GET"])
 def get_all_questions():
     try:
-        all_questions = Question.get_all_questions()
+        username = request.args.get("username")
+        score = request.args.get("score")
+        keyword = request.args.get("keyword")
+
+        all_questions = Question.get_all_questions(username,score,keyword)
     except BaseException as e:
         return handle_error(e)
 
