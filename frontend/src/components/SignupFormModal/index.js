@@ -33,7 +33,7 @@ function SignupFormModal() {
     }, [user, closeModal]);
 
     return (
-        <>
+        <div className='modalSignUp'>
             <h1>Sign Up</h1>
             <form onSubmit={handleSubmit}>
                 {error && <div>{error}</div>}
@@ -43,45 +43,56 @@ function SignupFormModal() {
                         <li key={idx}>{error}</li>
                     ))}
                 </ul>
+                <div>
                 <label>
                     Email
-                    <input
+                </label>
+                <input
                         type="text"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
                     />
-                </label>
+                </div>
+                <div>
                 <label>
                     Username
-                    <input
+                </label>
+                <input
                         type="text"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                         required
                     />
-                </label>
+                </div>
+                <div>
                 <label>
                     Password
-                    <input
+                </label>
+                <input
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
                     />
-                </label>
+                </div>
+                <div>
                 <label>
                     Confirm Password
-                    <input
+
+                </label>
+                <input
                         type="password"
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         required
                     />
-                </label>
+                </div>
+                <div>
                 <button type="submit">Sign Up</button>
+                </div>
             </form>
-        </>
+    </div>
     );
 }
 
