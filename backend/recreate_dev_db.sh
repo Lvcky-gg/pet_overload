@@ -1,3 +1,5 @@
+echo "Recreating the database!"
+
 rm -rf ../instance
 
 rm -rf migrations
