@@ -43,9 +43,11 @@ class Question(db.Model):
             "id": self.id,
             "title": self.title,
             "details": self.details,
-            "createdAt": self.created_at,
-            "updatedAt": self.updated_at,
-            "userId": self.user_id,
+            "created_at": self.created_at,
+            "updated_at": self.updated_at,
+            "user_id": self.user_id,
+            "answers_count": len(self.question_answers),
+            "votes_score": self.question_vote_score
         }
 
     @classmethod
@@ -68,17 +70,18 @@ class Question(db.Model):
             raise NotFoundException("Question not found.")
 
         answers = question.question_answers
-        vote_score = question.vote_score
+        votes_score = question.question_vote_score
 
         return {
             "id": question.id,
             "title": question.title,
             "details": question.details,
-            "createdAt": question.created_at,
-            "updatedAt": question.updated_at,
+            "created_at": question.created_at,
+            "updated_at": question.updated_at,
             "author": question.user.username,
             "answers": [answer.to_dict() for answer in answers],
-            "voteScore": vote_score,
+            "answers_count": len(answers),
+            "votes_score": votes_score,
         }
 
     @classmethod
@@ -149,7 +152,7 @@ class Question(db.Model):
         """
         Returns vote score for this question
         """
-        votes = self.question_answers
+        votes = self.question_votes
 
         if not votes:
             return 0
