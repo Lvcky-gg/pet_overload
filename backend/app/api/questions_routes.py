@@ -6,37 +6,11 @@ from datetime import datetime
 
 questions_routes_blueprint = Blueprint("questions", __name__)
 
-@questions_routes_blueprint.route("/<int:id>/answers", methods=["POST"])
-@login_required
-def create_answers(id):
-    question = Question.query.get(id)
-    if question:
-        answer = Answer(details=request.form["details"],created_at =datetime.now(),updated_at=datetime.now(),user_id = int(session["_user_id"]),question_id = id)
-        db.session.add(answer)
-        db.session.commit()
-        return answer.to_dict()
-    else:
-        return jsonify({"message": "Question couldn't be found","statusCode": 404}), 404
-
-@questions_routes_blueprint.route("/<int:id>/answers", methods=["GET"])
-def get_answers(id):
-    question = Question.query.get(id)
-    if question:
-       answer_list = Answer.query.filter_by(question_id=int(id)).all()
-       print([answer.to_dict() for answer in answer_list])
-       return jsonify({"answers":[answer.to_dict() for answer in answer_list]})
-    else:
-        return jsonify({"message": "Question couldn't be found","statusCode": 404}),404 
-
 
 @questions_routes_blueprint.route("/", methods=["GET"])
 def get_all_questions():
     try:
-        username = request.args.get("username")
-        score = request.args.get("score")
-        keyword = request.args.get("keyword")
-
-        all_questions = Question.get_all_questions(username,score,keyword)
+        all_questions = Question.get_all_questions()
     except BaseException as e:
         return handle_error(e)
 
