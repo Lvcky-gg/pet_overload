@@ -1,0 +1,1077 @@
+{
+	"info": {
+		"_postman_id": "9cc85054-2bba-4a21-8da6-d2f9ae83baf8",
+		"name": "PetOverload_backend_test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "question_votes",
+			"item": [
+				{
+					"name": "Get current user question_votes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/question_votes/current",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"question_votes",
+								"current"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post a vote to question",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"isLiked\":true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/questions/3/votes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"questions",
+								"3",
+								"votes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post vote to same question-error",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"isLiked\":true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/questions/3/votes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"questions",
+								"3",
+								"votes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post vote cannot find question",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"isLiked\":true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/questions/3000/votes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"questions",
+								"3000",
+								"votes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Put question_vote by id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"isLiked\":true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/question_votes/3",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"question_votes",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Put question_vote, vote not found",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"isLiked\":true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/question_votes/3000",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"question_votes",
+								"3000"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Put question_vote, not belongs to current user",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"isLiked\":true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/question_votes/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"question_votes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete question_vote",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/question_votes/4",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"question_votes",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete question_vote,not found",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/question_votes/4000",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"question_votes",
+								"4000"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete question_vote not belongs to current user",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/question_votes/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"question_votes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "answer_votes",
+			"item": [
+				{
+					"name": "Get current user answer_votes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/answer_votes/current",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"answer_votes",
+								"current"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post a vote to answer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"isLiked\":true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/answer/3/votes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"answer",
+								"3",
+								"votes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post a vote to same answer error",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"isLiked\":true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/answer/3/votes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"answer",
+								"3",
+								"votes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post vote answer not found",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"isLiked\":true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/answer/3000/votes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"answer",
+								"3000",
+								"votes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Put answer_vote by id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"isLiked\":true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/answer_votes/4",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"answer_votes",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Put answer_vote, not found",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"isLiked\":true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/answer_votes/4000",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"answer_votes",
+								"4000"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Put answer_vote,not belongs to current user",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"isLiked\":true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/answer_votes/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"answer_votes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete answer_vote",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/answer_votes/4",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"answer_votes",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete answer_vote,not found",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/answer_votes/4000",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"answer_votes",
+								"4000"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete answer_vote,not belongs to current user",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/answer_votes/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"answer_votes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "questions",
+			"item": [
+				{
+					"name": "Get all questions",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Get current user questions",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Get question by id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Get questions by id, not found",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Post question",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\n        \"title\": \"string\",\n        \"details\": \"string\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/questions",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"questions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post question, body validation",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\",\n   \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/questions/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"questions",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Put question by id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"string\",\n    \"details\": \"string\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/questions/4",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"questions",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Put question, not found",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"string\",\n    \"details\": \"string\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/questions/4000",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"questions",
+								"4000"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Put question, not author",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"string\",\n    \"details\": \"string\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/questions/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"questions",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Put question,body validation",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\",\n   \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/questions/4",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"questions",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search questions query filter",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Search question query filter, validate parameters",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Delete question",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/questions/4",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"questions",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete question,not author",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/questions/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"questions",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "answers",
+			"item": [
+				{
+					"name": "Get current user answers",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Get answers by question id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Get answers by question id,not found",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Get answer by id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Get answer by id,not found",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Post answer to a question",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/questions/1/answers",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"questions",
+								"1",
+								"answers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post answer to a question,not found",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"details\": \"string\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/questions/1000/answers",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"questions",
+								"1000",
+								"answers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post answer to a question,body validation",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"details\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/questions/1/answers",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"questions",
+								"1",
+								"answers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Put answer by id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"details\": \"string\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/answers/3",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"answers",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Put answer by id, not found",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"details\": \"string\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/answers/3000",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"answers",
+								"3000"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Put answer by id, not author",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/answers/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"answers",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete answer",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}answers/1",
+							"host": [
+								"{{url}}answers"
+							],
+							"path": [
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete answer, not found",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}answers/1000",
+							"host": [
+								"{{url}}answers"
+							],
+							"path": [
+								"1000"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete ansser,not author",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}answers/1000",
+							"host": [
+								"{{url}}answers"
+							],
+							"path": [
+								"1000"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var xsrfCookie = postman.getResponseCookie(\"csrf_token\"); ",
+							"postman.setEnvironmentVariable('xsrf_token', xsrfCookie.value);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-CSRFToken",
+						"value": "csrf_token=IjhhODdmMjc4NjA0YTE5YWZjZTFiMjVlMzRjNWQ5Y2E2ZTFhZWU0MDAi.ZC844g.o90-9qqCnH-ns2Hf-zlHB3MfStY; Path=/;",
+						"type": "default",
+						"disabled": true
+					},
+					{
+						"key": "X-CSRFToken",
+						"value": "{{xsrf_token}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\":\"demo@aa.io\",\n    \"password\":\"password\"\n    \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/auth/login",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sign up",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Sign up with exiting credentials",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Get current user",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Get all users",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Get user by id",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}

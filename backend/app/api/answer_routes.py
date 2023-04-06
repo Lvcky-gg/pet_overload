@@ -5,7 +5,7 @@ from datetime import datetime
 from ..models.utils import BaseException,ValidationException,NotFoundException,ForbiddenException,handle_error
 
 
-answer_routes = Blueprint("answer", __name__)
+answer_routes = Blueprint("answers", __name__)
 
 
 @answer_routes.route('/current')
@@ -52,7 +52,7 @@ def specific_answer(id):
         return jsonify(dictionary)
     else:
         return jsonify({'message':'Answer could not be found', 'statusCode':404}), 404
-    
+
 @answer_routes.route('/<int:id>', methods=["DELETE"])
 @login_required
 def remove_answer(id):
@@ -68,7 +68,7 @@ def remove_answer(id):
             return jsonify({"message": "Unauthorized User", "status":"403"}),403
     else:
         return jsonify({"message": "Answer couldn't be found","statusCode": 404}),404
-    
+
 @answer_routes.route('/<int:id>', methods=["PUT"])
 @login_required
 def update_answer(id):
