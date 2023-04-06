@@ -34,15 +34,20 @@ class User(db.Model, UserMixin):
     @password.setter
     def password(self, password):
         self.hashed_password = generate_password_hash(password)
-        
+
     def check_password(self, password):
         return check_password_hash(self.password, password)
 
     def to_dict(self):
+        '''
+        Return user information with reputation included
+        '''
+        reputation=len(self.user_questions)+len(self.user_answers)+len(self.question_votes)+len(self.answer_votes)
         return {
             'id': self.id,
             'username': self.username,
             'email': self.email,
+            'reputation':reputation,
             'createdAt':self.created_at,
             'updatedAt':self.updated_at
         }
