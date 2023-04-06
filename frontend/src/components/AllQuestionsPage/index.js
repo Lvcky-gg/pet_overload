@@ -32,8 +32,27 @@ const AllQuestionsPage = () => {
                     <button id="unanswered-button">Unanswered</button>
                     <button id="score-button">Score</button>
                 </div>
+                <div className="col-3">
+                    <button id="ask-question-button">Ask Question</button>
+                </div>
             </div>
-            <div id="question-list">Questions will load here TODO</div>
+            <div id="question-list">
+                {questions.map(
+                    ({ id, title, details, votes_score, answers_count }) => (
+                        <div id="question-card" key={id}>
+                            <div id="vote-answer-counts-col">
+                                <p>{votes_score}</p>
+                                <p>{answers_count}</p>
+                            </div>
+
+                            <div id="title-description-col">
+                                <h4>{title}</h4>
+                                <h4>{details}</h4>
+                            </div>
+                        </div>
+                    )
+                )}
+            </div>
         </div>
     );
 };
