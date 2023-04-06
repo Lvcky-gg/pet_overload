@@ -3,6 +3,7 @@ from typing import Any, Union
 from werkzeug import Response
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from .utils import ValidationException, NotFoundException, ForbiddenException
+from .user import User
 
 
 class Question(db.Model):
@@ -39,6 +40,8 @@ class Question(db.Model):
     question_votes = db.relationship("QuestionVote", back_populates="question")
 
     def to_dict(self) -> dict[str, Any]:
+        voteScore=self.question_vote_score
+        answerCount=len(self.question_answers)
         return {
             "id": self.id,
             "title": self.title,
@@ -46,14 +49,30 @@ class Question(db.Model):
             "createdAt": self.created_at,
             "updatedAt": self.updated_at,
             "userId": self.user_id,
+            "voteScore":voteScore,
+            "answerCount":answerCount
         }
 
     @classmethod
-    def get_all_questions(cls) -> list[Any]:
+    def get_all_questions(cls,username=None,score=None,keyword=None) -> list[Any]:
         """
-        Returns a list of all questions on the app
+        Returns a list of all questions on the app, or questions filtered by query parameters(username,score,keyword)
         """
-        question_records = cls.query.all()
+        if username:
+            # query questions belongs to username
+            user=User.query.filter(User.username==username).first()
+            if user:
+                question_records = cls.query.filter(cls.user_id==user.id).all()
+            else:
+                question_records = []
+        elif score:
+            #  query question_score>= score
+            question_records = [q for q in cls.query.all() if q.question_vote_score >= int(score)]
+        elif  keyword:
+            #  query question title include keyword
+            question_records=cls.query.filter(cls.title.ilike(f"%{keyword}%")).all()
+        else:
+            question_records = cls.query.all()
 
         return [question.to_dict() for question in question_records]
 
@@ -149,8 +168,9 @@ class Question(db.Model):
         """
         Returns vote score for this question
         """
-        votes = self.question_answers
-
+        # typo?
+        # votes = self.question_answers
+        votes=self.question_votes
         if not votes:
             return 0
 

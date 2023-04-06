@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request, session
 from flask_login import login_required, current_user
-from ..models import Question, User, Answer, db
-from ..models.utils import BaseException, handle_error
+from ..models import Question, QuestionVote, Answer, db
+from ..models.utils import BaseException,ValidationException,NotFoundException, handle_error
 from datetime import datetime
 
 questions_routes_blueprint = Blueprint("questions", __name__)
@@ -28,10 +28,15 @@ def get_answers(id):
     else:
         return jsonify({"message": "Question couldn't be found","statusCode": 404}),404 
 
+
 @questions_routes_blueprint.route("/", methods=["GET"])
 def get_all_questions():
     try:
-        all_questions = Question.get_all_questions()
+        username = request.args.get("username")
+        score = request.args.get("score")
+        keyword = request.args.get("keyword")
+
+        all_questions = Question.get_all_questions(username,score,keyword)
     except BaseException as e:
         return handle_error(e)
 
@@ -89,3 +94,25 @@ def delete_question(id: int):
 
     except BaseException as e:
         return handle_error(e)
+
+@questions_routes_blueprint.route("/<int:question_id>/votes",methods=['POST'])
+@login_required
+def create_question_vote(question_id):
+    '''
+    Create a vote to a question by id
+    '''
+    try:
+        is_liked=request.json.get("isLiked",None)
+        if is_liked is None:
+            raise ValidationException("Is_liked is required.")
+        if not isinstance(is_liked, bool):
+            raise ValidationException("Is_liked must be a boolean value.")
+        user_id=current_user.id
+        question = Question.query.filter(Question.id==question_id).first()
+        if question is None:
+            raise NotFoundException("Question couldn't be found.")
+    except BaseException as err:
+        return handle_error(err)
+
+    new_vote = QuestionVote.add_question_vote(is_liked=is_liked, user_id=user_id, question_id=question_id)
+    return new_vote.to_dict()
