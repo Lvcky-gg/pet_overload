@@ -6,6 +6,7 @@ import LoginFormPage from './components/LoginFormPage';
 import { HomePage } from './components/HomePage';
 import { authenticate } from './store/session';
 import Navigation from './components/Navigation';
+import { Footer } from './components/footer';
 
 function App() {
     const dispatch = useDispatch();
@@ -32,6 +33,7 @@ function App() {
                 </Routes>
          
             )}
+            <Footer></Footer>
         </>
     );
 }
