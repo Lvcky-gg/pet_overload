@@ -15,19 +15,40 @@ export const HomePage = () => {
 
         </div>
         <div className='homePageHighlights'>
-            <div>
+            {/* <div> */}
                 <h1>highlight page</h1>
 
-            </div>
-            <div>
-            <h1>//card</h1>
+            {/* </div> */}
+            <div className='homePageCards'>
+            {/* <h1>//card</h1>
             <h1>//image</h1>
             <h1>//title  </h1>
-            <h1>  //text</h1>
-                 
+            <h1>  //text</h1> */}
+                 <div className="homePageCard"> 
+                    <h1>Insert Component here</h1>
+                    <div>
+                    <h3>Shelter</h3>
+                    <p>this will be a link</p>
+                 </div>
+                 </div>
+
+                 <div className="homePageCard">
+                    <h1>Insert Component here</h1>
+                    <div>
+                    <h3>Cool Post</h3>
+                    <p>this will be a link</p>
+                 </div>
+                 </div>
+
+                 <div className="homePageCard">
+                    <h1>Insert Component here</h1>
+                    <div>
+                    <h3>Our People</h3>
+                    <p>this will be a link</p>
+                 </div>
+                 </div>
+
                 
-                
-              
 
             </div>
         
@@ -38,11 +59,11 @@ export const HomePage = () => {
         </div>
         <div className='homePageOtherResource'>
             <div>
+                <h2>Other Resources?</h2>
+                <p>PlaceHolder</p>
 
             </div>
-            <div>
-
-            </div>
+            <img src={imageFour} alt="#"/>
         
         </div>
         <div className='homePageBottomImage'>
