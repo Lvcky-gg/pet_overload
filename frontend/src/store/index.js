@@ -1,8 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { loadingMiddleware } from './loader';
 import sessionReducer from './session';
+import questionsReducer from './questions';
+import loadingReducer from './loader';
 
-const middleware = [];
+const middleware = [loadingMiddleware];
 
 if (process.env.NODE_ENV === 'development') {
     const { logger } = require('redux-logger');
@@ -11,7 +13,9 @@ if (process.env.NODE_ENV === 'development') {
 
 const store = configureStore({
     reducer: {
+        loading: loadingReducer,
         session: sessionReducer,
+        questions: questionsReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(middleware),
