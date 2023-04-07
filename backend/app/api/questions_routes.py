@@ -7,6 +7,18 @@ from datetime import datetime
 questions_routes_blueprint = Blueprint("questions", __name__)
 
 
+@questions_routes_blueprint.route("", methods=["GET"])
+def get_filtered_questions():
+    try:
+        username = request.args.get("username")
+        score = request.args.get("score")
+        keyword = request.args.get("keyword")
+        filtered_questions = Question.filter_questions(username,score,keyword)
+
+    except BaseException as e:
+        return handle_error(e)
+
+    return jsonify({"questions": filtered_questions}), 200
 @questions_routes_blueprint.route("/", methods=["GET"])
 def get_all_questions():
     try:

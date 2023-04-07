@@ -1,0 +1,23 @@
+.modalSignUp {
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding:5%;
+}
+
+.modalSignUp form div {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 3%;
+}
+.modalSignUp form div button {
+    width: 50%;
+    border-radius: 5%
+}
+.modalSignUp form div input{
+    width: 50%;
+    
+}

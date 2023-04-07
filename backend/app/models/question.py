@@ -3,6 +3,9 @@ from typing import Any, Union
 from werkzeug import Response
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from .utils import ValidationException, NotFoundException, ForbiddenException
+from .user import User
+import re
+from sqlalchemy import or_
 
 
 class Question(db.Model):
@@ -43,9 +46,11 @@ class Question(db.Model):
             "id": self.id,
             "title": self.title,
             "details": self.details,
-            "createdAt": self.created_at,
-            "updatedAt": self.updated_at,
-            "userId": self.user_id,
+            "created_at": self.created_at,
+            "updated_at": self.updated_at,
+            "user_id": self.user_id,
+            "answers_count": len(self.question_answers),
+            "votes_score": self.question_vote_score,
         }
 
     @classmethod
@@ -58,6 +63,60 @@ class Question(db.Model):
         return [question.to_dict() for question in question_records]
 
     @classmethod
+    def filter_questions(cls, username=None, score=None, keyword=None) -> list[Any]:
+        """
+        Returns questions filtered by query parameters
+        """
+        if username:
+            # query questions belongs to username
+            question_records = cls._filter_question_by_username(username)
+
+        elif score:
+            #  query question_score>= score
+            question_records = cls._filter_question_by_score(score)
+        elif keyword:
+            #  query question title include keyword
+            question_records = cls._filter_question_by_keyword(keyword)
+        else:
+            question_records = cls.get_all_questions()
+            return question_records
+
+        return [question.to_dict() for question in question_records]
+
+    @classmethod
+    def _filter_question_by_username(cls, username=None):
+        # query questions belongs to username
+        if len(username) > 40:
+            raise ValidationException("Username must be string less than 40 chars")
+        user = User.query.filter(User.username == username).first()
+        if user:
+            question_records = cls.query.filter(cls.user_id == user.id).all()
+        else:
+            question_records = []
+        return question_records
+
+    @classmethod
+    def _filter_question_by_score(cls, score=None):
+        #  query question_score>= score
+        if not isinstance(int(score), int):
+            raise ValidationException("Score must be integer")
+        question_records = [
+            q for q in cls.query.all() if q.question_vote_score >= int(score)
+        ]
+        return question_records
+
+    @classmethod
+    def _filter_question_by_keyword(cls, keyword=None):
+        #  query question title include keyword
+        words = keyword.split()
+        if any(re.search(r"[^\w\s]", word) for word in words):
+            raise ValidationException("Keywords should not contain special symbols.")
+
+        all_words = [cls.title.ilike(f"%{word}%") for word in words]
+        question_records = cls.query.filter(or_(*all_words)).all()
+        return question_records
+
+    @classmethod
     def get_question_by_id(cls, id: int) -> Union[dict[str, Any], None]:
         """
         Returns a question by id and all answers on that question
@@ -68,17 +127,18 @@ class Question(db.Model):
             raise NotFoundException("Question not found.")
 
         answers = question.question_answers
-        vote_score = question.vote_score
+        votes_score = question.question_vote_score
 
         return {
             "id": question.id,
             "title": question.title,
             "details": question.details,
-            "createdAt": question.created_at,
-            "updatedAt": question.updated_at,
+            "created_at": question.created_at,
+            "updated_at": question.updated_at,
             "author": question.user.username,
             "answers": [answer.to_dict() for answer in answers],
-            "voteScore": vote_score,
+            "answers_count": len(answers),
+            "votes_score": votes_score,
         }
 
     @classmethod
@@ -149,7 +209,7 @@ class Question(db.Model):
         """
         Returns vote score for this question
         """
-        votes = self.question_answers
+        votes = self.question_votes
 
         if not votes:
             return 0
