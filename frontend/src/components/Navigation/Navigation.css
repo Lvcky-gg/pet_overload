@@ -1,7 +1,37 @@
 .profile-dropdown {
   position: absolute;
+  background-color:white ;
+  box-shadow: 2px 2px 5px gray;
+  height:200px;
+  width:100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.navLogo {
+  width:8%;
 }
 
 .hidden {
   display: none;
+}
+
+.nav {
+  position: sticky;
+  top:0;
+  display:flex;
+  justify-content: space-around;
+  background-color:#F79B26 ;
+}
+.navDrop{
+  position: relative;
+  top: 2.9rem;
+  text-decoration: none;
+  list-style: none;
+  display: flex;
+
+}
+.navDrop li {
+  padding-left: 50%;;
 }
