@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { composeWithDevTools } from 'redux-devtools-extension';
 import sessionReducer from './session';
+import questionsReducer from './questions';
 
 const middleware = [];
 
@@ -12,6 +12,7 @@ if (process.env.NODE_ENV === 'development') {
 const store = configureStore({
     reducer: {
         session: sessionReducer,
+        questions: questionsReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(middleware),
