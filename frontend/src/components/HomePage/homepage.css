@@ -1,0 +1,19 @@
+.homePage {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+.homePageTopImage img {
+    width:40%;
+    margin:auto;
+}
+.homePageMiddleImage img {
+    width:40%;
+}
+.homePageBottomImage img {
+    width:40%; 
+}

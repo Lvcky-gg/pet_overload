@@ -86,7 +86,7 @@ def update_answer(id):
     else:
         return jsonify({"message": "Answer couldn't be found","statusCode": 404}),404
 
-@answer_routes.route('/')
-def root():
-    print('hello')
-    return 'hello'
+# @answer_routes.route('/')
+# def root():
+#     print('hello')
+#     return 'hello'
