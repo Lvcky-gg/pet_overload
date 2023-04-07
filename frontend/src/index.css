@@ -98,6 +98,13 @@ h6 {
     opacity: 0.9;
 }
 
+.flex-row {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 1rem;
+}
+
 pre {
     background-color: var(--code-background);
     padding: 1rem;
