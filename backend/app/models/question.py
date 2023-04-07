@@ -98,7 +98,9 @@ class Question(db.Model):
     @classmethod
     def _filter_question_by_score(cls, score=None):
         #  query question_score>= score
-        if not isinstance(int(score), int):
+        try:
+            score=int(score)
+        except (TypeError,ValueError):
             raise ValidationException("Score must be integer")
         question_records = [
             q for q in cls.query.all() if q.question_vote_score >= int(score)
