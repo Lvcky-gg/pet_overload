@@ -175,7 +175,7 @@ class Question(db.Model):
         if not details:
             raise ValidationException("Details are required.")
 
-        if user_id != question.user_id:
+        if int(user_id) != int(question.user_id):
             raise ForbiddenException("You are not the author of this question.")
 
         question.title = title
@@ -196,7 +196,7 @@ class Question(db.Model):
         if not question:
             raise NotFoundException("Question couldn't be found.")
 
-        if user_id != question.user_id:
+        if int(user_id) != int(question.user_id):
             raise ForbiddenException("You are not the author of this question.")
 
         db.session.delete(question)
