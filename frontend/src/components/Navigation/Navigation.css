@@ -39,8 +39,9 @@
   background-color:#F79B26 ;
 }
 .navDrop{
-  position: relative;
-  top: 2.9rem;
+  /* position: relative;
+  top: 2.9rem; */
+  margin-top: 2.7%;
   text-decoration: none;
   list-style: none;
   display: flex;
