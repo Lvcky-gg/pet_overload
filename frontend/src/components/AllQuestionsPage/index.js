@@ -1,5 +1,9 @@
 import { useEffect } from 'react';
 import { getAllQuestions } from '../../store/questions';
+import QuestionCard from './QuestionCard';
+import Button from '../Button';
+
+import './AllQuestionsPage.css';
 
 const { useSelector, useDispatch } = require('react-redux');
 
@@ -7,10 +11,6 @@ const AllQuestionsPage = () => {
     const dispatch = useDispatch();
     const questions = useSelector((state) => state.questions.allQuestions);
     const loading = useSelector((state) => state.questions.loading);
-
-    useEffect(() => {
-        console.log('Questions updated:', questions);
-    }, [questions]);
 
     useEffect(() => {
         dispatch(getAllQuestions());
@@ -22,34 +22,36 @@ const AllQuestionsPage = () => {
 
     return (
         <div className="container">
-            <div id="all-questions-header">
+            <div id="all-questions-header" className="flex-row">
                 <div className="col-3">
                     <h1>All Questions</h1>
-                    <p>Total questions number</p>
+                    <p>{questions.length} questions</p>
+                </div>
+                <div id="filter-by-col" className="col-3">
+                    <h5>Filter by</h5>
+                    <div className="flex-row">
+                        <Button id="newest-button" text="Newest" />
+                        <Button id="unanswered-button" text="Unanswered" />
+                        <Button id="score-button" text="Score" />
+                    </div>
                 </div>
                 <div className="col-3">
-                    <button id="newest-button">Newest</button>
-                    <button id="unanswered-button">Unanswered</button>
-                    <button id="score-button">Score</button>
-                </div>
-                <div className="col-3">
-                    <button id="ask-question-button">Ask Question</button>
+                    <button id="ask-question-button" className="button">
+                        Ask a question
+                    </button>
                 </div>
             </div>
             <div id="question-list">
                 {questions.map(
                     ({ id, title, details, votes_score, answers_count }) => (
-                        <div id="question-card" key={id}>
-                            <div id="vote-answer-counts-col">
-                                <p>{votes_score}</p>
-                                <p>{answers_count}</p>
-                            </div>
-
-                            <div id="title-description-col">
-                                <h4>{title}</h4>
-                                <h4>{details}</h4>
-                            </div>
-                        </div>
+                        <QuestionCard
+                            key={id}
+                            id={id}
+                            title={title}
+                            details={details}
+                            votes_score={votes_score}
+                            answers_count={answers_count}
+                        />
                     )
                 )}
             </div>
