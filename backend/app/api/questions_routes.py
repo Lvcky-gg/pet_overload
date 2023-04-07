@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request, session
 from flask_login import login_required, current_user
 from ..models import Question, QuestionVote, Answer, db
-from ..models.utils import BaseException,ValidationException,NotFoundException, handle_error
+from ..models.utils import BaseException,ValidationException,NotFoundException,ForbiddenException, handle_error
 from datetime import datetime
 
 questions_routes_blueprint = Blueprint("questions", __name__)
@@ -97,6 +97,10 @@ def create_question_vote(question_id):
         question = Question.query.filter(Question.id==question_id).first()
         if question is None:
             raise NotFoundException("Question couldn't be found.")
+        existing_vote=QuestionVote.query.filter_by(user_id=user_id,question_id=question_id).first()
+
+        if existing_vote:
+            raise ForbiddenException("User already voted this question")
     except BaseException as err:
         return handle_error(err)
 

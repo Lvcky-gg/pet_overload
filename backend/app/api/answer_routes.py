@@ -35,6 +35,9 @@ def add_vote(id):
         answer = Answer.query.filter(Answer.id==id).first()
         if answer is None:
             raise NotFoundException("Answer couldn't be found.")
+        existing_vote=AnswerVote.query.filter_by(user_id=user_id,answer_id=id).first()
+        if existing_vote:
+            raise ForbiddenException("User already voted this answer")
     except BaseException as err:
         return handle_error(err)
 

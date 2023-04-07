@@ -283,7 +283,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/answer/3/votes",
+							"raw": "{{url}}/answers/3/votes",
 							"host": [
 								"{{url}}"
 							],
@@ -311,7 +311,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/answer/3/votes",
+							"raw": "{{url}}/answers/3/votes",
 							"host": [
 								"{{url}}"
 							],
@@ -339,7 +339,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/answer/3000/votes",
+							"raw": "{{url}}/answers/3000/votes",
 							"host": [
 								"{{url}}"
 							],
