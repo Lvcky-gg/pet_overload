@@ -16,9 +16,11 @@
 
 }
 .profile-dropdown li{
+  overflow: hidden;
+  width: 100%;
   position: relative;
-  right:20px;
-  margin-top:5%;
+  right: 50%;
+  margin: auto;
 
 }
 .navLogo {
