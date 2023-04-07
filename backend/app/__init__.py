@@ -33,7 +33,7 @@ def create_app():
     app.register_blueprint(user_routes, url_prefix="/api/users")
     app.register_blueprint(auth_routes, url_prefix="/api/auth")
     app.register_blueprint(questions_routes_blueprint, url_prefix="/api/questions")
-    app.register_blueprint(answer_routes, url_prefix="/api/answer")
+    app.register_blueprint(answer_routes, url_prefix="/api/answers")
     app.register_blueprint(question_votes_routes, url_prefix="/api/question_votes")
     app.register_blueprint(answer_votes_routes, url_prefix="/api/answer_votes")
     db.init_app(app)
@@ -41,7 +41,7 @@ def create_app():
 
     # Application Security
     CORS(app)
-    
+
     @app.before_request
     def https_redirect():
         if os.environ.get("FLASK_ENV") == "production":

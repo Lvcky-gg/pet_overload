@@ -49,7 +49,7 @@ def remove_answer_vote(vote_id):
     except BaseException as err:
         return handle_error(err)
     vote.delete_answer_vote()
-    return jsonify("Answer_vote successfully deleted"),200
+    return {"message":"Answer_vote successfully deleted"},200
 
 @answer_votes_routes.route("/current")
 @login_required

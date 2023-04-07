@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import { signUp } from '../../store/session';
 import './SignupForm.css';
+import logo from './favicon2_720.png'
 
 function SignupFormModal() {
     const dispatch = useDispatch();
@@ -34,6 +35,7 @@ function SignupFormModal() {
 
     return (
         <div className='modalSignUp'>
+            <img src={logo} alt="#" className='modalLogo'></img>
             <h1>Sign Up</h1>
             <form onSubmit={handleSubmit}>
                 {error && <div>{error}</div>}

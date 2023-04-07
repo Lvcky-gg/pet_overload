@@ -49,7 +49,8 @@ def remove_question_vote(vote_id):
             raise ForbiddenException("Forbidden")
     except BaseException as err:
         return handle_error(err)
-
+    vote.delete_question_vote()
+    return {"message":"Question_vote successfully deleted"},200
 
 @question_votes_routes.route("/current")
 @login_required

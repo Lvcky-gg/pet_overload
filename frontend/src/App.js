@@ -3,10 +3,12 @@ import { useDispatch } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import SignupFormPage from './components/SignupFormPage';
 import LoginFormPage from './components/LoginFormPage';
+import AllQuestionsPage from './components/AllQuestionsPage';
 import { HomePage } from './components/HomePage';
 import { authenticate } from './store/session';
 import Navigation from './components/Navigation';
 import Loader from './components/Loader';
+import { Footer } from './components/footer';
 
 function App() {
     const dispatch = useDispatch();
@@ -15,10 +17,6 @@ function App() {
     useEffect(() => {
         dispatch(authenticate()).then(() => setIsLoaded(true));
     }, [dispatch]);
-
-    useEffect(() => {
-        console.log('isLoaded:', isLoaded);
-    });
 
     return (
         <>
@@ -29,8 +27,13 @@ function App() {
                     <Route path="/login" element={<LoginFormPage />} />
                     <Route path="/signup" element={<SignupFormPage />} />
                     <Route path="/" element={<HomePage />} />
+                    <Route
+                        path="/all-questions"
+                        element={<AllQuestionsPage />}
+                    />
                 </Routes>
             )}
+            <Footer></Footer>
         </>
     );
 }

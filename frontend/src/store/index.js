@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { loadingMiddleware } from './loader';
+import loadingReducer from './loader';
 import sessionReducer from './session';
 import questionsReducer from './questions';
-import loadingReducer from './loader';
 
 const middleware = [loadingMiddleware];
 

@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request, session
 from flask_login import login_required, current_user
 from ..models import Question, QuestionVote, Answer, db
-from ..models.utils import BaseException,ValidationException,NotFoundException, handle_error
+from ..models.utils import BaseException,ValidationException,NotFoundException,ForbiddenException, handle_error
 from datetime import datetime
 
 questions_routes_blueprint = Blueprint("questions", __name__)
@@ -12,10 +12,13 @@ questions_routes_blueprint = Blueprint("questions", __name__)
 def create_answers(id):
     question = Question.query.get(id)
     if question:
-        answer = Answer(details=request.form["details"],created_at =datetime.now(),updated_at=datetime.now(),user_id = int(session["_user_id"]),question_id = id)
-        db.session.add(answer)
-        db.session.commit()
-        return answer.to_dict()
+        if request.form["details"] != "":
+            answer = Answer(details=request.form["details"],created_at =datetime.now(),updated_at=datetime.now(),user_id = int(session["_user_id"]),question_id = id)
+            db.session.add(answer)
+            db.session.commit()
+            return answer.to_dict()
+        else:
+            return jsonify({"message": "Details must not be empty","statusCode": 400}), 400
     else:
         return jsonify({"message": "Question couldn't be found","statusCode": 404}), 404
 
@@ -119,6 +122,10 @@ def create_question_vote(question_id):
         question = Question.query.filter(Question.id==question_id).first()
         if question is None:
             raise NotFoundException("Question couldn't be found.")
+        existing_vote=QuestionVote.query.filter_by(user_id=user_id,question_id=question_id).first()
+
+        if existing_vote:
+            raise ForbiddenException("User already voted this question")
     except BaseException as err:
         return handle_error(err)
 
