@@ -3,12 +3,15 @@ import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
+import logo from "./images/logo.png"
 
 function Navigation({ isLoaded }) {
     const sessionUser = useSelector((state) => state.session.user);
 
     return (
-        <ul>
+        <div className="nav"> 
+        <img src={logo} alt="#" className="navLogo"></img>
+        <ul className="navDrop">
             <li>
                 <NavLink to="/">Home</NavLink>
             </li>
@@ -18,6 +21,7 @@ function Navigation({ isLoaded }) {
                 </li>
             )}
         </ul>
+        </div>
     );
 }
 

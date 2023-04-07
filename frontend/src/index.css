@@ -118,3 +118,15 @@ code {
     margin-right: 10px;
     vertical-align: middle;
 }
+
+body::-webkit-scrollbar {
+    background:var(--background-color);
+    
+    
+}
+  body::-webkit-scrollbar-thumb {
+    background-color:#0E67B4;    /* color of the scroll thumb */
+    border-radius: 20px;       /* roundness of the scroll thumb */
+    height:30px;
+
+  }
