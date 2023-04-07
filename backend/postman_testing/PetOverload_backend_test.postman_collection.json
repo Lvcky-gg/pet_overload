@@ -41,13 +41,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/questions/3/votes",
+							"raw": "{{url}}/questions/2/votes",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"questions",
-								"3",
+								"2",
 								"votes"
 							]
 						}
@@ -288,7 +288,7 @@
 								"{{url}}"
 							],
 							"path": [
-								"answer",
+								"answers",
 								"3",
 								"votes"
 							]
@@ -316,7 +316,7 @@
 								"{{url}}"
 							],
 							"path": [
-								"answer",
+								"answers",
 								"3",
 								"votes"
 							]
@@ -344,7 +344,7 @@
 								"{{url}}"
 							],
 							"path": [
-								"answer",
+								"answers",
 								"3000",
 								"votes"
 							]
@@ -367,13 +367,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/answer_votes/4",
+							"raw": "{{url}}/answer_votes/3",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"answer_votes",
-								"4"
+								"3"
 							]
 						}
 					},
@@ -496,7 +496,17 @@
 					"name": "Get all questions",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "{{url}}/questions/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"questions",
+								""
+							]
+						}
 					},
 					"response": []
 				},
@@ -504,7 +514,17 @@
 					"name": "Get current user questions",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "{{url}}/questions/current",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"questions",
+								"current"
+							]
+						}
 					},
 					"response": []
 				},
@@ -512,7 +532,17 @@
 					"name": "Get question by id",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "{{url}}/questions/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"questions",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
@@ -520,7 +550,17 @@
 					"name": "Get questions by id, not found",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "{{url}}/questions/1000",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"questions",
+								"1000"
+							]
+						}
 					},
 					"response": []
 				},
@@ -531,7 +571,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "    {\n        \"title\": \"string\",\n        \"details\": \"string\"\n}",
+							"raw": "{\n    \"title\": \"string\",\n    \"details\": \"string\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -539,12 +579,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/questions",
+							"raw": "{{url}}/questions/",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
-								"questions"
+								"questions",
+								""
 							]
 						}
 					},
@@ -557,7 +598,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"title\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\",\n   \n}",
+							"raw": "{\n    \"title\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\"\n   \n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -665,7 +706,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"title\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\",\n   \n}",
+							"raw": "{\n    \"title\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\"\n   \n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -689,7 +730,32 @@
 					"name": "Search questions query filter",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "{{url}}/questions?score=1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"questions"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "Demo",
+									"disabled": true
+								},
+								{
+									"key": "score",
+									"value": "1"
+								},
+								{
+									"key": "keyword",
+									"value": "dog",
+									"disabled": true
+								}
+							]
+						}
 					},
 					"response": []
 				},
@@ -697,7 +763,32 @@
 					"name": "Search question query filter, validate parameters",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "{{url}}/questions?username=Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, ",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"questions"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, "
+								},
+								{
+									"key": "score",
+									"value": "one",
+									"disabled": true
+								},
+								{
+									"key": "keyword",
+									"value": "dog?",
+									"disabled": true
+								}
+							]
+						}
 					},
 					"response": []
 				},
@@ -746,7 +837,17 @@
 					"name": "Get current user answers",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "{{url}}/answers/current",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"answers",
+								"current"
+							]
+						}
 					},
 					"response": []
 				},
@@ -754,7 +855,18 @@
 					"name": "Get answers by question id",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "{{url}}/questions/3/answers",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"questions",
+								"3",
+								"answers"
+							]
+						}
 					},
 					"response": []
 				},
@@ -762,7 +874,18 @@
 					"name": "Get answers by question id,not found",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "{{url}}/questions/3000/answers",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"questions",
+								"3000",
+								"answers"
+							]
+						}
 					},
 					"response": []
 				},
@@ -770,7 +893,17 @@
 					"name": "Get answer by id",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "{{url}}/answers/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"answers",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
@@ -778,7 +911,17 @@
 					"name": "Get answer by id,not found",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "{{url}}/answers/1000",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"answers",
+								"1000"
+							]
+						}
 					},
 					"response": []
 				},
@@ -787,6 +930,16 @@
 					"request": {
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "details",
+									"value": "new answer",
+									"type": "default"
+								}
+							]
+						},
 						"url": {
 							"raw": "{{url}}/questions/1/answers",
 							"host": [
@@ -835,8 +988,14 @@
 						"method": "POST",
 						"header": [],
 						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"details\": \"\"\n}",
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "details",
+									"value": "",
+									"type": "default"
+								}
+							],
 							"options": {
 								"raw": {
 									"language": "json"
@@ -863,8 +1022,14 @@
 						"method": "PUT",
 						"header": [],
 						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"details\": \"string\"\n}",
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "details",
+									"value": "strings",
+									"type": "default"
+								}
+							],
 							"options": {
 								"raw": {
 									"language": "json"
@@ -872,13 +1037,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/answers/3",
+							"raw": "{{url}}/answers/4",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"answers",
-								"3"
+								"4"
 							]
 						}
 					},
@@ -935,12 +1100,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{url}}answers/1",
+							"raw": "{{url}}/answers/4",
 							"host": [
-								"{{url}}answers"
+								"{{url}}"
 							],
 							"path": [
-								"1"
+								"answers",
+								"4"
 							]
 						}
 					},
@@ -952,11 +1118,12 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{url}}answers/1000",
+							"raw": "{{url}}/answers/1000",
 							"host": [
-								"{{url}}answers"
+								"{{url}}"
 							],
 							"path": [
+								"answers",
 								"1000"
 							]
 						}
@@ -969,12 +1136,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{url}}answers/1000",
+							"raw": "{{url}}/answers/1",
 							"host": [
-								"{{url}}answers"
+								"{{url}}"
 							],
 							"path": [
-								"1000"
+								"answers",
+								"1"
 							]
 						}
 					},
@@ -999,12 +1167,6 @@
 			"request": {
 				"method": "POST",
 				"header": [
-					{
-						"key": "X-CSRFToken",
-						"value": "csrf_token=IjhhODdmMjc4NjA0YTE5YWZjZTFiMjVlMzRjNWQ5Y2E2ZTFhZWU0MDAi.ZC844g.o90-9qqCnH-ns2Hf-zlHB3MfStY; Path=/;",
-						"type": "default",
-						"disabled": true
-					},
 					{
 						"key": "X-CSRFToken",
 						"value": "{{xsrf_token}}",
@@ -1036,16 +1198,54 @@
 		{
 			"name": "Sign up",
 			"request": {
-				"method": "GET",
-				"header": []
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n           \"username\": \"lvcky\",\n           \"email\": \"lvcky@lvcky.com\",\n           \"password\": \"password\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/auth/signup",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"auth",
+						"signup"
+					]
+				}
 			},
 			"response": []
 		},
 		{
 			"name": "Sign up with exiting credentials",
 			"request": {
-				"method": "GET",
-				"header": []
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n           \"username\": \"lvcky\",\n           \"email\": \"lvcky@lvcky.com\",\n           \"password\": \"password\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/auth/signup",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"auth",
+						"signup"
+					]
+				}
 			},
 			"response": []
 		},
@@ -1053,7 +1253,17 @@
 			"name": "Get current user",
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": {
+					"raw": "{{url}}/auth/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"auth",
+						""
+					]
+				}
 			},
 			"response": []
 		},
@@ -1061,7 +1271,17 @@
 			"name": "Get all users",
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": {
+					"raw": "{{url}}/users/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						""
+					]
+				}
 			},
 			"response": []
 		},
@@ -1069,7 +1289,17 @@
 			"name": "Get user by id",
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": {
+					"raw": "{{url}}/users/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"1"
+					]
+				}
 			},
 			"response": []
 		}
