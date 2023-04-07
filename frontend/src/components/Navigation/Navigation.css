@@ -9,6 +9,18 @@
   align-items: center;
   justify-content: center;
 }
+.profile-dropdown button{
+  position: relative;
+  right:20px;
+  margin-top:5%;
+
+}
+.profile-dropdown li{
+  position: relative;
+  right:20px;
+  margin-top:5%;
+
+}
 .navLogo {
   width:8%;
 }
@@ -33,5 +45,5 @@
 
 }
 .navDrop li {
-  padding-left: 50%;;
+  padding-left: 50%;
 }
