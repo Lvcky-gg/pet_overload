@@ -7,6 +7,9 @@
 .userCard {
     width:30%;
 }
+.allUsersPage {
+    padding-bottom: 10%;
+}
 
 .userCard h4 {
     width:fit-content;
