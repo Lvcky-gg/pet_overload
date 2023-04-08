@@ -64,7 +64,7 @@ function LoginFormModal() {
                     />
                  </div>
                  <div>
-                <button type="submit">Log In</button>
+                <button type="submit" className="modalButton">Log In</button>
                 </div>
             </form>
             </div>

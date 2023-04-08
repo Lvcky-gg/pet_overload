@@ -4,7 +4,6 @@ export const sessionSlice = createSlice({
     name: 'session',
     initialState: {
         user: null,
-        loading: false,
         error: null,
         validationErrors: null,
     },
@@ -28,18 +27,18 @@ export const sessionSlice = createSlice({
                 state.user = null;
             })
             .addCase(signUp.pending, (state) => {
-                state.loading = true;
+
                 state.error = null;
                 state.validationErrors = null;
             })
             .addCase(signUp.fulfilled, (state, action) => {
-                state.loading = false;
+
                 state.user = action.payload;
                 state.error = null;
                 state.validationErrors = null;
             })
             .addCase(signUp.rejected, (state, action) => {
-                state.loading = false;
+
                 state.error = action.payload.message;
                 state.validationErrors = action.payload.errors;
                 state.user = null;

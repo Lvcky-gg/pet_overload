@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import SignupFormPage from './components/SignupFormPage';
 import LoginFormPage from './components/LoginFormPage';
 import AllQuestionsPage from './components/AllQuestionsPage';
+import AllUsersPage from './components/allUsersPage'
 import { HomePage } from './components/HomePage';
 import { authenticate } from './store/session';
 import Navigation from './components/Navigation';
@@ -30,6 +31,10 @@ function App() {
                     <Route
                         path="/all-questions"
                         element={<AllQuestionsPage />}
+                    />
+                    <Route
+                        path="/all-users"
+                        element={<AllUsersPage/>}
                     />
                 </Routes>
             )}

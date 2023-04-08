@@ -1,0 +1,51 @@
+.AllUsersPage{
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+
+}
+#all-users-header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+}
+#user-list {
+    width:80%;
+    margin:auto;
+    display:flex;
+    justify-content: center;
+    flex-flow: row wrap;
+}
+.userCard {
+    width: 20%;
+    margin: 2%;
+    background-color: #ffffff;
+}
+.userCard:hover  {
+    box-shadow: 3px 3px 3px gray;
+
+}
+
+.userCard h4 {
+    width:fit-content;
+    margin:auto;
+    padding-bottom: 5%;
+}
+.userCircle {
+    width: 50px;
+    height:50px;
+    border: solid var(--secondary-color) 2px;
+    border-radius: 50%;
+    padding: 2%;
+    margin: auto;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    background-color: var(--primary-color);
+    display:flex;
+    justify-content: center;
+    align-items:center;
+}
+.userCircle i {
+    color:var(--secondary-color)
+}

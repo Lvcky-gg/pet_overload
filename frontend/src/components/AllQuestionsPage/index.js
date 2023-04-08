@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { getAllQuestions } from '../../store/questions';
+import { getAllAnswers } from '../../store/answers';
 import QuestionCard from './QuestionCard';
 import Button from '../Button';
 
@@ -11,9 +12,11 @@ const AllQuestionsPage = () => {
     const dispatch = useDispatch();
     const questions = useSelector((state) => state.questions.allQuestions);
     const loading = useSelector((state) => state.questions.loading);
+    const answers = useSelector((state)=>state.answers.allAnswers)
 
     useEffect(() => {
         dispatch(getAllQuestions());
+        dispatch(getAllAnswers())
     }, []);
 
     if (loading) {
