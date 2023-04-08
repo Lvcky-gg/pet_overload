@@ -8,6 +8,7 @@ import {
     faArrowDown,
     faUpLong,
     faDownLong,
+    faUserCircle
     
 } from '@fortawesome/free-solid-svg-icons';
 import SignupFormPage from './components/SignupFormPage';
@@ -29,7 +30,7 @@ function App() {
     }, [dispatch]);
 
     // FontAwesome icons to be installed globally.
-    library.add(fas, faUpLong, faDownLong);
+    library.add(fas, faUpLong, faDownLong, faUserCircle);
 
     return (
         <>

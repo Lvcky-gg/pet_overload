@@ -20,13 +20,14 @@ export const userSlice = createSlice({
 export const getAllUsers = createAsyncThunk(
     'users/getAllUsers',
     async (_, {rejectWithValue}) => {
-        const response = await fetch('/api/users', {
+        const response = await fetch('api/users', {
             headers: {
                 'Content-Type': 'application/json',
             },
         });
 
         if(!response.ok) {
+            console.log('This is an error')
             rejectWithValue(await response.json())
         }
         const data = await response.json()
