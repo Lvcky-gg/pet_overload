@@ -20,17 +20,20 @@ export const answerSlice = createSlice({
 export const getAllAnswers = createAsyncThunk(
     'answers/getAllAnswers',
     async (_, { rejectWithValue }) => {
-        const response = await fetch('/api/answers', {
+        const response = await fetch('api/answers', {
             headers: {
                 'Content-Type': 'application/json',
             },
+            //source of bug
+            // credentials: 'include',
         });
 
         if (!response.ok) {
             rejectWithValue(await response.json());
         }
         const data = await response.json();
-        return data.answers;
+        console.log('data', data);
+        return data.Answers;
     }
 );
 
