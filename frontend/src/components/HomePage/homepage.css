@@ -3,6 +3,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-color: #f5f5f5;
 }
 
 
@@ -40,22 +41,37 @@
 }
 .homePageHighlights h1  {
     margin:auto;
-    width:30%;
+    width:15%;
     padding-top:5%;
     padding-bottom:5%;
 }
 .homePageCards {
     display: flex;
+    justify-content: center;
 
 }
 .homePageCard {
     display: flex;
     flex-direction: column;
+    margin:20px;
+    background-color: #ffffff;
+    width: 20%;
 
 }
 
+.homePageCard:hover {
+    box-shadow: 3px 3px 3px gray;
+}
+.placeHolderImageHome {
+    width:50%;
+    margin: auto;
+    padding-top:5%;
+}
 .homePageCard div {
     margin:auto;
+}
+.homePageCard div a,h3 {
+    max-width:30%;
 }
 
 .homePageOtherResource {

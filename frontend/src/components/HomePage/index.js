@@ -5,6 +5,9 @@ import imageOne from './images/PXL_20230129_031141829~3.jpg'
 import imageTwo from './images/PXL_20230205_182244672~2.jpg'
 import imageThree from './images/PXL_20230310_213734277~2.jpg'
 import imageFour from './images/Screenshot_20201009-154928_Snapchat~2.jpg'
+import questionImg from './images/question.png'
+// import AllQuestionsPage from '../AllQuestionsPage';
+import { NavLink } from 'react-router-dom';
 
 export const HomePage = () => {
 
@@ -25,26 +28,26 @@ export const HomePage = () => {
             <h1>//title  </h1>
             <h1>  //text</h1> */}
                  <div className="homePageCard"> 
-                    <h1>Insert Component here</h1>
+                 <img src={questionImg} alt="#" className='placeHolderImageHome'/>
                     <div>
-                    <h3>Shelter</h3>
-                    <p>this will be a link</p>
+                    <h3>Questions</h3>
+                    <NavLink to='/all-questions'>Go to Questions</NavLink>
                  </div>
                  </div>
 
                  <div className="homePageCard">
-                    <h1>Insert Component here</h1>
+                 <img src={questionImg} alt="#" className='placeHolderImageHome'/>
                     <div>
-                    <h3>Cool Post</h3>
-                    <p>this will be a link</p>
+                    <h3>Questions</h3>
+                    <NavLink to='/all-questions'>Go to Questions</NavLink>
                  </div>
                  </div>
 
                  <div className="homePageCard">
-                    <h1>Insert Component here</h1>
+                 <img src={questionImg} alt="#" className='placeHolderImageHome'/>
                     <div>
-                    <h3>Our People</h3>
-                    <p>this will be a link</p>
+                    <h3>Questions</h3>
+                    <NavLink to='/all-questions'>Go to Questions</NavLink>
                  </div>
                  </div>
 

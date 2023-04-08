@@ -4,21 +4,17 @@ export const questionsSlice = createSlice({
     name: 'questions',
     initialState: {
         allQuestions: [],
-        loading: false,
     },
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(getAllQuestions.pending, (state) => {
-                state.loading = true;
-            })
+            // .addCase(getAllQuestions.pending, (state) => {
+            // })
             .addCase(getAllQuestions.fulfilled, (state, action) => {
-                state.loading = false;
                 state.allQuestions = action.payload;
             })
             .addCase(getAllQuestions.rejected, (state, action) => {
                 console.log('Rejected with value:', action.payload);
-                state.loading = false;
             });
     },
 });
