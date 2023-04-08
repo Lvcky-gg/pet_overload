@@ -28,6 +28,7 @@ export const getAllUsers = createAsyncThunk(
         });
 
         if(!response.ok) {
+            console.log('This is an error')
             rejectWithValue(await response.json())
         }
         const data = await response.json()
