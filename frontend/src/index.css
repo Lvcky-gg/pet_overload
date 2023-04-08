@@ -9,7 +9,7 @@
     --header-background: #f8fafc;
     --header-menu-hover-text-color: #f8fafc;
     --code-background: #f9fafb;
-    --border-color: #e2e8f0;
+    --border-color: #d2d5d9;
     --button-text-color: #fff;
     --header-menu-hover-background: #2d3e50;
     --code-text-color: #4b5563;
@@ -127,18 +127,22 @@ code {
 }
 
 body::-webkit-scrollbar {
-    background:var(--background-color);
-    width:20px;
-    
-    
+    background: var(--background-color);
+    width: 20px;
+
+
 }
 
 body::-webkit-scrollbar-track {
-    background: var(--background-color);        /* color of the tracking area */
-  }
-  body::-webkit-scrollbar-thumb {
-    background-color:#0E67B4;    /* color of the scroll thumb */
-    border-radius: 20px;       /* roundness of the scroll thumb */
-    height:30px;
+    background: var(--background-color);
+    /* color of the tracking area */
+}
 
-  }
+body::-webkit-scrollbar-thumb {
+    background-color: #0E67B4;
+    /* color of the scroll thumb */
+    border-radius: 20px;
+    /* roundness of the scroll thumb */
+    height: 30px;
+
+}
