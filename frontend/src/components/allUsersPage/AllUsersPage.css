@@ -1,0 +1,31 @@
+#user-list {
+    width:80%;
+    margin:auto;
+    display:flex;
+    flex-flow: row wrap;
+}
+.userCard {
+    width:30%;
+}
+
+.userCard h4 {
+    width:fit-content;
+    margin:auto;
+}
+.userCircle {
+    width: 50px;
+    height:50px;
+    border: solid var(--secondary-color) 2px;
+    border-radius: 50%;
+    padding: 2%;
+    margin: auto;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    background-color: var(--primary-color);
+    display:flex;
+    justify-content: center;
+    align-items:center;
+}
+.userCircle i {
+    color:var(--secondary-color)
+}
