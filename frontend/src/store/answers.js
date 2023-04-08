@@ -24,6 +24,7 @@ export const getAllAnswers = createAsyncThunk(
             headers: {
                 'Content-Type': 'application/json',
             },
+            credentials: 'include',
         });
 
         if(!response.ok) {

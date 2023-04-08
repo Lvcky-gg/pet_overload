@@ -8,6 +8,7 @@ import {
     faArrowDown,
     faUpLong,
     faDownLong,
+    
 } from '@fortawesome/free-solid-svg-icons';
 import SignupFormPage from './components/SignupFormPage';
 import LoginFormPage from './components/LoginFormPage';
