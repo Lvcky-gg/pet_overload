@@ -5,10 +5,6 @@
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
-    position:absolute;
-    bottom:0;
-    right:0;
-    left:0;
 }
 .footer img {
     height:200px;
