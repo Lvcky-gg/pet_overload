@@ -2,11 +2,12 @@
     width:80%;
     margin:auto;
     display:flex;
+    justify-content: center;
     flex-flow: row wrap;
 }
 .userCard {
-    width:30%;
-    margin-top:2%;
+    width: 20%;
+    margin: 2%;
     background-color: #ffffff;
 }
 .userCard:hover  {
