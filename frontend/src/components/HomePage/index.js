@@ -38,8 +38,8 @@ export const HomePage = () => {
                  <div className="homePageCard">
                  <img src={questionImg} alt="#" className='placeHolderImageHome'/>
                     <div>
-                    <h3>Questions</h3>
-                    <NavLink to='/all-questions'>Go to Questions</NavLink>
+                    <h3>Users</h3>
+                    <NavLink to='/all-users'>Go to Users</NavLink>
                  </div>
                  </div>
 
