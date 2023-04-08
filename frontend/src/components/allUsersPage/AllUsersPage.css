@@ -1,3 +1,15 @@
+.AllUsersPage{
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+
+}
+#all-users-header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+}
 #user-list {
     width:80%;
     margin:auto;
@@ -13,9 +25,6 @@
 .userCard:hover  {
     box-shadow: 3px 3px 3px gray;
 
-}
-.allUsersPage {
-    margin-bottom: 10%;
 }
 
 .userCard h4 {
