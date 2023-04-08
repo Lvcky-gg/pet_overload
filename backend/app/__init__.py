@@ -40,7 +40,11 @@ def create_app():
     Migrate(app, db)
 
     # Application Security
-    CORS(app)
+    flask_env = os.environ.get("FLASK_ENV")
+    if flask_env == "development":
+        CORS(app, origins=["http://localhost:3000", "http://localhost:5000"], supports_credentials=True)
+    elif flask_env == "production":
+        CORS(app, origins="https://pet-overload.onrender.com/", supports_credentials=True)
 
     @app.before_request
     def https_redirect():
