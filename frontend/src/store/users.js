@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-export const answerSlice = createSlice({
+export const userSlice = createSlice({
     name:'users',
     initialState: {
         allUsers: [],
@@ -8,7 +8,7 @@ export const answerSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
-        .addCase(getAllAnswers.fulfilled, (state, action)=> {
+        .addCase(getAllUsers.fulfilled, (state, action)=> {
             state.allUsers = action.payload;
         })
         .addCase(getAllUsers.rejected, (state, action)=> {
