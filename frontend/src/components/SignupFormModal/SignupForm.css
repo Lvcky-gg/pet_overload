@@ -23,10 +23,24 @@
 
 }
 .modalSignUp form div button {
-    width: 30%;
+    width: 40%;
     border-radius: 5%
 }
 .modalSignUp form div input{
     width: 50%;
     
+}
+
+.modalButton {
+    display: inline-block;
+    background-color: var(--button-background);
+    color: var(--button-text-color);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    text-align: center;
+    cursor: pointer;
+
+}
+.modalButton:hover {
+    opacity: 0.9;
 }

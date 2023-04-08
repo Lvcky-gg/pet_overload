@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { getAllQuestions } from '../../store/questions';
+import { getAllAnswers } from '../../store/answers';
 import QuestionCard from './QuestionCard';
 import Button from '../Button';
 
@@ -15,6 +16,7 @@ const AllQuestionsPage = () => {
 
     useEffect(() => {
         dispatch(getAllQuestions());
+        dispatch(getAllAnswers())
     }, []);
 
     if (loading) {
