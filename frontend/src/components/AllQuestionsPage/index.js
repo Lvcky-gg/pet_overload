@@ -3,7 +3,6 @@ import { getAllQuestions } from '../../store/questions';
 import { getAllAnswers } from '../../store/answers';
 import QuestionCard from './QuestionCard';
 import Button from '../Button';
-
 import './AllQuestionsPage.css';
 
 const { useSelector, useDispatch } = require('react-redux');
@@ -20,28 +19,29 @@ const AllQuestionsPage = () => {
     }, []);
 
     if (loading) {
-        return <div>Loading . . .</div>;
+        return null;
     }
 
     return (
-        <div className="container">
-            <div id="all-questions-header" className="flex-row">
-                <div className="col-3">
-                    <h1>All Questions</h1>
-                    <p>{questions.length} questions</p>
-                </div>
-                <div id="filter-by-col" className="col-3">
-                    <h5>Filter by</h5>
-                    <div className="flex-row">
-                        <Button id="newest-button" text="Newest" />
-                        <Button id="unanswered-button" text="Unanswered" />
-                        <Button id="score-button" text="Score" />
-                    </div>
-                </div>
-                <div className="col-3">
+        <div className="container" id="all-questions-container">
+            <div className="all-questions-header">
+                <h1>All Questions</h1>
+                <div className="ask-question-container">
                     <button id="ask-question-button" className="button">
                         Ask a question
                     </button>
+                </div>
+            </div>
+            <div className="filter-row">
+                <div className="question-count-container">
+                    <p className="question-count">
+                        {questions.length} questions
+                    </p>
+                </div>
+                <div className="filter-options">
+                    <Button id="newest-button" text="Newest" />
+                    <Button id="unanswered-button" text="Unanswered" />
+                    <Button id="score-button" text="Score" />
                 </div>
             </div>
             <div id="question-list">
