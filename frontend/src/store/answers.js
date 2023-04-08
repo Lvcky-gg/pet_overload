@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { Action } from "@remix-run/router";
 
 export const answerSlice = createSlice({
     name:'answers',
@@ -9,7 +10,9 @@ export const answerSlice = createSlice({
     extraReducers: (builder) => {
         builder
         .addCase(getAllAnswers.fulfilled, (state, action)=> {
+            // console.log('action',action.payload)
             state.allAnswers = action.payload;
+           
         })
         .addCase(getAllAnswers.rejected, (state, action)=> {
             console.log('Rejected with value:', action.payload);
@@ -33,7 +36,7 @@ export const getAllAnswers = createAsyncThunk(
         }
         const data = await response.json()
         console.log('data', data)
-        return data.answers;
+        return data.Answers;
     }
 );
 
