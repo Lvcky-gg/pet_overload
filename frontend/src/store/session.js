@@ -71,7 +71,6 @@ export const login = createAsyncThunk(
     'session/login',
     async ({ email, password }, { rejectWithValue }) => {
         try {
-
             const response = await fetch('/api/auth/login', {
                 method: 'POST',
                 headers: {
@@ -91,7 +90,7 @@ export const login = createAsyncThunk(
                 }
             }
 
-            return data;
+            return data.user;
         } catch (error) {
             return rejectWithValue({ message: error.message });
         }
@@ -134,7 +133,7 @@ export const signUp = createAsyncThunk(
                 }
             }
 
-            return data;
+            return data.user;
         } catch (error) {
             return rejectWithValue({ message: error.message });
         }
