@@ -11,6 +11,7 @@ const AllQuestionsPage = () => {
     const dispatch = useDispatch();
     const questions = useSelector((state) => state.questions.allQuestions);
     const loading = useSelector((state) => state.questions.loading);
+    const answers = useSelector((state)=>state.answers.allAnswers)
 
     useEffect(() => {
         dispatch(getAllQuestions());
