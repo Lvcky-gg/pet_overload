@@ -14,6 +14,7 @@
 .userCard h4 {
     width:fit-content;
     margin:auto;
+    padding-bottom: 5%;
 }
 .userCircle {
     width: 50px;
