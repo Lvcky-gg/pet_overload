@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import SignupFormPage from './components/SignupFormPage';
 import LoginFormPage from './components/LoginFormPage';
 import AllQuestionsPage from './components/AllQuestionsPage';
+import UserProfile from './components/UserProfile';
 import { HomePage } from './components/HomePage';
 import { authenticate } from './store/session';
 import Navigation from './components/Navigation';
@@ -31,9 +32,10 @@ function App() {
                         path="/all-questions"
                         element={<AllQuestionsPage />}
                     />
+                    <Route path="/user/profile" element={<UserProfile />} />
                 </Routes>
             )}
-            <Footer></Footer>
+            <Footer />
         </>
     );
 }
