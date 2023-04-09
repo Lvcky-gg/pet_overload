@@ -19,7 +19,7 @@ def seed_answer_votes():
 
 def undo_answer_votes():
     if environment == "production":
-        db.session.execute(f"TRUNCATE table answer_votes RESTART IDENTITY CASCADE;")
+        db.session.execute(f"TRUNCATE table {SCHEMA}.answer_votes RESTART IDENTITY CASCADE;")
     else:
         db.session.execute(text("DELETE FROM answer_votes"))
 
