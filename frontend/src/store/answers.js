@@ -31,8 +31,10 @@ export const getAllAnswers = createAsyncThunk(
         if (!response.ok) {
             rejectWithValue(await response.json());
         }
+
         const data = await response.json();
         console.log('data', data);
+
         return data.Answers;
     }
 );

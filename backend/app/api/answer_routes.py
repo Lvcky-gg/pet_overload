@@ -92,5 +92,6 @@ def update_answer(id):
 @answer_routes.route('/')
 def root():
     answers = Answer.query.all()
+    #route here
 
     return {'Answers':[answer.to_dict() for answer in answers]}
