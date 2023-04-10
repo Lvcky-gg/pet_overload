@@ -1,0 +1,13 @@
+#userProfile-container ul {
+    list-style: none;
+}
+#activity-title {
+    color: #0e67b4;
+    font-size: 35px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+#userProfile-container {
+    background-color: #f5f5f5;
+}

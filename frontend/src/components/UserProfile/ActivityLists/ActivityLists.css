@@ -1,0 +1,31 @@
+.user-activity-list {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    font-size: 15px;
+}
+.user-activity-list p {
+    text-align: center;
+}
+.user-activity-list.column-title {
+    background-color: #0e67b4;
+    color: #fff;
+    border-radius: 5px;
+}
+#activity-list-container {
+    margin-left: 10px;
+}
+.user-activity-list-container {
+    padding: 0;
+}
+#question-title {
+    text-align: left;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    margin-left: 10px;
+}
+.user-activity-list.list-item {
+    background-color: #ffffff;
+    margin-top: 10px;
+}

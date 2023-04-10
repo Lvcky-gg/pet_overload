@@ -26,7 +26,8 @@ class AnswerVote(db.Model):
             'createdAt':self.created_at,
             'updatedAt':self.updated_at,
             'userId':self.user_id,
-            'answerId':self.answer_id
+            'answerId':self.answer_id,
+            'answer': self.answer.to_dict(),
         }
 
     #factory method to create Answer instance
