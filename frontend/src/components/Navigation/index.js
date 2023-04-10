@@ -12,7 +12,7 @@ function Navigation({ isLoaded }) {
     return (
         <div className="nav"> 
         <img src={logo} alt="#" className="navLogo"></img>
-        {sessionUser &&(<SearchBar></SearchBar>)}
+        <SearchBar></SearchBar>
         <ul className="navDrop">
             <li>
                 <NavLink to="/">Home</NavLink>
