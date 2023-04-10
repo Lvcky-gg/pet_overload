@@ -13,6 +13,16 @@ export const answerSlice = createSlice({
             })
             .addCase(getAllAnswers.rejected, (state, action) => {
                 console.log('Rejected with value:', action.payload);
+            })
+            .addCase(deleteAnswer.fulfilled, (state, action) => {
+                state.loading = false;
+                state.allAnswers = state.allAnswers.filter(
+                    (vote) => vote.id === action.payload
+                );
+            })
+            .addCase(deleteAnswer.rejected, (state, action) => {
+                console.log('Rejected with value:', action.payload);
+                state.loading = false;
             });
     },
 });
@@ -56,5 +66,21 @@ export const getAnswersByQuestion = createAsyncThunk(
         return data.answers;
     }
 );
+export const deleteAnswer = createAsyncThunk(
+    'answers/deleteAnswer',
+    async (answerId, { rejectWithValue }) => {
+        const response = await fetch(`/api/answers/${answerId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        if (!response.ok) {
+            const errData = await response.json();
+            return rejectWithValue(errData);
+        }
 
+        return answerId;
+    }
+);
 export default answerSlice.reducer;
