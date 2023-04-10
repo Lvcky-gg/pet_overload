@@ -1,11 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-/*
-    Create the session slice of state for the redux store. 
-*/
 export const sessionSlice = createSlice({
     name: 'session',
-    initialState: { user: null },
+    initialState: {
+        user: null,
+        error: null,
+        validationErrors: null,
+    },
     reducers: {
         setUser: (state, action) => {
             state.user = action.payload;
@@ -14,28 +15,33 @@ export const sessionSlice = createSlice({
             state.user = null;
         },
     },
-    /* 
-		Extra reducers are used for async thunks
-	*/
     extraReducers: (builder) => {
         builder
             .addCase(authenticate.fulfilled, (state, action) => {
-                if (action.payload) {
-                    state.user = action.payload;
-                }
+                state.user = action.payload;
             })
             .addCase(login.fulfilled, (state, action) => {
-                if (action.payload) {
-                    state.user = action.payload;
-                }
+                state.user = action.payload;
             })
             .addCase(logout.fulfilled, (state) => {
                 state.user = null;
             })
+            .addCase(signUp.pending, (state) => {
+
+                state.error = null;
+                state.validationErrors = null;
+            })
             .addCase(signUp.fulfilled, (state, action) => {
-                if (action.payload) {
-                    state.user = action.payload;
-                }
+
+                state.user = action.payload;
+                state.error = null;
+                state.validationErrors = null;
+            })
+            .addCase(signUp.rejected, (state, action) => {
+
+                state.error = action.payload.message;
+                state.validationErrors = action.payload.errors;
+                state.user = null;
             });
     },
 });
@@ -47,6 +53,7 @@ export const authenticate = createAsyncThunk(
             headers: {
                 'Content-Type': 'application/json',
             },
+            credentials: 'include',
         });
         if (response.ok) {
             const data = await response.json();
@@ -62,28 +69,30 @@ export const authenticate = createAsyncThunk(
 
 export const login = createAsyncThunk(
     'session/login',
-    async ({ email, password }) => {
-        const response = await fetch('/api/auth/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                email,
-                password,
-            }),
-        });
+    async ({ email, password }, { rejectWithValue }) => {
+        try {
+            const response = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email,
+                    password,
+                }),
+            });
 
-        if (response.ok) {
             const data = await response.json();
-            return data;
-        } else if (response.status < 500) {
-            const data = await response.json();
-            if (data.errors) {
-                throw new Error(data.errors);
+
+            if (!response.ok) {
+                if (data.errors) {
+                    return rejectWithValue({ errors: data.errors });
+                }
             }
-        } else {
-            throw new Error('An error occurred. Please try again.');
+
+            return data.user;
+        } catch (error) {
+            return rejectWithValue({ message: error.message });
         }
     }
 );
@@ -102,31 +111,31 @@ export const logout = createAsyncThunk('session/logout', async () => {
 
 export const signUp = createAsyncThunk(
     'session/signUp',
-    async ({ username, email, password }) => {
-        const response = await fetch('/api/auth/signup', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                username,
-                email,
-                password,
-            }),
-        });
+    async ({ username, email, password }, { rejectWithValue }) => {
+        try {
+            const response = await fetch('/api/auth/signup', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username,
+                    email,
+                    password,
+                }),
+            });
 
-        if (response.ok) {
             const data = await response.json();
 
-            return data;
-        } else if (response.status < 500) {
-            const data = await response.json();
-
-            if (data.errors) {
-                throw new Error(data.errors);
+            if (!response.ok) {
+                if (data.errors) {
+                    return rejectWithValue({ errors: data.errors });
+                }
             }
-        } else {
-            throw new Error('An error occurred. Please try again.');
+
+            return data.user;
+        } catch (error) {
+            return rejectWithValue({ message: error.message });
         }
     }
 );

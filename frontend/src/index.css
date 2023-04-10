@@ -1,1 +1,149 @@
-/* TODO Add site wide styles */
+:root {
+    --primary-color: #F79B26;
+    --secondary-color: #0E67B4;
+    --tertiary-color: #f74726;
+    --link-color: #0E67B4;
+    --button-background: #0E67B4;
+    --text-color: #333;
+    --background-color: #f5f5f5;
+    --header-background: #f8fafc;
+    --header-menu-hover-text-color: #f8fafc;
+    --code-background: #f9fafb;
+    --border-color: #d2d5d9;
+    --button-text-color: #fff;
+    --header-menu-hover-background: #2d3e50;
+    --code-text-color: #4b5563;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    margin: 0;
+}
+
+a {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--primary-color);
+    line-height: 1.2;
+}
+
+.header {
+    background-color: var(--header-background);
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-logo {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.header-menu {
+    display: flex;
+    gap: 1rem;
+}
+
+.header-menu a {
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+}
+
+.header-menu a:hover {
+    background-color: var(--header-menu-hover-background);
+    color: var(--header-menu-hover-text-color);
+}
+
+.page {
+    padding: 2rem 0;
+}
+
+.button {
+    display: inline-block;
+    background-color: var(--button-background);
+    color: var(--button-text-color);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    text-align: center;
+    cursor: pointer;
+}
+
+
+.button:hover {
+    opacity: 0.9;
+}
+
+.flex-row {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 1rem;
+}
+
+pre {
+    background-color: var(--code-background);
+    padding: 1rem;
+    border-radius: 4px;
+    overflow-x: auto;
+}
+
+code {
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    color: var(--code-text-color);
+}
+
+.color-sample {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ccc;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+body::-webkit-scrollbar {
+    background: var(--background-color);
+    width: 20px;
+
+
+}
+
+body::-webkit-scrollbar-track {
+    background: var(--background-color);
+    /* color of the tracking area */
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: #0E67B4;
+    /* color of the scroll thumb */
+    border-radius: 20px;
+    /* roundness of the scroll thumb */
+    height: 30px;
+
+}

@@ -1,0 +1,46 @@
+.modalSignUp {
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding:5%;
+    
+    
+}
+.modalLogo {
+    height:100px;
+}
+.modalSignUp form  {
+    width: 50%;
+}
+
+.modalSignUp form div {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 3%;
+
+}
+.modalSignUp form div button {
+    width: 40%;
+    border-radius: 5%
+}
+.modalSignUp form div input{
+    width: 50%;
+    
+}
+
+.modalButton {
+    display: inline-block;
+    background-color: var(--button-background);
+    color: var(--button-text-color);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    text-align: center;
+    cursor: pointer;
+
+}
+.modalButton:hover {
+    opacity: 0.9;
+}

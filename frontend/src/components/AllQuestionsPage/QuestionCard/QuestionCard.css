@@ -1,0 +1,70 @@
+.question-card {
+    background-color: #ffffff;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    margin-bottom: 20px;
+    padding: 20px;
+}
+
+.row {
+    display: flex;
+    align-items: stretch;
+}
+
+.title-description-col {
+    margin-left: 25px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.question-card h2 {
+    margin: 0;
+}
+
+.question-card p {
+    margin: 8px 0;
+}
+
+.answers-msg {
+    font-size: 14px;
+    color: var(--secondary-color);
+    margin-top: 8px;
+}
+
+.voting-score {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    padding-right: 20px;
+    box-sizing: border-box;
+    border-right: 1px solid #ccc;
+}
+
+.voting-score-value {
+    font-weight: 500;
+    font-size: 24px;
+    color: var(--text-color);
+    margin: 4px 0;
+}
+
+.downvote-arrow,
+.upvote-arrow {
+    font-size: 1.5rem;
+    cursor: pointer;
+    --fa-beat-scale: 1.4;
+    --fa-animation-duration: 0.75s;
+}
+
+.upvote-arrow:hover,
+.downvote-arrow:hover {
+    color: var(--primary-color);
+}
+
+.upvote-arrow.selected,
+.downvote-arrow.selected {
+    color: var(--secondary-color);
+}
