@@ -10,4 +10,4 @@ dev.db
 *.db
 instance/
 app/instance/
-migrations/
+app/migrations/
