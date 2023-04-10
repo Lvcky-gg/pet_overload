@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
 import logo from "./images/logo.png"
+import SearchBar from '../SearchBar';
 
 function Navigation({ isLoaded }) {
     const sessionUser = useSelector((state) => state.session.user);
@@ -11,6 +12,7 @@ function Navigation({ isLoaded }) {
     return (
         <div className="nav"> 
         <img src={logo} alt="#" className="navLogo"></img>
+        <SearchBar></SearchBar>
         <ul className="navDrop">
             <li>
                 <NavLink to="/">Home</NavLink>

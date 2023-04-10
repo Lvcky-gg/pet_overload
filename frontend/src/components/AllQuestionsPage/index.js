@@ -4,6 +4,7 @@ import { getAllAnswers } from '../../store/answers';
 import QuestionCard from './QuestionCard';
 import Button from '../Button';
 import './AllQuestionsPage.css';
+import Sidebar from '../Sidebar';
 
 const { useSelector, useDispatch } = require('react-redux');
 
@@ -23,7 +24,10 @@ const AllQuestionsPage = () => {
     }
 
     return (
+        // <div className="questionPage">
+        //     <Sidebar/>
         <div className="container" id="all-questions-container">
+        {/* <Sidebar/> */}
             <div className="all-questions-header">
                 <h1>All Questions</h1>
                 <div className="ask-question-container">
@@ -59,6 +63,7 @@ const AllQuestionsPage = () => {
                 )}
             </div>
         </div>
+        // </div>
     );
 };
 

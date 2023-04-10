@@ -1,0 +1,14 @@
+.sideBar {
+    display:flex;
+    flex-direction:column;
+    align-items: flex-end;
+    padding-top:2%;
+    max-height:1000px;
+    border-right:1px solid gray;
+    width:150px;
+   
+}
+.sideBar a {
+    padding-top:25%;
+    padding-right:5%;
+}
