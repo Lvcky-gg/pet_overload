@@ -76,6 +76,7 @@ def run_migrations_online():
         config.get_section(config.config_ini_section),
         prefix='sqlalchemy.',
         poolclass=pool.NullPool,
+        url=f"{config.get_main_option('sqlalchemy.url')}?options=-csearch_path={SCHEMA}",
     )
 
     with connectable.connect() as connection:
