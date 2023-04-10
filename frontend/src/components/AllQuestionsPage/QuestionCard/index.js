@@ -39,6 +39,7 @@ const QuestionCard = ({ title, details, votes_score, answers_count }) => {
                     <h2>{title}</h2>
                     <p>{details}</p>
                     <p className="answers-msg">
+                    
                         {answers_count} {answers_msg}
                     </p>
                 </div>

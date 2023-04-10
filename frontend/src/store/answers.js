@@ -13,7 +13,14 @@ export const answerSlice = createSlice({
             })
             .addCase(getAllAnswers.rejected, (state, action) => {
                 console.log('Rejected with value:', action.payload);
-            });
+            })
+            // .addCase(createAnswerByQuestion.fulfilled, (state, action)=> {
+            //     const updatedAnswer = action.payload;
+            //     const idx = state.allAnswers.findIndex(
+            //         (answer) => answer.id ===
+            //     )
+
+            // })
     },
 });
 
@@ -51,11 +58,34 @@ export const getAnswersByQuestion = createAsyncThunk(
         }
 
         const data = await response.json();
-        console.log(`Answers to question ${questionId}`, data.answers);
+        console.log(`Answers to question ${questionId}`, data.Answers);
 
 
         return data.Answers;
 
+    }
+);
+
+export const createAnswerByQuestion = createAsyncThunk(
+    'answers/createAnswerByQuestion',
+    async (questionId, {rejectWithValue}) => {
+        const response = await fetch(`/api/questions/${questionId}/answers`, {
+            method:'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+
+
+        });
+        if (!response.ok) {
+            rejectWithValue(await response.json());
+        }
+
+        const data = await response.json();
+        console.log(`Answers to question ${questionId}`, data.Answers);
+
+
+        return data.Answers;
     }
 );
 

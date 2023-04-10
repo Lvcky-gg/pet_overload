@@ -13,7 +13,12 @@ const AllQuestionsPage = () => {
     const questions = useSelector((state) => state.questions.allQuestions);
     const loading = useSelector((state) => state.questions.loading);
     const answers = useSelector((state)=>state.answers.allAnswers)
-
+    
+    // for (let i = 0; i < answers.length; i++){
+    //     if(answers[i].questionId){
+    //         console.log(answers[i])
+    //     }
+    // }
     useEffect(() => {
         dispatch(getAllQuestions());
         dispatch(getAllAnswers())
