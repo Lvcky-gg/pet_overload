@@ -13,7 +13,7 @@ class AnswerVote(db.Model):
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow())
     updated_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow())
     user_id=db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")),nullable=False)
-    answer_id=db.Column(db.Integer,db.ForeignKey(add_prefix_for_prod("answers.id")),nullable=False)
+    answer_id=db.Column(db.Integer,db.ForeignKey(add_prefix_for_prod("answers.id"),ondelete="CASCADE"),nullable=False)
 
     #relationship
     user=db.relationship("User",back_populates="answer_votes")

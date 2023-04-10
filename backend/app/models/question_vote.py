@@ -18,7 +18,7 @@ class QuestionVote(db.Model):
         db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False
     )
     question_id = db.Column(
-        db.Integer, db.ForeignKey(add_prefix_for_prod("questions.id")), nullable=False
+        db.Integer, db.ForeignKey(add_prefix_for_prod("questions.id"),ondelete="CASCADE"), nullable=False
     )
 
     # relationship

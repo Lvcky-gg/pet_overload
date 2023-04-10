@@ -13,7 +13,7 @@ class Answer(db.Model):
     created_at =db.Column(db.DateTime,nullable=False)
     updated_at =db.Column(db.DateTime,nullable=False)
     user_id=db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")),nullable=False)
-    question_id=db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("questions.id")),nullable=False)
+    question_id=db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("questions.id"),ondelete="CASCADE"),nullable=False)
 
     #relationship
     #1 user-many answers
@@ -21,7 +21,7 @@ class Answer(db.Model):
     #1 question -many answers
     question=db.relationship("Question",back_populates="question_answers")
     #1 answer-many votes
-    answer_votes=db.relationship("AnswerVote",back_populates="answer")
+    answer_votes=db.relationship("AnswerVote",back_populates="answer",cascade="all, delete-orphan")
 
     def to_dict(self):
         votes = self.answer_votes
