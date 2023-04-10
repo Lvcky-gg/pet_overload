@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
-import { Route } from 'react-router-dom';
 import { authenticate } from '../../store/session';
 
 import './UserProfile.css';
@@ -15,7 +13,7 @@ const UserProfile = () => {
     const user = useSelector((state) => state.session);
     const [activeTab, setActiveTab] = useState('questions');
     const [activeSort, setActiveSort] = useState('newest');
-    console.log('user:', user);
+
     useEffect(() => {
         dispatch(authenticate());
     }, [dispatch]);
@@ -32,7 +30,11 @@ const UserProfile = () => {
                 activeSort={activeSort}
                 setActiveSort={setActiveSort}
             />
-            <ActivityList activeTab={activeTab} activeSort={activeSort} />
+            <ActivityList
+                activeTab={activeTab}
+                activeSort={activeSort}
+                user={user.user}
+            />
         </div>
     );
 };

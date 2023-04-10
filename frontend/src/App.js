@@ -45,6 +45,7 @@ function App() {
                         path="/all-questions"
                         element={<AllQuestionsPage />}
                     />
+                    <Route path="/user/profile" element={<UserProfile />} />
                 </Routes>
             )}
             <Footer />

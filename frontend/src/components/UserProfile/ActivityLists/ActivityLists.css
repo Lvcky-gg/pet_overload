@@ -4,13 +4,20 @@
     gap: 16px;
     font-size: 15px;
 }
-.user-activity-list p {
+.user-activity-list p,
+.user-activity-list div {
     text-align: center;
 }
 .user-activity-list.column-title {
     background-color: #0e67b4;
     color: #fff;
     border-radius: 5px;
+    margin-top: 10px;
+}
+.activity-button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 #activity-list-container {
     margin-left: 10px;
@@ -18,7 +25,8 @@
 .user-activity-list-container {
     padding: 0;
 }
-#question-title {
+#question-title,
+#answer-detail {
     text-align: left;
     white-space: pre-wrap;
     word-wrap: break-word;
@@ -28,4 +36,9 @@
 .user-activity-list.list-item {
     background-color: #ffffff;
     margin-top: 10px;
+}
+#no-record-msg {
+    text-align: left;
+    margin-top: 10px;
+    background-color: #ffffff;
 }
