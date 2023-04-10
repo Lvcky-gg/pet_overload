@@ -13,10 +13,10 @@ const UserProfile = () => {
     const user = useSelector((state) => state.session);
     const [activeTab, setActiveTab] = useState('questions');
     const [activeSort, setActiveSort] = useState('newest');
-
+    const [isDelete, setIsDelete] = useState(false);
     useEffect(() => {
         dispatch(authenticate());
-    }, [dispatch]);
+    }, [dispatch, isDelete]);
 
     if (!user) {
         // have the login model shows and let user login/sign up
@@ -34,6 +34,8 @@ const UserProfile = () => {
                 activeTab={activeTab}
                 activeSort={activeSort}
                 user={user.user}
+                isDelete={isDelete}
+                setIsDelete={setIsDelete}
             />
         </div>
     );

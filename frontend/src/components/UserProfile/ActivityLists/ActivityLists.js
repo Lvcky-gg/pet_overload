@@ -13,7 +13,13 @@ import DeleteButton from './DeleteButton';
 
 import './ActivityLists.css';
 
-const ActivityList = ({ activeTab, activeSort, user }) => {
+const ActivityList = ({
+    activeTab,
+    activeSort,
+    user,
+    isDelete,
+    setIsDelete,
+}) => {
     const dispatch = useDispatch();
     const questions = useSelector((state) => state.questions.allQuestions);
     const answers = useSelector((state) => state.answers.allAnswers);
@@ -24,7 +30,6 @@ const ActivityList = ({ activeTab, activeSort, user }) => {
     const userAVotes = useSelector((state) => state.answerVotes.answerVotes);
 
     // const loading = useSelector((state) => state.questionVotes.loading);
-    const [isDelete, setIsDelete] = useState(false);
 
     useEffect(() => {
         dispatch(getQuestionVotes());
