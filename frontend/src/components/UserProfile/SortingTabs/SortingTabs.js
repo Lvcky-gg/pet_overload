@@ -9,13 +9,17 @@ const SortingTabs = ({ activeSort, setActiveSort }) => {
         <div id="sorting-tabs-container">
             <nav className="header-menu">
                 <span
-                    className="sort-tab"
+                    className={`sort-tab${
+                        activeSort === 'newest' ? ' active' : ''
+                    }`}
                     onClick={() => handleTabClick('newest')}
                 >
                     Newest
                 </span>
                 <span
-                    className="sort-tab"
+                    className={`sort-tab${
+                        activeSort === 'score' ? ' active' : ''
+                    }`}
                     onClick={() => handleTabClick('score')}
                 >
                     Score

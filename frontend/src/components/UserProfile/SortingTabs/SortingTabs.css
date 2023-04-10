@@ -5,3 +5,10 @@
     color: #0e67b4;
     font-size: 14px;
 }
+.sort-tab {
+    cursor: pointer;
+}
+
+.sort-tab.active {
+    text-decoration: underline;
+}
