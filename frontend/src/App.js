@@ -45,7 +45,10 @@ function App() {
                         path="/all-questions"
                         element={<AllQuestionsPage />}
                     />
-                    <Route path="/user/profile" element={<UserProfile />} />
+                    <Route
+                        path="/user/profile"
+                        element={<UserProfile isLoaded={isLoaded} />}
+                    />
                 </Routes>
             )}
             <Footer />

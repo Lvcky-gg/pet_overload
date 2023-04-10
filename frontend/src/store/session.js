@@ -27,18 +27,15 @@ export const sessionSlice = createSlice({
                 state.user = null;
             })
             .addCase(signUp.pending, (state) => {
-
                 state.error = null;
                 state.validationErrors = null;
             })
             .addCase(signUp.fulfilled, (state, action) => {
-
                 state.user = action.payload;
                 state.error = null;
                 state.validationErrors = null;
             })
             .addCase(signUp.rejected, (state, action) => {
-
                 state.error = action.payload.message;
                 state.validationErrors = action.payload.errors;
                 state.user = null;
@@ -62,7 +59,7 @@ export const authenticate = createAsyncThunk(
                 return;
             }
 
-            return data;
+            return data.user;
         }
     }
 );

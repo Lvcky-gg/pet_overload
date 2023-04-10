@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import dateFormater from '../../../utils/dateFormater';
@@ -47,11 +47,9 @@ const ActivityList = ({
         return question ? question : 'No Questions voted';
     };
     const userQuestions = questions.filter((question) => {
-        return question.user_id === user.user.id;
+        return question.user_id === user.id;
     });
-    const userAnswers = answers.filter(
-        (answer) => answer.userId === user.user.id
-    );
+    const userAnswers = answers.filter((answer) => answer.userId === user.id);
     const handleDelete = (type, id) => {
         if (type === 'question') {
             dispatch(deleteQustion(id));

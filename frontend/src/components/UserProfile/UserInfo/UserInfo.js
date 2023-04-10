@@ -5,7 +5,9 @@ import dateFormater from '../../../utils/dateFormater';
 
 import './UserInfo.css';
 const UserInfo = ({ user }) => {
-    const { username, reputation, createdAt } = user.user;
+    console.log(user);
+    const { username, reputation, createdAt } = user;
+    console.log('user prog', username, reputation, createdAt);
     return (
         <div id="user-info-container">
             <div id="name-card">

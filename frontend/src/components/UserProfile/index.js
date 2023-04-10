@@ -7,23 +7,29 @@ import UserInfo from './UserInfo/UserInfo';
 import ActivityTabs from './ActivityTabs/ActivityTabs';
 import SortingTabs from './SortingTabs/SortingTabs';
 import ActivityList from './ActivityLists/ActivityLists';
+import { Navigate } from 'react-router-dom';
 
-const UserProfile = () => {
+const UserProfile = ({ isLoaded }) => {
     const dispatch = useDispatch();
-    const user = useSelector((state) => state.session);
+    const user = useSelector((state) => state.session.user);
     const [activeTab, setActiveTab] = useState('questions');
     const [activeSort, setActiveSort] = useState('newest');
     const [isDelete, setIsDelete] = useState(false);
     useEffect(() => {
         dispatch(authenticate());
     }, [dispatch, isDelete]);
-
+    console.log('load', isLoaded);
     if (!user) {
-        // have the login model shows and let user login/sign up
+        // redirect to home
+        return (
+            <>
+                <Navigate to="/" />
+            </>
+        );
     }
     return (
         <div className="container" id="userProfile-container">
-            <UserInfo user={user.user} />
+            <UserInfo user={user} />
             <p id="activity-title">Activity</p>
             <ActivityTabs activeTab={activeTab} setActiveTab={setActiveTab} />
             <SortingTabs
@@ -33,7 +39,7 @@ const UserProfile = () => {
             <ActivityList
                 activeTab={activeTab}
                 activeSort={activeSort}
-                user={user.user}
+                user={user}
                 isDelete={isDelete}
                 setIsDelete={setIsDelete}
             />
