@@ -53,7 +53,9 @@ export const getAnswersByQuestion = createAsyncThunk(
         const data = await response.json();
         console.log(`Answers to question ${questionId}`, data.answers);
 
+
         return data.Answers;
+
     }
 );
 
