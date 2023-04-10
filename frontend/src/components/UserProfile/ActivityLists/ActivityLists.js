@@ -97,8 +97,22 @@ const ActivityList = ({ activeTab, activeSort, user }) => {
     return (
         <div id="activity-list-container">
             <div className="total-number-container">
-                <span>Total Numbers:</span>
-                <span id="user-activity-number">{userQVotes.length}</span>
+                <span>
+                    Total <span>{activeTab}</span> number:
+                </span>
+                {activeTab === 'questions' && (
+                    <span id="user-activity-number">
+                        {userQuestions.length}
+                    </span>
+                )}
+                {activeTab === 'answers' && (
+                    <span id="user-activity-number"> {userAnswers.length}</span>
+                )}
+                {activeTab === 'votes' && (
+                    <span id="user-activity-number">
+                        {userQVotes.length + userAVotes.length}
+                    </span>
+                )}
             </div>
 
             {activeTab === 'votes' && (

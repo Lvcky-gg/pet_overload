@@ -3,15 +3,18 @@ import React, { useState } from 'react';
 const DeleteButton = ({ type, id, onDelete, setIsDelete }) => {
     const [showConfirmation, setShowConfirmation] = useState(false);
 
-    const handleDelete = () => {
+    const handleDelete = (e) => {
+        e.preventDefault();
         setShowConfirmation(true);
     };
-    const handleConfirm = () => {
+    const handleConfirm = (e) => {
+        e.preventDefault();
         onDelete(type, id);
         setShowConfirmation(false);
         setIsDelete((prev) => !prev);
     };
-    const handleCancel = () => {
+    const handleCancel = (e) => {
+        e.preventDefault();
         setShowConfirmation(false);
     };
     return (
