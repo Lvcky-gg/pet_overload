@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 const initialState = {
-    questionVotes: {},
+    questionVotes: [],
     loading: false,
 };
 export const questionVotesSlice = createSlice({
@@ -12,37 +12,31 @@ export const questionVotesSlice = createSlice({
         // actions
         //payload in the extraReducers is the value returned by the fulfilled or rejected promise in the async thunk function
         builder
-            .addCase(getQuestionVotes.pending, (state) => {
-                state.loading = true;
-            })
             .addCase(getQuestionVotes.fulfilled, (state, action) => {
                 state.loading = false;
-                action.payload.forEach((vote) => {
-                    state.questionVotes[vote.questionId] = vote;
-                });
+                state.questionVotes = action.payload;
             })
             .addCase(getQuestionVotes.rejected, (state, action) => {
                 console.log('Rejected with value:', action.payload);
                 state.loading = false;
             })
-            .addCase(deleteQustionVotes.pending, (state) => {
-                state.loading = true;
-            })
             .addCase(deleteQustionVotes.fulfilled, (state, action) => {
                 state.loading = false;
-                delete state.questionVotes[action.payload];
+                state.questionVotes = state.questionVotes.fileter(
+                    (vote) => vote.id === action.payload
+                );
             })
             .addCase(deleteQustionVotes.rejected, (state, action) => {
                 console.log('Rejected with value:', action.payload);
                 state.loading = false;
             })
-            .addCase(updateQuestionVotes.pending, (state) => {
-                state.loading = true;
-            })
             .addCase(updateQuestionVotes.fulfilled, (state, action) => {
                 state.loading = false;
                 const updateVote = action.payload;
-                state.questionVotes[updateVote.questionId] = updateVote;
+                const idx = state.questionVotes.findIndex(
+                    (vote) => vote.questionId === updateVote.questionId
+                );
+                state.questionVotes[idx] = updateVote;
             })
             .addCase(updateQuestionVotes.rejected, (state, action) => {
                 console.log('Rejected with value:', action.payload);
