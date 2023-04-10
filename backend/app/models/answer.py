@@ -21,7 +21,7 @@ class Answer(db.Model):
     #1 question -many answers
     question=db.relationship("Question",back_populates="question_answers")
     #1 answer-many votes
-    answer_votes=db.relationship("AnswerVote",back_populates="answer",cascade="all, delete-orphan")
+    answer_votes=db.relationship("AnswerVote",back_populates="answer",cascade="all, delete")
 
     def to_dict(self):
         votes = self.answer_votes
