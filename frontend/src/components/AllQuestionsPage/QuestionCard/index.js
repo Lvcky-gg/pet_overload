@@ -1,12 +1,16 @@
 import { useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { selectVoteStatus } from '../../../store/questionVotes';
+import { useSelector } from 'react-redux';
 
 import './QuestionCard.css';
 
-const QuestionCard = ({ title, details, votes_score, answers_count }) => {
-    const answers_msg = answers_count === 1 ? 'answer' : 'answers';
+const QuestionCard = ({ id, title, details, votes_score, answers_count }) => {
     const upvoteArrowRef = useRef(null);
     const downvoteArrowRef = useRef(null);
+    const currentVote = useSelector((state, id) => id);
+
+    const answers_msg = answers_count === 1 ? 'answer' : 'answers';
 
     const handleVoteArrowClick = (arrowRef) => {
         arrowRef.current.classList.add('fa-beat');
