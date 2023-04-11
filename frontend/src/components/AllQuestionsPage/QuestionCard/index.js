@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import './QuestionCard.css';
 import { NavLink } from 'react-router-dom';
 
-const QuestionCard = ({ id, title, details, votes_score, answers_count }) => {
+const QuestionCard = ({ id, title, details, votes_score, answers_count, showAnswers, answersMessage }) => {
     // const [hidden, setHidden] = useState(false);
     const upvoteArrowRef = useRef(null);
     const downvoteArrowRef = useRef(null);
@@ -51,9 +51,9 @@ const QuestionCard = ({ id, title, details, votes_score, answers_count }) => {
                         <h2>{title}</h2>
                     </NavLink>
                     <p>{details}</p>
-                    {/* <p className={className} onClick={showAnswers}>
+                    <p className={className} onClick={showAnswers}>
                         {answers_count} {answersMessage}
-                    </p> */}
+                    </p>
                 </div>
             </div>
         </div>

@@ -20,6 +20,7 @@ import Loader from './components/Loader';
 import { Footer } from './components/footer';
 import SearchResults from './components/SearchResults';
 import SpecificQuestion from './components/SpecificQuestionPage';
+import AllUsersPage from './components/allUsersPage';
 
 function App() {
     const dispatch = useDispatch();
@@ -41,6 +42,8 @@ function App() {
                     <Route path="/login" element={<LoginFormPage />} />
                     <Route path="/signup" element={<SignupFormPage />} />
                     <Route path="/" element={<HomePage />} />
+                    <Route path="/all-users" element={<AllUsersPage />} />
+                    
                     <Route
                         exact
                         path="/all-questions/"
