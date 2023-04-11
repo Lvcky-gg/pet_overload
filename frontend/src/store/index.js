@@ -3,8 +3,10 @@ import { loadingMiddleware } from './loader';
 import loadingReducer from './loader';
 import sessionReducer from './session';
 import questionsReducer from './questions';
-import answerReducer from './answers'
-import userReducer from './users'
+import answerReducer from './answers';
+import userReducer from './users';
+import questionVotesReducer from './questionVotes';
+import answerVotesReducer from './answerVotes';
 
 const middleware = [loadingMiddleware];
 
@@ -18,8 +20,10 @@ const store = configureStore({
         loading: loadingReducer,
         session: sessionReducer,
         questions: questionsReducer,
-        answers:answerReducer,
-        users:userReducer,
+        answers: answerReducer,
+        users: userReducer,
+        questionVotes: questionVotesReducer,
+        answerVotes: answerVotesReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(middleware),

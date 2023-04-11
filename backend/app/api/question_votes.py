@@ -62,4 +62,4 @@ def get_user_question_votes():
     # return jsonify([user_question_vote.to_dict() for user_question_vote in user_question_votes])
     # list in json format
     question_votes_list=[user_question_vote.to_dict() for user_question_vote in user_question_votes]
-    return {"question_votes":question_votes_list}
+    return {"questionVotes":question_votes_list}

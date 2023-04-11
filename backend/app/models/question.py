@@ -38,8 +38,8 @@ class Question(db.Model):
     )
 
     user = db.relationship("User", back_populates="user_questions")
-    question_answers = db.relationship("Answer", back_populates="question")
-    question_votes = db.relationship("QuestionVote", back_populates="question")
+    question_answers = db.relationship("Answer", back_populates="question",cascade="all, delete")
+    question_votes = db.relationship("QuestionVote", back_populates="question",cascade="all, delete")
 
     def to_dict(self) -> dict[str, Any]:
         return {

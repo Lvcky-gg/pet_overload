@@ -18,12 +18,12 @@ class QuestionVote(db.Model):
         db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False
     )
     question_id = db.Column(
-        db.Integer, db.ForeignKey(add_prefix_for_prod("questions.id")), nullable=False
+        db.Integer, db.ForeignKey(add_prefix_for_prod("questions.id"),ondelete="CASCADE"), nullable=False
     )
 
     # relationship
     user = db.relationship("User", back_populates="question_votes")
-    question = db.relationship("Question", back_populates="question_votes")   
+    question = db.relationship("Question", back_populates="question_votes")
 
     @classmethod
     def get_question_vote_by_id(cls, id: int, session=None) -> Union['QuestionVote', None]:
@@ -87,4 +87,5 @@ class QuestionVote(db.Model):
             "updatedAt": self.updated_at,
             "userId": self.user_id,
             "questionId": self.question_id,
+            "question":self.question.to_dict()
         }
