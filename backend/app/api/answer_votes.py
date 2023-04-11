@@ -61,4 +61,4 @@ def get_user_answer_votes():
     # return jsonify([user_answer_vote.to_dict() for user_answer_vote in user_answer_votes])
     # list in json format
     answer_votes_list=[user_answer_vote.to_dict() for user_answer_vote in user_answer_votes]
-    return {"answer_votes":answer_votes_list}
+    return {"answerVotes":answer_votes_list}
