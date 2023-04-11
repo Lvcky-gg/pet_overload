@@ -1,9 +1,11 @@
-.Single-questions-container {
+#Single-questions-container {
     max-width: 800px;
     gap: 1rem;
     margin-bottom: 2rem;
+    padding-bottom: 40%;
 
 }
+
 .answerCardButtonContainer {
     display: flex;
     justify-content: flex-start;
