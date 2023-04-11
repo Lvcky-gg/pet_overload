@@ -11,7 +11,9 @@ import { convertToRaw } from 'draft-js'
 // import RenderMarkup from "./renderMarkup";
 import'./editor.css'
 
-const RichEditor = () => {
+//handle submission is meant to be passed down here to tell it how to submit data
+
+const RichEditor = ({handleEditorSubmit}) => {
     const [editorState, setEditorState] = useState(() => EditorState.createEmpty())
     const [contentState, setcontentState] = useState(null);
     const hashConfig = {
@@ -64,6 +66,7 @@ const RichEditor = () => {
         >
 
         </div>
+        <button className="modalButton" onSubmit={handleEditorSubmit}>Submit</button>
     </div>)
 }
 export default RichEditor

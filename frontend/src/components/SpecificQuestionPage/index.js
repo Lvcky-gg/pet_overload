@@ -15,6 +15,7 @@ const { useSelector, useDispatch } = require('react-redux');
 const SpecificQuestion = () => {
     const [hidden, setHidden] = useState(false)
     const [editor, setEditor] = useState(false)
+    
     const questions = useSelector((state) => state.questions.allQuestions);
     const loading = useSelector((state) => state.questions.loading);
     const answers = useSelector((state)=>state.answers.allAnswers);

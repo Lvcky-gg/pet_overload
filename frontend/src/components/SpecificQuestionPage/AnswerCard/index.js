@@ -1,11 +1,13 @@
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import session from '../../../store/session';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+import RichEditor from '../../RichTextEditor';
 
 
 const AnswerCard = ({details, votes_score, user_id }) => {
+    const [richTextEditor, setRichTextEditor] = useState(false)
     const dispatch = useDispatch()
     const upvoteArrowRef = useRef(null);
     const downvoteArrowRef = useRef(null);
@@ -30,6 +32,11 @@ const AnswerCard = ({details, votes_score, user_id }) => {
           //here we can delete
     }
 
+    const handleEditClick = (e) => {
+        e.preventDefault()
+        setRichTextEditor(!richTextEditor)
+    }
+    useEffect(()=>{},[richTextEditor])
     return (
         <div className="question-card">
             <div className="row">
@@ -55,13 +62,14 @@ const AnswerCard = ({details, votes_score, user_id }) => {
                     
                     {sessionUser.user.id===user_id &&(
                     <div className='answerCardButtonContainer'>
-                        <button id="answerCardButton" className='modalButton'>Edit</button>
+                        <button id="answerCardButton" className='modalButton' onClick={handleEditClick}>Edit</button>
                         <button id="answerCardButton" className='modalButton' onClick={handleDeleteClick}>Delete</button>
                     </div>
                     )}
                     
                 </div>
             </div>
+            {richTextEditor && (<div><RichEditor></RichEditor></div>)}
         </div>
     );
 };
