@@ -41,7 +41,7 @@ export const questionsSlice = createSlice({
                 state.error = null;
             })
 
-            .addCase(deleteQustion.rejected, (state, action) => {
+            .addCase(deleteQuestion.rejected, (state, action) => {
                 console.log('Rejected with value:', action.payload);
                 state.loading = false;
                 state.error = action.payload.error;
