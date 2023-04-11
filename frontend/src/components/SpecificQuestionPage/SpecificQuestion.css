@@ -5,6 +5,13 @@
     padding-bottom: 40%;
 
 }
+.all-questions-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0.5rem 0;  
+    
+}
 
 .answerCardButtonContainer {
     display: flex;
