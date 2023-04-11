@@ -14,9 +14,9 @@ function Navigation({ isLoaded }) {
         <img src={logo} alt="#" className="navLogo"></img>
         <SearchBar></SearchBar>
         <ul className="navDrop">
-            <li>
+            {/* <li>
                 <NavLink to="/">Home</NavLink>
-            </li>
+            </li> */}
             {isLoaded && (
                 <li>
                     <NavLink to="/">Home</NavLink>

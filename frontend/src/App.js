@@ -15,6 +15,7 @@ import SignupFormPage from './components/SignupFormPage';
 import LoginFormPage from './components/LoginFormPage';
 import AllQuestionsPage from './components/AllQuestionsPage';
 import AllUsersPage from './components/allUsersPage'
+import Team from './components/team'
 import { HomePage } from './components/HomePage';
 import { authenticate } from './store/session';
 import Navigation from './components/Navigation';
@@ -53,6 +54,10 @@ function App() {
                     <Route
                     path={`/all-questions/:questionId`}
                     element={<SpecificQuestion/>}
+                    />
+                    <Route
+                        path="/team"
+                        element={<Team/>}
                     />
                 </Routes>
             )}
