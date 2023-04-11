@@ -87,7 +87,7 @@ class Question(db.Model):
     def _filter_question_by_username(cls, username=None):
         # query questions belongs to username
         if len(username) > 40:
-            raise ValidationException("Username must be string less than 40 chars")
+            raise ValidationException("Author name cannot exceed 40 letters")
         user = User.query.filter(User.username == username).first()
         if user:
             question_records = cls.query.filter(cls.user_id == user.id).all()
