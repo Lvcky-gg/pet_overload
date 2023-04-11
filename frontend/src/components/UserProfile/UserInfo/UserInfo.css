@@ -34,9 +34,7 @@
 #member-date {
     color: #0e67b4;
 }
-#userProfile-container {
-    text-align: left;
-}
+
 #user-info-container {
     display: flex;
     justify-content: space-between;
