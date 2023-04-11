@@ -26,7 +26,7 @@ const AnswerCard = ({details, votes_score, user_id }) => {
           } else {
             txt = false;
           }
-          console.log(sessionUser.user.id)
+          console.log(txt)
           //here we can delete
     }
 

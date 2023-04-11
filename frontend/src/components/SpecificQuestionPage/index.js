@@ -5,6 +5,7 @@ import { getAllAnswers } from "../../store/answers";
 import { getAllQuestions } from "../../store/questions";
 import  './SpecificQuestion.css'
 import AnswerCard from "./AnswerCard";
+import RichEditor from "../RichTextEditor";
 
 const { useSelector, useDispatch } = require('react-redux');
 
@@ -13,6 +14,7 @@ const { useSelector, useDispatch } = require('react-redux');
 
 const SpecificQuestion = () => {
     const [hidden, setHidden] = useState(false)
+    const [editor, setEditor] = useState(false)
     const questions = useSelector((state) => state.questions.allQuestions);
     const loading = useSelector((state) => state.questions.loading);
     const answers = useSelector((state)=>state.answers.allAnswers);
@@ -21,6 +23,10 @@ const SpecificQuestion = () => {
     const {questionId} = useParams()
     const showAnswers = (e) => {
         setHidden(!hidden)
+    }
+    const showEditor = (e) => {
+        e.preventDefault()
+        setEditor(!editor)
     }
 
     useEffect(() => {
@@ -64,11 +70,12 @@ const SpecificQuestion = () => {
                 <div className="all-questions-header">
                 <h1>{title}</h1>
                 <div className="ask-question-container">
-                    <button id="ask-question-button" className="button">
-                        Ask a question
+                    <button id="ask-question-button" className="button" onClick={showEditor}>
+                        Answer question
                     </button>
                 </div>
             </div>
+            {editor && <RichEditor/>}
 
            <QuestionCard
             key={id}
@@ -94,10 +101,7 @@ const SpecificQuestion = () => {
             )}
             
 
-            </div>
-
-
-            
+            </div>  
         </div>)}
         </>)
     
