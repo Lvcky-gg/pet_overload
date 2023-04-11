@@ -1,10 +1,15 @@
 import { useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import session from '../../../store/session';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 
-const AnswerCard = ({details, votes_score }) => {
+const AnswerCard = ({details, votes_score, user_id }) => {
+    const dispatch = useDispatch()
     const upvoteArrowRef = useRef(null);
     const downvoteArrowRef = useRef(null);
+    const sessionUser = useSelector((state) => state.session.user);
 
     const handleVoteArrowClick = (arrowRef) => {
         arrowRef.current.classList.add('fa-beat');
@@ -13,6 +18,17 @@ const AnswerCard = ({details, votes_score }) => {
             arrowRef.current.classList.remove('fa-beat');
         }, 800);
     };
+    const handleAlertClick = (e) => {
+        e.preventDefault()
+        let txt;
+        if (window.confirm("Are you sure?")) {
+            txt = true;
+          } else {
+            txt = false;
+          }
+          console.log(sessionUser.user.id)
+          
+    }
 
     return (
         <div className="question-card">
@@ -37,7 +53,7 @@ const AnswerCard = ({details, votes_score }) => {
                     <p>{details}</p>
                     <div className='answerCardButtonContainer'>
                     <button id="answerCardButton" className='modalButton'>Edit</button>
-                    <button id="answerCardButton" className='modalButton'>Delete</button>
+                    {sessionUser.user.id===user_id &&(<button id="answerCardButton" className='modalButton' onClick={handleAlertClick}>Delete</button>)}
                     </div>
                 </div>
             </div>
