@@ -74,3 +74,7 @@
     gap: 1rem;
     margin-bottom: 2rem;
 }
+.questionPage {
+    display:flex;
+    width:100%
+}

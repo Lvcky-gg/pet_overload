@@ -1,0 +1,14 @@
+.Single-questions-container {
+    max-width: 800px;
+    gap: 1rem;
+    margin-bottom: 2rem;
+
+}
+.answerCardButtonContainer {
+    display: flex;
+    justify-content: flex-start;
+}
+#answerCardButton {
+    width:10%;
+    margin:1%;
+}

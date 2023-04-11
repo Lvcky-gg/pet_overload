@@ -20,6 +20,7 @@ import { authenticate } from './store/session';
 import Navigation from './components/Navigation';
 import Loader from './components/Loader';
 import { Footer } from './components/footer';
+import SpecificQuestion from './components/SpecificQuestionPage';
 
 function App() {
     const dispatch = useDispatch();
@@ -48,6 +49,10 @@ function App() {
                     <Route
                         path="/all-users"
                         element={<AllUsersPage/>}
+                    />
+                    <Route
+                    path={`/all-questions/:questionId`}
+                    element={<SpecificQuestion/>}
                     />
                 </Routes>
             )}

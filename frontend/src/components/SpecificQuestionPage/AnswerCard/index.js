@@ -1,15 +1,15 @@
 import { useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useState } from 'react';
+import session from '../../../store/session';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-import './QuestionCard.css';
 
-const QuestionCard = ({ title, details, votes_score, answers_count, showAnswers }) => {
-    const [hidden, setHidden] = useState(false)
-    const answers_msg = answers_count === 1 ? 'answer' : 'answers';
+const AnswerCard = ({details, votes_score, user_id }) => {
+    const dispatch = useDispatch()
     const upvoteArrowRef = useRef(null);
     const downvoteArrowRef = useRef(null);
-
+    const sessionUser = useSelector((state) => state.session.user);
 
     const handleVoteArrowClick = (arrowRef) => {
         arrowRef.current.classList.add('fa-beat');
@@ -18,6 +18,17 @@ const QuestionCard = ({ title, details, votes_score, answers_count, showAnswers 
             arrowRef.current.classList.remove('fa-beat');
         }, 800);
     };
+    const handleDeleteClick = (e) => {
+        e.preventDefault()
+        let txt;
+        if (window.confirm("Are you sure?")) {
+            txt = true;
+          } else {
+            txt = false;
+          }
+          console.log(txt)
+          //here we can delete
+    }
 
     return (
         <div className="question-card">
@@ -39,16 +50,20 @@ const QuestionCard = ({ title, details, votes_score, answers_count, showAnswers 
                 </div>
 
                 <div className="title-description-col">
-                    <h2>{title}</h2>
                     <p>{details}</p>
-                    <p className="answers-msg" onClick={showAnswers}>
                     
-                        {answers_count} {answers_msg}
-                    </p>
+                    
+                    {sessionUser.user.id===user_id &&(
+                    <div className='answerCardButtonContainer'>
+                        <button id="answerCardButton" className='modalButton'>Edit</button>
+                        <button id="answerCardButton" className='modalButton' onClick={handleDeleteClick}>Delete</button>
+                    </div>
+                    )}
+                    
                 </div>
             </div>
         </div>
     );
 };
 
-export default QuestionCard;
+export default AnswerCard;
