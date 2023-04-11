@@ -22,6 +22,7 @@ import Navigation from './components/Navigation';
 import Loader from './components/Loader';
 import { Footer } from './components/footer';
 import SpecificQuestion from './components/SpecificQuestionPage';
+import UserProfile from './components/UserProfile';
 
 function App() {
     const dispatch = useDispatch();
@@ -50,6 +51,10 @@ function App() {
                     <Route
                         path="/all-users"
                         element={<AllUsersPage/>}
+                    />
+                    <Route
+                        path="/user-profile"
+                        element={<UserProfile/>}
                     />
                     <Route
                     path={`/all-questions/:questionId`}
