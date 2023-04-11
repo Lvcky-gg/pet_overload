@@ -14,24 +14,22 @@ export const answerSlice = createSlice({
             .addCase(getAllAnswers.rejected, (state, action) => {
                 console.log('Rejected with value:', action.payload);
             })
-            .addCase(createAnswerByQuestion.fulfilled, (state, action)=> {
+            .addCase(createAnswerByQuestion.fulfilled, (state, action) => {
                 const createdAnswer = action.payload;
-        
-                state.allAnswers.push(createdAnswer)
 
+                state.allAnswers.push(createdAnswer);
             })
-            .addCase(createAnswerByQuestion.rejected,(state, action)=>{
+            .addCase(createAnswerByQuestion.rejected, (state, action) => {
                 console.log('Rejected with value:', action.payload);
             })
-            .addCase(updateAnswerByQuestion.fulfilled, (state, action)=> {
+            .addCase(updateAnswerByQuestion.fulfilled, (state, action) => {
                 const updatedAnswer = action.payload;
                 const idx = state.allAnswers.findIndex(
                     (answer) => answer.id === updatedAnswer.id
-                )
-                state.allAnswers[idx] = updatedAnswer
-
+                );
+                state.allAnswers[idx] = updatedAnswer;
             })
-            .addCase(updateAnswerByQuestion.rejected,(state, action)=>{
+            .addCase(updateAnswerByQuestion.rejected, (state, action) => {
                 console.log('Rejected with value:', action.payload);
             })
             .addCase(deleteAnswer.fulfilled, (state, action) => {
@@ -41,26 +39,26 @@ export const answerSlice = createSlice({
             })
             .addCase(deleteAnswer.rejected, (state, action) => {
                 console.log('Rejected with value:', action.payload);
-            })
+            });
     },
 });
 
 export const getAllAnswers = createAsyncThunk(
     'answers/getAllAnswers',
     async (_, { rejectWithValue }) => {
-        const response = await fetch('/api/answers', {
+        const response = await fetch('api/answers', {
             headers: {
                 'Content-Type': 'application/json',
             },
-            //source of bug
-            // credentials: 'include',
+            credentials: 'include',
         });
 
         if (!response.ok) {
             rejectWithValue(await response.json());
         }
+
         const data = await response.json();
-        console.log('data', data);
+
         return data.Answers;
     }
 );
@@ -72,31 +70,25 @@ export const getAnswersByQuestion = createAsyncThunk(
             headers: {
                 'Content-Type': 'application/json',
             },
+            credentials: 'include',
         });
 
         if (!response.ok) {
             rejectWithValue(await response.json());
         }
-
         const data = await response.json();
-        console.log(`Answers to question ${questionId}`, data.Answers);
-
-
         return data.Answers;
-
     }
 );
 
 export const createAnswerByQuestion = createAsyncThunk(
     'answers/createAnswerByQuestion',
-    async (questionId, {rejectWithValue}) => {
+    async (questionId, { rejectWithValue }) => {
         const response = await fetch(`/api/questions/${questionId}/answers`, {
-            method:'POST',
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-            }
-
-
+            },
         });
         if (!response.ok) {
             rejectWithValue(await response.json());
@@ -104,7 +96,6 @@ export const createAnswerByQuestion = createAsyncThunk(
 
         const data = await response.json();
         console.log(`Answers to question ${questionId}`, data.Answers);
-
 
         return data.Answers;
     }
@@ -112,14 +103,12 @@ export const createAnswerByQuestion = createAsyncThunk(
 
 export const updateAnswerByQuestion = createAsyncThunk(
     'answers/updateAnswerByQuestion',
-    async (answerId, {rejectWithValue}) => {
+    async (answerId, { rejectWithValue }) => {
         const response = await fetch(`/api/answers/${answerId}`, {
-            method:'PUT',
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-            }
-
-
+            },
         });
         if (!response.ok) {
             rejectWithValue(await response.json());
@@ -127,21 +116,18 @@ export const updateAnswerByQuestion = createAsyncThunk(
 
         const data = await response.json();
         console.log(`Answers to ${answerId}`, data.Answers);
-
 
         return data.Answers;
     }
 );
 export const deleteAnswer = createAsyncThunk(
     'answers/deleteAnswer',
-    async (answerId, {rejectWithValue}) => {
+    async (answerId, { rejectWithValue }) => {
         const response = await fetch(`/api//answers/${answerId}`, {
-            method:'DELETE',
+            method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
-            }
-
-
+            },
         });
         if (!response.ok) {
             rejectWithValue(await response.json());
@@ -149,7 +135,6 @@ export const deleteAnswer = createAsyncThunk(
 
         const data = await response.json();
         console.log(`Answers to ${answerId}`, data.Answers);
-
 
         return data.Answers;
     }

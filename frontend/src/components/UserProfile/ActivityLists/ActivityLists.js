@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import dateFormater from '../../../utils/dateFormater';
 import {
     getQuestionVotes,
-    deleteQustionVotes,
+    deleteQuestionVotes,
 } from '../../../store/questionVotes';
-import { getAllQuestions, deleteQustion } from '../../../store/questions';
+import { getAllQuestions, deleteQuestion } from '../../../store/questions';
 import { getAnswerVotes, deleteAnswerVotes } from '../../../store/answerVotes';
 import { getAllAnswers, deleteAnswer } from '../../../store/answers';
 import DeleteButton from './DeleteButton';
@@ -52,11 +52,11 @@ const ActivityList = ({
     const userAnswers = answers.filter((answer) => answer.userId === user.id);
     const handleDelete = (type, id) => {
         if (type === 'question') {
-            dispatch(deleteQustion(id));
+            dispatch(deleteQuestion(id));
         } else if (type === 'answer') {
             dispatch(deleteAnswer(id));
         } else if (type === 'questionVotes') {
-            dispatch(deleteQustionVotes(id));
+            dispatch(deleteQuestionVotes(id));
         } else if (type === 'answerVotes') {
             dispatch(deleteAnswerVotes(id));
         }

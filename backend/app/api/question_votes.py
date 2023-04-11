@@ -62,4 +62,17 @@ def get_user_question_votes():
     # return jsonify([user_question_vote.to_dict() for user_question_vote in user_question_votes])
     # list in json format
     question_votes_list=[user_question_vote.to_dict() for user_question_vote in user_question_votes]
+    
     return {"questionVotes":question_votes_list}
+
+@question_votes_routes.route("/current/<int:question_id>")
+@login_required
+def get_specific_question_vote(question_id):
+    '''
+    Query for a specific vote for a specific question by id
+    '''
+    
+    question_vote = QuestionVote.get_question_vote_by_user_and_question(int(current_user.id), int(question_id))
+    if question_vote is None:
+        raise NotFoundException("Vote couldn't be found.")
+    return question_vote.to_dict()

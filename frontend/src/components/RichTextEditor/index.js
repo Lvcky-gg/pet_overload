@@ -1,28 +1,32 @@
-import React from "react";
+import React from 'react';
 import { EditorState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import { useState } from "react";
+import { useState } from 'react';
 import { convertToHTML } from 'draft-convert';
-import { useEffect } from "react";
+import { useEffect } from 'react';
 import draftToMarkdown from 'draftjs-to-markdown';
-import { convertToRaw } from 'draft-js'
-import'./editor.css'
+import { convertToRaw } from 'draft-js';
+import './editor.css';
 
 //handle submission is meant to be passed down here to tell it how to submit data
 
-const RichEditor = ({handleEditorSubmit, details}) => {
-    const [editorState, setEditorState] = useState(() => EditorState.createEmpty())
+const RichEditor = ({ handleEditorSubmit, details }) => {
+    const [editorState, setEditorState] = useState(() =>
+        EditorState.createEmpty()
+    );
     const [contentState, setcontentState] = useState(details);
     const hashConfig = {
         trigger: '#',
         separator: ' ',
-      }
-      const config = {
-        blockTypesMapping : {/* mappings */},
-        emptyLineBeforeBlock : true
-      }
-    console.log(contentState)
+    };
+    const config = {
+        blockTypesMapping: {
+            /* mappings */
+        },
+        emptyLineBeforeBlock: true,
+    };
+    console.log(contentState);
 
     const rawContentState = convertToRaw(editorState.getCurrentContent());
     const markup = draftToMarkdown(contentState, hashConfig, config);
@@ -38,42 +42,38 @@ const RichEditor = ({handleEditorSubmit, details}) => {
             .replace(/\*\*(.*)\*\*/gim, '<b>$1</b>') // bold text
             .replace(/\*(.*)\*/gim, '<i>$1</i>'); // italic text
         return toHTML.trim(); // using trim method to remove whitespace
-    }
-
+    };
 
     //HTML STRING CAN BE PASSED TO BACKEND
-  const htmlString = markdownParser(markup)
-  //THIS IS HOW WE PARSE
-  const theObj = {__html:htmlString};
- //THIS IS HOW WE VIEW
-//  <div
-//  className="preview"
-//  dangerouslySetInnerHTML={theObj}
-// >
+    const htmlString = markdownParser(markup);
+    //THIS IS HOW WE PARSE
+    const theObj = { __html: htmlString };
+    //THIS IS HOW WE VIEW
+    //  <div
+    //  className="preview"
+    //  dangerouslySetInnerHTML={theObj}
+    // >
 
-// </div>
-
+    // </div>
 
     useEffect(() => {
-        
         setcontentState(rawContentState);
-      }, [editorState]);
+    }, [editorState]);
 
-    return (<div className='editor'>
-        <Editor
-        editorState={editorState}
-        onEditorStateChange={setEditorState}
-        wrapperClassName="wrapper-class"
-        editorClassName="editor-class"
-        toolbarClassName="toolbar-class"
-        />
-          <div
-            className="preview"
-            dangerouslySetInnerHTML={theObj}
-        >
-
+    return (
+        <div className="editor">
+            <Editor
+                editorState={editorState}
+                onEditorStateChange={setEditorState}
+                wrapperClassName="wrapper-class"
+                editorClassName="editor-class"
+                toolbarClassName="toolbar-class"
+            />
+            <div className="preview" dangerouslySetInnerHTML={theObj}></div>
+            <button className="modalButton" onSubmit={handleEditorSubmit}>
+                Submit
+            </button>
         </div>
-        <button className="modalButton" onSubmit={handleEditorSubmit}>Submit</button>
-    </div>)
-}
-export default RichEditor
+    );
+};
+export default RichEditor;

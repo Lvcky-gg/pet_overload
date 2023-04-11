@@ -9,25 +9,21 @@ export const questionVotesSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-        // actions
-        //payload in the extraReducers is the value returned by the fulfilled or rejected promise in the async thunk function
         builder
             .addCase(getQuestionVotes.fulfilled, (state, action) => {
                 state.loading = false;
                 state.questionVotes = action.payload;
             })
             .addCase(getQuestionVotes.rejected, (state, action) => {
-                console.log('Rejected with value:', action.payload);
                 state.loading = false;
             })
-            .addCase(deleteQustionVotes.fulfilled, (state, action) => {
+            .addCase(deleteQuestionVotes.fulfilled, (state, action) => {
                 state.loading = false;
                 state.questionVotes = state.questionVotes.fileter(
                     (vote) => vote.id === action.payload
                 );
             })
-            .addCase(deleteQustionVotes.rejected, (state, action) => {
-                console.log('Rejected with value:', action.payload);
+            .addCase(deleteQuestionVotes.rejected, (state, action) => {
                 state.loading = false;
             })
             .addCase(updateQuestionVotes.fulfilled, (state, action) => {
@@ -39,12 +35,11 @@ export const questionVotesSlice = createSlice({
                 state.questionVotes[idx] = updateVote;
             })
             .addCase(updateQuestionVotes.rejected, (state, action) => {
-                console.log('Rejected with value:', action.payload);
                 state.loading = false;
             });
     },
 });
-// thunks
+
 export const getQuestionVotes = createAsyncThunk(
     'questionVotes/getQuestionVotes',
     async (_, { rejectWithValue }) => {
@@ -52,18 +47,20 @@ export const getQuestionVotes = createAsyncThunk(
             headers: {
                 'Content-Type': 'application/json',
             },
+            credentials: 'include',
         });
+
         if (!response.ok) {
-            // payload for rejected
-            const errData = await response.json();
-            return rejectWithValue(errData);
+            rejectWithValue(await response.json());
         }
-        // payload for fulfilled
+
         const data = await response.json();
-        return data.questionVotes;
+
+        return data.question_votes;
     }
 );
-export const deleteQustionVotes = createAsyncThunk(
+
+export const deleteQuestionVotes = createAsyncThunk(
     'questionVotes/deleteQuestionVotes',
     async (questionId, { rejectWithValue }) => {
         const response = await fetch(`/api/question_votes/${questionId}`, {
@@ -72,8 +69,10 @@ export const deleteQustionVotes = createAsyncThunk(
                 'Content-Type': 'application/json',
             },
         });
+
         if (!response.ok) {
             const errData = await response.json();
+
             return rejectWithValue(errData);
         }
 
@@ -90,12 +89,34 @@ export const updateQuestionVotes = createAsyncThunk(
             },
             body: JSON.stringify({ isLiked }),
         });
+
+        const data = await response.json();
+
         if (!response.ok) {
-            const errData = await response.json();
             return rejectWithValue(errData);
         }
-        const data = await response.json();
+
         return data;
     }
 );
+
+export const { addNewQuestionVote } = questionVotesSlice.actions;
+
+// Selector that that returns the current vote status for a question
+// Returns 1 if the user upvoted the question
+// Returns 0 if the user hasn't voted on the question
+// Returns -1 if the user downvoted the question
+export const selectVoteStatus = (state, questionId) => {
+    const questionVotes = state.allQuestionVotes;
+    const questionVote = questionVotes.find(
+        (questionVote) => questionVote.question_id === questionId
+    );
+
+    if (!questionVote) {
+        return 0;
+    }
+
+    return questionVote.vote_status;
+};
+
 export default questionVotesSlice.reducer;
