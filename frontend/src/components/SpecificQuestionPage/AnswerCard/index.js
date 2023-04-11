@@ -35,6 +35,10 @@ const AnswerCard = ({details, votes_score }) => {
 
                 <div className="title-description-col">
                     <p>{details}</p>
+                    <div className='answerCardButtonContainer'>
+                    <button id="answerCardButton" className='modalButton'>Edit</button>
+                    <button id="answerCardButton" className='modalButton'>Delete</button>
+                    </div>
                 </div>
             </div>
         </div>

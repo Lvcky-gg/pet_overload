@@ -4,3 +4,11 @@
     margin-bottom: 2rem;
 
 }
+.answerCardButtonContainer {
+    display: flex;
+    justify-content: flex-start;
+}
+#answerCardButton {
+    width:10%;
+    margin:1%;
+}
