@@ -53,6 +53,9 @@ function ProfileButton({ user }) {
                         <li><NavLink to='/all-questions'>Questions</NavLink></li>
                         <li><NavLink to='/all-users'>Users</NavLink></li>
                         <li><NavLink to='/team'>Our Team</NavLink></li>
+                        <NavLink exact="true" to="/user/profile">
+                            Profile
+                        </NavLink>
                         <li>
                             <button
                                 className="modalButton"

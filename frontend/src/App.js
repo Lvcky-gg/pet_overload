@@ -4,25 +4,21 @@ import { Route, Routes } from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import {
-    faArrowUp,
-    faArrowDown,
     faUpLong,
     faDownLong,
-    faUserCircle
-    
+    faUserCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import SignupFormPage from './components/SignupFormPage';
 import LoginFormPage from './components/LoginFormPage';
 import AllQuestionsPage from './components/AllQuestionsPage';
-import AllUsersPage from './components/allUsersPage'
-import Team from './components/team'
+import Team from './components/team';
+import UserProfile from './components/UserProfile';
 import { HomePage } from './components/HomePage';
 import { authenticate } from './store/session';
 import Navigation from './components/Navigation';
 import Loader from './components/Loader';
 import { Footer } from './components/footer';
 import SpecificQuestion from './components/SpecificQuestionPage';
-import UserProfile from './components/UserProfile';
 
 function App() {
     const dispatch = useDispatch();
@@ -48,25 +44,21 @@ function App() {
                         path="/all-questions"
                         element={<AllQuestionsPage />}
                     />
+                    {/* There are two of these for user profile, one needs to be deleted. I do not
+                    know which one. */}
                     <Route
-                        path="/all-users"
-                        element={<AllUsersPage/>}
+                        path="/user/profile"
+                        element={<UserProfile isLoaded={isLoaded} />}
                     />
+                    <Route path="/user-profile" element={<UserProfile />} />
                     <Route
-                        path="/user-profile"
-                        element={<UserProfile/>}
+                        path={`/all-questions/:questionId`}
+                        element={<SpecificQuestion />}
                     />
-                    <Route
-                    path={`/all-questions/:questionId`}
-                    element={<SpecificQuestion/>}
-                    />
-                    <Route
-                        path="/team"
-                        element={<Team/>}
-                    />
+                    <Route path="/team" element={<Team />} />
                 </Routes>
             )}
-            <Footer></Footer>
+            <Footer />
         </>
     );
 }

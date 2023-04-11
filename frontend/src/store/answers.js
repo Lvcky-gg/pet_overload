@@ -46,7 +46,7 @@ export const answerSlice = createSlice({
 export const getAllAnswers = createAsyncThunk(
     'answers/getAllAnswers',
     async (_, { rejectWithValue }) => {
-        const response = await fetch('api/answers', {
+        const response = await fetch('/api/answers/', {
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -76,6 +76,7 @@ export const getAnswersByQuestion = createAsyncThunk(
         if (!response.ok) {
             rejectWithValue(await response.json());
         }
+
         const data = await response.json();
         return data.Answers;
     }
@@ -90,12 +91,12 @@ export const createAnswerByQuestion = createAsyncThunk(
                 'Content-Type': 'application/json',
             },
         });
+
         if (!response.ok) {
             rejectWithValue(await response.json());
         }
 
         const data = await response.json();
-        console.log(`Answers to question ${questionId}`, data.Answers);
 
         return data.Answers;
     }
@@ -115,7 +116,6 @@ export const updateAnswerByQuestion = createAsyncThunk(
         }
 
         const data = await response.json();
-        console.log(`Answers to ${answerId}`, data.Answers);
 
         return data.Answers;
     }
@@ -129,12 +129,12 @@ export const deleteAnswer = createAsyncThunk(
                 'Content-Type': 'application/json',
             },
         });
+
         if (!response.ok) {
             rejectWithValue(await response.json());
         }
 
         const data = await response.json();
-        console.log(`Answers to ${answerId}`, data.Answers);
 
         return data.Answers;
     }

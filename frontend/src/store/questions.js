@@ -36,9 +36,7 @@ export const questionsSlice = createSlice({
                     (vote) => vote.id === action.payload
                 );
             })
-            .addCase(deleteQuestion.rejected, (state, action) => {
-                state.loading = false;
-            });
+            .addCase(deleteQuestion.rejected, (state, action) => {});
     },
 });
 

@@ -4,11 +4,14 @@ const initialState = {
     questionVotes: [],
     loading: false,
 };
+
 export const questionVotesSlice = createSlice({
     name: 'questionVotes',
     initialState,
     reducers: {},
     extraReducers: (builder) => {
+        // actions
+        //payload in the extraReducers is the value returned by the fulfilled or rejected promise in the async thunk function
         builder
             .addCase(getQuestionVotes.fulfilled, (state, action) => {
                 state.loading = false;
@@ -40,6 +43,7 @@ export const questionVotesSlice = createSlice({
     },
 });
 
+// thunks
 export const getQuestionVotes = createAsyncThunk(
     'questionVotes/getQuestionVotes',
     async (_, { rejectWithValue }) => {
@@ -56,7 +60,7 @@ export const getQuestionVotes = createAsyncThunk(
 
         const data = await response.json();
 
-        return data.question_votes;
+        return data.questionVotes;
     }
 );
 
@@ -79,6 +83,7 @@ export const deleteQuestionVotes = createAsyncThunk(
         return questionId;
     }
 );
+
 export const updateQuestionVotes = createAsyncThunk(
     'questionVotes/updateQuestionVotes',
     async (questionId, isLiked, { rejectWithValue }) => {
@@ -100,8 +105,6 @@ export const updateQuestionVotes = createAsyncThunk(
     }
 );
 
-export const { addNewQuestionVote } = questionVotesSlice.actions;
-
 // Selector that that returns the current vote status for a question
 // Returns 1 if the user upvoted the question
 // Returns 0 if the user hasn't voted on the question
@@ -118,5 +121,7 @@ export const selectVoteStatus = (state, questionId) => {
 
     return questionVote.vote_status;
 };
+
+export const { addNewQuestionVote } = questionVotesSlice.actions;
 
 export default questionVotesSlice.reducer;
