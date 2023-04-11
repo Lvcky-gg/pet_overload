@@ -70,7 +70,7 @@ export const HomePage = () => {
         
         </div>
         <div className='homePageBottomImage'>
-        <img src={imageThree} alt="#"/>
+        {/* <img src={imageThree} alt="#"/> */}
         
         </div>
         <div className='homePageWhiteSpace'>
