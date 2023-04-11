@@ -51,10 +51,15 @@ const AnswerCard = ({details, votes_score, user_id }) => {
 
                 <div className="title-description-col">
                     <p>{details}</p>
+                    
+                    
+                    {sessionUser.user.id===user_id &&(
                     <div className='answerCardButtonContainer'>
-                    <button id="answerCardButton" className='modalButton'>Edit</button>
-                    {sessionUser.user.id===user_id &&(<button id="answerCardButton" className='modalButton' onClick={handleAlertClick}>Delete</button>)}
+                        <button id="answerCardButton" className='modalButton'>Edit</button>
+                        <button id="answerCardButton" className='modalButton' onClick={handleAlertClick}>Delete</button>
                     </div>
+                    )}
+                    
                 </div>
             </div>
         </div>
