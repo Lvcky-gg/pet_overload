@@ -4,6 +4,7 @@ import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { useState } from "react";
 import { convertToHTML } from 'draft-convert';
+import { useEffect } from "react";
 import'./editor.css'
 
 const RichEditor = () => {
@@ -14,7 +15,7 @@ const RichEditor = () => {
         let html = convertToHTML(editorState.getCurrentContent());
         setConvertedContent(html);
       }, [editorState]);
-      
+
     return (<div className='editor'>
         <Editor
         editorState={editorState}
