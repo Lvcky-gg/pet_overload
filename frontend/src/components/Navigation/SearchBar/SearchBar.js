@@ -1,12 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import './SearchBar.css';
 
 const SearchBar = () => {
+    const searchInputRef = useRef(null);
     const navigate = useNavigate();
     const [searchInput, setSearchInput] = useState('');
     const [showDropdown, setShowDropdown] = useState(false);
     const [searchUrl, setSearchUrl] = useState('');
+    const error = useSelector((state) => state.questions.error);
+    const [errorMsg, setErrorMsg] = useState('');
+
     const onSearch = (input) => {
         if (input[0] === "'" || input[0] === '"') {
             //search by keyword
@@ -18,16 +23,19 @@ const SearchBar = () => {
             // search by score
             setSearchUrl(`score=${input.split(':').slice(1).join('')}`);
         } else {
+            // default
             setSearchUrl(`keyword=${input}`);
         }
         setShowDropdown(false);
     };
-    const handleSearch = (e) => {
+    const handleSearchSubmit = (e) => {
         e.preventDefault();
         onSearch(searchInput);
     };
 
     const handleFocus = () => {
+        setSearchInput('');
+        setErrorMsg('');
         setShowDropdown(true);
     };
 
@@ -36,25 +44,40 @@ const SearchBar = () => {
     };
     useEffect(() => {
         if (searchUrl) {
-            // navigate('/all-questions');
-            navigate(`/all-questions?${searchUrl}`, { replace: true });
+            navigate(`/all-questions/search?${searchUrl}`, { replace: true });
             setSearchInput('');
             setSearchUrl('');
         }
-    }, [searchUrl, navigate]);
+        if (error) {
+            setErrorMsg(error);
+        }
+        if (!error) setErrorMsg('');
+    }, [searchUrl, navigate, error]);
+    useEffect(() => {
+        if (searchInputRef.current) {
+            if (!errorMsg) {
+                searchInputRef.current.focus();
+            } else {
+                searchInputRef.current.blur();
+            }
+        }
+    }, [errorMsg]);
     return (
         <div className="search-bar-container">
-            <form onSubmit={handleSearch} className="search-bar-form">
+            <form onSubmit={handleSearchSubmit} className="search-bar-form">
                 <div className="searchbar-wrapper">
                     <input
                         type="text"
                         placeholder="Search..."
-                        value={searchInput}
+                        value={errorMsg ? errorMsg : searchInput}
+                        // value={searchInput}
                         onChange={(e) => setSearchInput(e.target.value)}
                         onFocus={handleFocus}
                         onBlur={handleBlur}
                         className="search-bar-input"
+                        ref={searchInputRef}
                     />
+
                     <i className="fas fa-search"></i>
                 </div>
                 {showDropdown && (
