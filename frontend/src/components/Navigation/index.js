@@ -5,7 +5,7 @@ import ProfileButton from './ProfileButton';
 import './Navigation.css';
 import logo from './images/logo.png';
 import SearchBar from './SearchBar/SearchBar';
-function Navigation({ isLoaded }) {
+function Navigation({ isLoaded, searchUrl, setSearchUrl }) {
     const sessionUser = useSelector((state) => state.session.user);
 
     return (
