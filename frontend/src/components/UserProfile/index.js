@@ -28,7 +28,7 @@ const UserProfile = ({ isLoaded }) => {
         );
     }
     return (
-        <div className="container" id="userProfile-container">
+        <div id="userProfile-container">
             <UserInfo user={user} />
             <p id="activity-title">Activity</p>
             <ActivityTabs activeTab={activeTab} setActiveTab={setActiveTab} />
