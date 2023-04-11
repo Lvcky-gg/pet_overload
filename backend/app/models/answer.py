@@ -30,5 +30,18 @@ class Answer(db.Model):
             'createdAt':self.created_at,
             'updatedAt':self.updated_at,
             'userId':self.user_id,
-            'questionId':self.question_id
+            'questionId':self.question_id,
+            "votes_score": self.answer_vote_score,
         }
+
+    @property
+    def answer_vote_score(self) -> int:
+        """
+        Returns vote score for this answer
+        """
+        votes = self.answer_votes
+
+        if not votes:
+            return 0
+
+        return sum([1 if vote.is_liked else -1 for vote in votes])

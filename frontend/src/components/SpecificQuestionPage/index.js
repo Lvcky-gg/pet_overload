@@ -1,9 +1,10 @@
-import React,{ useEffect } from "react";
+import React,{ useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import QuestionCard from "../AllQuestionsPage/QuestionCard";
 import { getAllAnswers } from "../../store/answers";
 import { getAllQuestions } from "../../store/questions";
 import  './SpecificQuestion.css'
+import AnswerCard from "./AnswerCard";
 
 const { useSelector, useDispatch } = require('react-redux');
 
@@ -11,13 +12,16 @@ const { useSelector, useDispatch } = require('react-redux');
 
 
 const SpecificQuestion = () => {
+    const [hidden, setHidden] = useState(false)
     const questions = useSelector((state) => state.questions.allQuestions);
     const loading = useSelector((state) => state.questions.loading);
     const answers = useSelector((state)=>state.answers.allAnswers);
     const dispatch = useDispatch()
 
     const {questionId} = useParams()
-
+    const showAnswers = (e) => {
+        setHidden(!hidden)
+    }
 
     useEffect(() => {
         dispatch(getAllQuestions());
@@ -35,7 +39,7 @@ const SpecificQuestion = () => {
 
     const question = questions.filter((question)=>+questionId === question.id)
     console.log(question)
-    if (question){
+    if (question[0]){
         id = question[0].id
         title = question[0].title
         details = question[0].details
@@ -71,7 +75,25 @@ const SpecificQuestion = () => {
             // title={title}
             details={details}
             votes_score={votes_score}
+            showAnswers={showAnswers}
+
             answers_count={answers_count}></QuestionCard> 
+
+            <div>
+            {hidden && answer.map(
+                ({id,details, votes_score }) => (
+                    <AnswerCard
+                    key = {id}
+                    id={id}
+                    details={details}
+                    votes_score={votes_score}
+                    ></AnswerCard>
+                )
+            )}
+            
+
+            </div>
+
 
             
         </div>)}

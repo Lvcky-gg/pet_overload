@@ -1,15 +1,10 @@
 import { useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useState } from 'react';
 
-import './QuestionCard.css';
 
-const QuestionCard = ({ title, details, votes_score, answers_count, showAnswers }) => {
-    const [hidden, setHidden] = useState(false)
-    const answers_msg = answers_count === 1 ? 'answer' : 'answers';
+const AnswerCard = ({details, votes_score }) => {
     const upvoteArrowRef = useRef(null);
     const downvoteArrowRef = useRef(null);
-
 
     const handleVoteArrowClick = (arrowRef) => {
         arrowRef.current.classList.add('fa-beat');
@@ -39,16 +34,11 @@ const QuestionCard = ({ title, details, votes_score, answers_count, showAnswers 
                 </div>
 
                 <div className="title-description-col">
-                    <h2>{title}</h2>
                     <p>{details}</p>
-                    <p className="answers-msg" onClick={showAnswers}>
-                    
-                        {answers_count} {answers_msg}
-                    </p>
                 </div>
             </div>
         </div>
     );
 };
 
-export default QuestionCard;
+export default AnswerCard;
