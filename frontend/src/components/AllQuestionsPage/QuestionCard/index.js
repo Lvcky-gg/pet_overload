@@ -1,15 +1,17 @@
 import { useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 import './QuestionCard.css';
 import { NavLink } from 'react-router-dom';
 
-const QuestionCard = ({id, title, details, votes_score, answers_count, showAnswers, nav }) => {
+const QuestionCard = ({ id, title, details, votes_score, answers_count, showAnswers, nav }) => {
     const [hidden, setHidden] = useState(false)
     const answers_msg = answers_count === 1 ? 'answer' : 'answers';
     const upvoteArrowRef = useRef(null);
     const downvoteArrowRef = useRef(null);
+    const {questionId} = useParams()
 
 
     const handleVoteArrowClick = (arrowRef) => {
@@ -19,6 +21,14 @@ const QuestionCard = ({id, title, details, votes_score, answers_count, showAnswe
             arrowRef.current.classList.remove('fa-beat');
         }, 800);
     };
+    let className;
+    if (questionId){
+        className = 'answers-msg true'
+
+    }else{
+        className='answers-msg'
+    }
+    console.log(useParams())
 
     return (
         <div className="question-card">
@@ -46,9 +56,9 @@ const QuestionCard = ({id, title, details, votes_score, answers_count, showAnswe
                     <h2>{title}</h2>
                    </NavLink>
                     <p>{details}</p>
-                    <p className="answers-msg" onClick={showAnswers}>
+                    <p className={className} onClick={showAnswers}>
                     
-                        {answers_count} {answers_msg}
+                        {answers_count } {answers_msg}
                     </p>
                 </div>
             </div>
