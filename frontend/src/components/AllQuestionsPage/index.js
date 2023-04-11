@@ -28,8 +28,6 @@ const AllQuestionsPage = () => {
 
     }, [dispatch]);
 
-        dispatch(getAllQuestions());
-    }, []);
 
     const sortByNewest = () => {
         dispatch(sortQuestionsByNewest());
