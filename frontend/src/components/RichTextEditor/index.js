@@ -5,21 +5,49 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { useState } from "react";
 import { convertToHTML } from 'draft-convert';
 import { useEffect } from "react";
-import DOMPurify from 'dompurify'
+// import DOMPurify from 'dompurify'
+import draftToMarkdown from 'draftjs-to-markdown';
+import { convertToRaw } from 'draft-js'
+// import RenderMarkup from "./renderMarkup";
 import'./editor.css'
 
 const RichEditor = () => {
     const [editorState, setEditorState] = useState(() => EditorState.createEmpty())
-    const [convertedContent, setConvertedContent] = useState(null);
-
-    function createMarkup(html) {
-        return {
-          __html: DOMPurify.sanitize(html)
-        }
+    const [contentState, setcontentState] = useState(null);
+    const hashConfig = {
+        trigger: '#',
+        separator: ' ',
       }
+      const config = {
+        blockTypesMapping : {/* mappings */},
+        emptyLineBeforeBlock : true
+      }
+    
+
+    const rawContentState = convertToRaw(editorState.getCurrentContent());
+    const markup = draftToMarkdown(contentState, hashConfig, config);
+
+    const markdownParser = (markup) => {
+        const toHTML = markup
+            .replace(/^###### (.*$)/gim, '<h6>$1</h6>') // h4 tag
+            .replace(/^##### (.*$)/gim, '<h5>$1</h5>') // h5 tag
+            .replace(/^#### (.*$)/gim, '<h4>$1</h4>') // h4 tag
+            .replace(/^### (.*$)/gim, '<h3>$1</h3>') // h3 tag
+            .replace(/^## (.*$)/gim, '<h2>$1</h2>') // h2 tag
+            .replace(/^# (.*$)/gim, '<h1>$1</h1>') // h1 tag
+            .replace(/\*\*(.*)\*\*/gim, '<b>$1</b>') // bold text
+            .replace(/\*(.*)\*/gim, '<i>$1</i>'); // italic text
+        return toHTML.trim(); // using trim method to remove whitespace
+    }
+
+  const htmlString = markdownParser(markup)
+  const theObj = {__html:htmlString};
+  console.log(theObj)
+
+
     useEffect(() => {
-        let html = convertToHTML(editorState.getCurrentContent());
-        setConvertedContent(html);
+        
+        setcontentState(rawContentState);
       }, [editorState]);
 
     return (<div className='editor'>
@@ -32,7 +60,9 @@ const RichEditor = () => {
         />
           <div
             className="preview"
-            dangerouslySetInnerHTML={createMarkup(convertedContent)}>
+            dangerouslySetInnerHTML={theObj}
+        >
+
         </div>
     </div>)
 }

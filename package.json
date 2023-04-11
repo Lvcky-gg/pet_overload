@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "draftjs-to-markdown": "^0.6.0"
+  }
+}
