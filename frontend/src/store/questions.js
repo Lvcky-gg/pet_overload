@@ -23,7 +23,13 @@ export const questionsSlice = createSlice({
                 (question) => question.answers_count === 0
             );
         },
-
+        updateQuestionAfterVote(state, action) {
+            const updatedQuestion = action.payload;
+            const idx = state.allQuestions.findIndex(
+                (question) => question.id === updatedQuestion.id
+            );
+            state.allQuestions[idx] = updatedQuestion;
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -124,6 +130,7 @@ export const {
     sortQuestionsByNewest,
     sortQuestionsByScore,
     filterQuestionsByUnanswered,
+    updateQuestionAfterVote,
 } = questionsSlice.actions;
 
 export default questionsSlice.reducer;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -20,51 +20,56 @@ import Loader from './components/Loader';
 import { Footer } from './components/footer';
 import SearchResults from './components/SearchResults';
 import SpecificQuestion from './components/SpecificQuestionPage';
-import AllUsersPage from './components/allUsersPage';
+import Sidebar from './components/Sidebar';
 
 function App() {
     const dispatch = useDispatch();
     const [isLoaded, setIsLoaded] = useState(false);
-
+    const location = useLocation();
     useEffect(() => {
         dispatch(authenticate()).then(() => setIsLoaded(true));
     }, [dispatch]);
 
     // FontAwesome icons to be installed globally.
     library.add(fas, faUpLong, faDownLong, faUserCircle);
+    const showSidebar =
+        location.pathname.startsWith('/all-questions') ||
+        location.pathname.startsWith('/all-questions/search') ||
+        location.pathname.startsWith('/user/profile');
 
     return (
         <>
             <Navigation isLoaded={isLoaded} />
             <Loader />
-            {isLoaded && (
-                <Routes>
-                    <Route path="/login" element={<LoginFormPage />} />
-                    <Route path="/signup" element={<SignupFormPage />} />
-                    <Route path="/" element={<HomePage />} />
-                    <Route path="/all-users" element={<AllUsersPage />} />
-                    
-                    <Route
-                        exact
-                        path="/all-questions/"
-                        element={<AllQuestionsPage />}
-                    />
-                    <Route
-                        path="/all-questions/search"
-                        element={<SearchResults />}
-                    />
-                    <Route
-                        path="/user/profile"
-                        element={<UserProfile isLoaded={isLoaded} />}
-                    />
-               
-                    <Route
-                        path={`/all-questions/:questionId`}
-                        element={<SpecificQuestion />}
-                    />
-                    <Route path="/team" element={<Team />} />
-                </Routes>
-            )}
+            <div className="main container">
+                {showSidebar && <Sidebar />}
+                {isLoaded && (
+                    <Routes>
+                        <Route path="/login" element={<LoginFormPage />} />
+                        <Route path="/signup" element={<SignupFormPage />} />
+                        <Route path="/" element={<HomePage />} />
+                        <Route
+                            exact
+                            path="/all-questions/"
+                            element={<AllQuestionsPage />}
+                        />
+                        <Route
+                            path="/all-questions/search"
+                            element={<SearchResults />}
+                        />
+                        <Route
+                            path="/user/profile"
+                            element={<UserProfile isLoaded={isLoaded} />}
+                        />
+
+                        <Route
+                            path={`/all-questions/:questionId`}
+                            element={<SpecificQuestion />}
+                        />
+                        <Route path="/team" element={<Team />} />
+                    </Routes>
+                )}
+            </div>
             <Footer />
         </>
     );

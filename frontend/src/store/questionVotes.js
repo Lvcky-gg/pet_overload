@@ -39,6 +39,22 @@ export const questionVotesSlice = createSlice({
             })
             .addCase(updateQuestionVotes.rejected, (state, action) => {
                 state.loading = false;
+            })
+            .addCase(deleteQuestionVoteById.fulfilled, (state, action) => {
+                state.questionVotes = state.questionVotes.filter(
+                    (vote) => vote.id !== action.payload
+                );
+            })
+            .addCase(createQuestionVote.fulfilled, (state, action) => {
+                state.questionVotes.push(action.payload);
+            })
+            .addCase(updateQuestionVoteById.fulfilled, (state, action) => {
+                const updatedVote = action.payload;
+                const idx = state.questionVotes.findIndex(
+                    (vote) => vote.id === updatedVote.id
+                );
+
+                state.questionVotes[idx] = updatedVote;
             });
     },
 });
@@ -106,23 +122,90 @@ export const updateQuestionVotes = createAsyncThunk(
     }
 );
 
+export const deleteQuestionVoteById = createAsyncThunk(
+    'questionVotes/deleteQuestionVoteById',
+    async ({questionVoteId}) => {
+        const response = await fetch(`/api/question_votes/${questionVoteId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        const data = await response.json();
+        console.log('Delete Question Vote Response:', data)
+
+        if (!response.ok) {
+            return false;
+        }
+
+        return questionVoteId;
+    }
+);
+
+export const updateQuestionVoteById = createAsyncThunk(
+    'questionVotes/updateQuestionVoteById',
+    async ({ questionVoteId, isLiked }, { rejectWithValue }) => {
+        isLiked = isLiked === 1 ? true : false;
+
+        const response = await fetch(`/api/question_votes/${questionVoteId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ isLiked }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            return rejectWithValue(data);
+        }
+
+        return data;
+    }
+);
+
+export const createQuestionVote = createAsyncThunk(
+    'questionVotes/createQuestionVote',
+    async ({ questionId, isLiked }, { rejectWithValue }) => {
+        isLiked = isLiked === 1 ? true : false;
+
+        const response = await fetch(`/api/questions/${questionId}/votes`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ questionId, isLiked }),
+        });
+        
+        const data = await response.json();
+        
+        if (!response.ok) {
+            return rejectWithValue(data);
+        }
+
+        return data;
+    }
+);
+
 // Selector that that returns the current vote status for a question
 // Returns 1 if the user upvoted the question
 // Returns 0 if the user hasn't voted on the question
 // Returns -1 if the user downvoted the question
 export const selectVoteStatus = (state, questionId) => {
-    const questionVotes = state.allQuestionVotes;
+    const questionVotes = state.questionVotes;
     const questionVote = questionVotes.find(
-        (questionVote) => questionVote.question_id === questionId
+        (questionVote) => questionVote.questionId === questionId
     );
 
     if (!questionVote) {
-        return 0;
+        return null;
     }
 
-    return questionVote.vote_status;
+    return questionVote;
 };
 
-export const { addNewQuestionVote } = questionVotesSlice.actions;
+// export const { addNewQuestionVote } = questionVotesSlice.actions;
 
 export default questionVotesSlice.reducer;
