@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { getAllAnswers } from '../../store/answers';
 import {
     getAllQuestions,
     sortQuestionsByNewest,
@@ -19,10 +20,14 @@ const AllQuestionsPage = () => {
         (state) => state.questions.displayedQuestions
     );
 
+
     // const answers = useSelector((state) => state.answers.allAnswers);
     useEffect(() => {
-        dispatch(getAllQuestions());
-    }, []);
+            dispatch(getAllQuestions());
+            dispatch(getAllAnswers());
+
+    }, [dispatch]);
+
 
     const sortByNewest = () => {
         dispatch(sortQuestionsByNewest());

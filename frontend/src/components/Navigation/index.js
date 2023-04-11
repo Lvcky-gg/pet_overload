@@ -3,10 +3,13 @@ import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
-import logo from "./images/logo.png"
-import SearchBar from '../SearchBar';
+
+import logo from './images/logo.png';
+import SearchBar from './SearchBar/SearchBar';
+//import SearchBar from '../SearchBar';
 
 function Navigation({ isLoaded }) {
+
     const sessionUser = useSelector((state) => state.session.user);
 
     return (

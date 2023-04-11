@@ -18,6 +18,7 @@ import { authenticate } from './store/session';
 import Navigation from './components/Navigation';
 import Loader from './components/Loader';
 import { Footer } from './components/footer';
+import SearchResults from './components/SearchResults';
 import SpecificQuestion from './components/SpecificQuestionPage';
 
 function App() {
@@ -41,16 +42,19 @@ function App() {
                     <Route path="/signup" element={<SignupFormPage />} />
                     <Route path="/" element={<HomePage />} />
                     <Route
-                        path="/all-questions"
+                        exact
+                        path="/all-questions/"
                         element={<AllQuestionsPage />}
                     />
-                    {/* There are two of these for user profile, one needs to be deleted. I do not
-                    know which one. */}
+                    <Route
+                        path="/all-questions/search"
+                        element={<SearchResults />}
+                    />
                     <Route
                         path="/user/profile"
                         element={<UserProfile isLoaded={isLoaded} />}
                     />
-                    <Route path="/user-profile" element={<UserProfile />} />
+               
                     <Route
                         path={`/all-questions/:questionId`}
                         element={<SpecificQuestion />}
