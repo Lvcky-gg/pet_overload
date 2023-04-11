@@ -18,7 +18,7 @@ def change_question_vote(vote_id):
         if is_liked is None:
             raise ValidationException("Is_liked is required.")
         if not isinstance(is_liked, bool):
-            raise ValidationException("Is_liked must be a boolean value.", 400)
+            raise ValidationException("Is_liked must be a boolean value.")
 
         vote=QuestionVote.query.filter(QuestionVote.id==vote_id).first()
         if vote is None:
