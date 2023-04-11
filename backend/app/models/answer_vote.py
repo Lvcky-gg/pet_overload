@@ -13,7 +13,7 @@ class AnswerVote(db.Model):
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow())
     updated_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow())
     user_id=db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")),nullable=False)
-    answer_id=db.Column(db.Integer,db.ForeignKey(add_prefix_for_prod("answers.id")),nullable=False)
+    answer_id=db.Column(db.Integer,db.ForeignKey(add_prefix_for_prod("answers.id"),ondelete="CASCADE"),nullable=False)
 
     #relationship
     user=db.relationship("User",back_populates="answer_votes")
@@ -26,7 +26,8 @@ class AnswerVote(db.Model):
             'createdAt':self.created_at,
             'updatedAt':self.updated_at,
             'userId':self.user_id,
-            'answerId':self.answer_id
+            'answerId':self.answer_id,
+            'answer': self.answer.to_dict(),
         }
 
     #factory method to create Answer instance

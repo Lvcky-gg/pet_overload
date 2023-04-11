@@ -1,24 +1,52 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
+const initialState = {
+    questionVotes: [],
+    loading: false,
+};
 export const questionVotesSlice = createSlice({
     name: 'questionVotes',
-    initialState: {
-        allQuestionVotes: [],
-    },
+    initialState,
     reducers: {},
     extraReducers: (builder) => {
+        // actions
+        //payload in the extraReducers is the value returned by the fulfilled or rejected promise in the async thunk function
         builder
-            .addCase(getUsersQuestionVotes.fulfilled, (state, action) => {
-                state.allQuestionVotes = action.payload;
+            .addCase(getQuestionVotes.fulfilled, (state, action) => {
+                state.loading = false;
+                state.questionVotes = action.payload;
             })
-            .addCase(getUsersQuestionVotes.rejected, (state, action) => {
+            .addCase(getQuestionVotes.rejected, (state, action) => {
                 console.log('Rejected with value:', action.payload);
+                state.loading = false;
+            })
+            .addCase(deleteQuestionVotes.fulfilled, (state, action) => {
+                state.loading = false;
+                state.questionVotes = state.questionVotes.fileter(
+                    (vote) => vote.id === action.payload
+                );
+            })
+            .addCase(deleteQuestionVotes.rejected, (state, action) => {
+                console.log('Rejected with value:', action.payload);
+                state.loading = false;
+            })
+            .addCase(updateQuestionVotes.fulfilled, (state, action) => {
+                state.loading = false;
+                const updateVote = action.payload;
+                const idx = state.questionVotes.findIndex(
+                    (vote) => vote.questionId === updateVote.questionId
+                );
+                state.questionVotes[idx] = updateVote;
+            })
+            .addCase(updateQuestionVotes.rejected, (state, action) => {
+                console.log('Rejected with value:', action.payload);
+                state.loading = false;
             });
     },
 });
-
-export const getUsersQuestionVotes = createAsyncThunk(
-    'questionVotes/getAllQuestionVotes',
+// thunks
+export const getQuestionVotes = createAsyncThunk(
+    'questionVotes/getQuestionVotes',
     async (_, { rejectWithValue }) => {
         const response = await fetch('/api/question_votes/current', {
             headers: {
@@ -33,7 +61,7 @@ export const getUsersQuestionVotes = createAsyncThunk(
 
         const data = await response.json();
 
-        return data.question_votes;
+        return data.questionVotes;
     }
 );
 
@@ -56,4 +84,40 @@ export const selectVoteStatus = (state, questionId) => {
     return questionVote.vote_status;
 };
 
+export const deleteQuestionVotes = createAsyncThunk(
+    'questionVotes/deleteQuestionVotes',
+    async (questionId, { rejectWithValue }) => {
+        const response = await fetch(`/api/question_votes/${questionId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            const errData = await response.json();
+            return rejectWithValue(errData);
+        }
+
+        return questionId;
+    }
+);
+export const updateQuestionVotes = createAsyncThunk(
+    'questionVotes/updateQuestionVotes',
+    async (questionId, isLiked, { rejectWithValue }) => {
+        const response = await fetch(`/api/question_votes/${questionId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ isLiked }),
+        });
+        if (!response.ok) {
+            const errData = await response.json();
+            return rejectWithValue(errData);
+        }
+        const data = await response.json();
+        return data;
+    }
+);
 export default questionVotesSlice.reducer;

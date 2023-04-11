@@ -8,13 +8,13 @@ import {
     faArrowDown,
     faUpLong,
     faDownLong,
-    faUserCircle
-    
+    faUserCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import SignupFormPage from './components/SignupFormPage';
 import LoginFormPage from './components/LoginFormPage';
 import AllQuestionsPage from './components/AllQuestionsPage';
-import AllUsersPage from './components/allUsersPage'
+import UserProfile from './components/UserProfile';
+import AllUsersPage from './components/allUsersPage';
 import { HomePage } from './components/HomePage';
 import { authenticate } from './store/session';
 import Navigation from './components/Navigation';
@@ -46,12 +46,12 @@ function App() {
                         element={<AllQuestionsPage />}
                     />
                     <Route
-                        path="/all-users"
-                        element={<AllUsersPage/>}
+                        path="/user/profile"
+                        element={<UserProfile isLoaded={isLoaded} />}
                     />
                 </Routes>
             )}
-            <Footer></Footer>
+            <Footer />
         </>
     );
 }
