@@ -75,6 +75,7 @@ const SpecificQuestion = () => {
                     </button>
                 </div>
             </div>
+            //editor
             {editor && <RichEditor/>}
 
            <QuestionCard
