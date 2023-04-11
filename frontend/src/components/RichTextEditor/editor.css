@@ -13,6 +13,7 @@
     margin-bottom: 5vh;
     text-align: center;
     padding: 12px;
+    overflow:hidden;
 }
 .preview {
     padding: 1rem;
