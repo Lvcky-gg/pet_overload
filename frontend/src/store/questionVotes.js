@@ -98,6 +98,7 @@ export const updateQuestionVotes = createAsyncThunk(
         const data = await response.json();
 
         if (!response.ok) {
+            const errData = await response.json();
             return rejectWithValue(errData);
         }
 
