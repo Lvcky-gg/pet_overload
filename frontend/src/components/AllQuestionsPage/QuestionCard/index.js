@@ -3,8 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 
 import './QuestionCard.css';
+import { NavLink } from 'react-router-dom';
 
-const QuestionCard = ({ title, details, votes_score, answers_count, showAnswers }) => {
+const QuestionCard = ({id, title, details, votes_score, answers_count, showAnswers, nav }) => {
     const [hidden, setHidden] = useState(false)
     const answers_msg = answers_count === 1 ? 'answer' : 'answers';
     const upvoteArrowRef = useRef(null);
@@ -39,7 +40,11 @@ const QuestionCard = ({ title, details, votes_score, answers_count, showAnswers 
                 </div>
 
                 <div className="title-description-col">
+                   <NavLink
+                   to={`/all-questions/${id}`}
+                   >
                     <h2>{title}</h2>
+                   </NavLink>
                     <p>{details}</p>
                     <p className="answers-msg" onClick={showAnswers}>
                     

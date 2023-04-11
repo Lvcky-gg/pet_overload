@@ -13,6 +13,7 @@ const AllQuestionsPage = () => {
     const questions = useSelector((state) => state.questions.allQuestions);
     const loading = useSelector((state) => state.questions.loading);
     const answers = useSelector((state)=>state.answers.allAnswers)
+    const nav = true;
     
     // for (let i = 0; i < answers.length; i++){
     //     if(answers[i].questionId){
@@ -55,7 +56,7 @@ const AllQuestionsPage = () => {
             </div>
             <div id="question-list">
                 {questions.map(
-                    ({ id, title, details, votes_score, answers_count }) => (
+                    ({ id, title, details, votes_score, answers_count,nav }) => (
                         <QuestionCard
                             key={id}
                             id={id}
