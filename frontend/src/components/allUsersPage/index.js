@@ -4,6 +4,7 @@ import UserCard from './userCard';
 import Button from '../Button';
 
 import './AllUsersPage.css';
+import Sidebar from '../Sidebar';
 
 const { useSelector, useDispatch } = require('react-redux');
 
@@ -21,6 +22,8 @@ const AllUsersPage = () => {
     }
 
     return  (
+        // <div className="questionPage">
+        //     <Sidebar/>
         <div className="AllUsersPage">
             
             <div id="all-users-header" className="flex-row">
@@ -44,6 +47,7 @@ const AllUsersPage = () => {
                 )}
             </div>
         </div>
+        // </div>
     )
 
 

@@ -4,8 +4,6 @@ import { Route, Routes } from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import {
-    faArrowUp,
-    faArrowDown,
     faUpLong,
     faDownLong,
     faUserCircle,
@@ -13,14 +11,15 @@ import {
 import SignupFormPage from './components/SignupFormPage';
 import LoginFormPage from './components/LoginFormPage';
 import AllQuestionsPage from './components/AllQuestionsPage';
+import Team from './components/team';
 import UserProfile from './components/UserProfile';
-import AllUsersPage from './components/allUsersPage';
 import { HomePage } from './components/HomePage';
 import { authenticate } from './store/session';
 import Navigation from './components/Navigation';
 import Loader from './components/Loader';
 import { Footer } from './components/footer';
 import SearchResults from './components/SearchResults';
+import SpecificQuestion from './components/SpecificQuestionPage';
 
 function App() {
     const dispatch = useDispatch();
@@ -55,6 +54,12 @@ function App() {
                         path="/user/profile"
                         element={<UserProfile isLoaded={isLoaded} />}
                     />
+               
+                    <Route
+                        path={`/all-questions/:questionId`}
+                        element={<SpecificQuestion />}
+                    />
+                    <Route path="/team" element={<Team />} />
                 </Routes>
             )}
             <Footer />

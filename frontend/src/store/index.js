@@ -4,9 +4,9 @@ import loadingReducer from './loader';
 import sessionReducer from './session';
 import questionsReducer from './questions';
 import answerReducer from './answers';
+import answerVotesReducer from './answerVotes';
 import userReducer from './users';
 import questionVotesReducer from './questionVotes';
-import answerVotesReducer from './answerVotes';
 
 const middleware = [loadingMiddleware];
 
@@ -28,11 +28,6 @@ const store = configureStore({
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(middleware),
     devTools: process.env.NODE_ENV !== 'production',
-    // enhancers: [
-    // 	process.env.NODE_ENV !== "production"
-    // 		? composeWithDevTools()
-    // 		: (f) => f,
-    // ],
 });
 
 export default store;

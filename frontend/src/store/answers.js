@@ -14,15 +14,31 @@ export const answerSlice = createSlice({
             .addCase(getAllAnswers.rejected, (state, action) => {
                 console.log('Rejected with value:', action.payload);
             })
+            .addCase(createAnswerByQuestion.fulfilled, (state, action) => {
+                const createdAnswer = action.payload;
+
+                state.allAnswers.push(createdAnswer);
+            })
+            .addCase(createAnswerByQuestion.rejected, (state, action) => {
+                console.log('Rejected with value:', action.payload);
+            })
+            .addCase(updateAnswerByQuestion.fulfilled, (state, action) => {
+                const updatedAnswer = action.payload;
+                const idx = state.allAnswers.findIndex(
+                    (answer) => answer.id === updatedAnswer.id
+                );
+                state.allAnswers[idx] = updatedAnswer;
+            })
+            .addCase(updateAnswerByQuestion.rejected, (state, action) => {
+                console.log('Rejected with value:', action.payload);
+            })
             .addCase(deleteAnswer.fulfilled, (state, action) => {
-                state.loading = false;
-                state.allAnswers = state.allAnswers.filter(
-                    (vote) => vote.id === action.payload
+                state.allAnswers = state.allAnswers.fileter(
+                    (answer) => answer.id === action.payload
                 );
             })
             .addCase(deleteAnswer.rejected, (state, action) => {
                 console.log('Rejected with value:', action.payload);
-                state.loading = false;
             });
     },
 });
@@ -34,15 +50,15 @@ export const getAllAnswers = createAsyncThunk(
             headers: {
                 'Content-Type': 'application/json',
             },
-            //source of bug
-            // credentials: 'include',
+            credentials: 'include',
         });
 
         if (!response.ok) {
             rejectWithValue(await response.json());
         }
+
         const data = await response.json();
-        console.log('data', data);
+
         return data.Answers;
     }
 );
@@ -54,6 +70,7 @@ export const getAnswersByQuestion = createAsyncThunk(
             headers: {
                 'Content-Type': 'application/json',
             },
+            credentials: 'include',
         });
 
         if (!response.ok) {
@@ -61,26 +78,66 @@ export const getAnswersByQuestion = createAsyncThunk(
         }
 
         const data = await response.json();
-        console.log(`Answers to question ${questionId}`, data.answers);
-
-        return data.answers;
+        return data.Answers;
     }
 );
-export const deleteAnswer = createAsyncThunk(
-    'answers/deleteAnswer',
+
+export const createAnswerByQuestion = createAsyncThunk(
+    'answers/createAnswerByQuestion',
+    async (questionId, { rejectWithValue }) => {
+        const response = await fetch(`/api/questions/${questionId}/answers`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            rejectWithValue(await response.json());
+        }
+
+        const data = await response.json();
+
+        return data.Answers;
+    }
+);
+
+export const updateAnswerByQuestion = createAsyncThunk(
+    'answers/updateAnswerByQuestion',
     async (answerId, { rejectWithValue }) => {
         const response = await fetch(`/api/answers/${answerId}`, {
-            method: 'DELETE',
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
         });
         if (!response.ok) {
-            const errData = await response.json();
-            return rejectWithValue(errData);
+            rejectWithValue(await response.json());
         }
 
-        return answerId;
+        const data = await response.json();
+
+        return data.Answers;
     }
 );
+export const deleteAnswer = createAsyncThunk(
+    'answers/deleteAnswer',
+    async (answerId, { rejectWithValue }) => {
+        const response = await fetch(`/api//answers/${answerId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            rejectWithValue(await response.json());
+        }
+
+        const data = await response.json();
+
+        return data.Answers;
+    }
+);
+
 export default answerSlice.reducer;

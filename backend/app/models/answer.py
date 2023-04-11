@@ -24,11 +24,6 @@ class Answer(db.Model):
     answer_votes=db.relationship("AnswerVote",back_populates="answer",cascade="all, delete")
 
     def to_dict(self):
-        votes = self.answer_votes
-
-        score =0
-        if votes:
-            score=sum([1 if vote.is_liked else -1 for vote in votes])
         return {
             'id': self.id,
             'details': self.details,
@@ -36,5 +31,17 @@ class Answer(db.Model):
             'updatedAt':self.updated_at,
             'userId':self.user_id,
             'questionId':self.question_id,
-            'answerScore':score
+            "answerScore": self.answer_vote_score,
         }
+
+    @property
+    def answer_vote_score(self) -> int:
+        """
+        Returns vote score for this answer
+        """
+        votes = self.answer_votes
+
+        if not votes:
+            return 0
+
+        return sum([1 if vote.is_liked else -1 for vote in votes])

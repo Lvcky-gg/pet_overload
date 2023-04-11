@@ -35,8 +35,10 @@
   position: sticky;
   top:0;
   display:flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   background-color:#F79B26 ;
+  z-index: 10;
+  width:100%;
 }
 .navDrop{
   /* position: relative;
