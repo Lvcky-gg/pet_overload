@@ -1,0 +1,13 @@
+name: Enforce up-to-date branch
+
+on:
+    push:
+        branches:
+            - '**'
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Check out repository
+              uses: actions/checkout@v2
