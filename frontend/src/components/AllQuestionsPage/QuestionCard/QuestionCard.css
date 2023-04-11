@@ -68,3 +68,6 @@
 .downvote-arrow.selected {
     color: var(--secondary-color);
 }
+.true{
+    cursor: pointer;
+}
