@@ -42,9 +42,18 @@ const RichEditor = ({handleEditorSubmit}) => {
         return toHTML.trim(); // using trim method to remove whitespace
     }
 
+
+    //HTML STRING CAN BE PASSED TO BACKEND
   const htmlString = markdownParser(markup)
+  //THIS IS HOW WE PARSE
   const theObj = {__html:htmlString};
-  console.log(theObj)
+ //THIS IS HOW WE VIEW
+//  <div
+//  className="preview"
+//  dangerouslySetInnerHTML={theObj}
+// >
+
+// </div>
 
 
     useEffect(() => {
