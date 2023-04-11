@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
-import { getAllQuestions } from '../../store/questions';
+import { useLocation } from 'react-router-dom';
+import { getAllQuestions, filterQuestions } from '../../store/questions';
 import { getAllAnswers } from '../../store/answers';
 import QuestionCard from './QuestionCard';
 import Button from '../Button';
@@ -8,16 +9,25 @@ import './AllQuestionsPage.css';
 const { useSelector, useDispatch } = require('react-redux');
 
 const AllQuestionsPage = () => {
+    const location = useLocation();
+    const parameter = location.search;
+    console.log('location', parameter);
     const dispatch = useDispatch();
     const questions = useSelector((state) => state.questions.allQuestions);
     const loading = useSelector((state) => state.questions.loading);
-    const answers = useSelector((state)=>state.answers.allAnswers)
+    const answers = useSelector((state) => state.answers.allAnswers);
 
     useEffect(() => {
-        dispatch(getAllQuestions());
-        dispatch(getAllAnswers())
-    }, []);
-
+        if (!parameter) {
+            console.log('inside if');
+            dispatch(getAllQuestions());
+            dispatch(getAllAnswers());
+        } else {
+            console.log('inside else');
+            dispatch(filterQuestions(parameter));
+        }
+    }, [parameter, dispatch]);
+    console.log('question', questions);
     if (loading) {
         return null;
     }

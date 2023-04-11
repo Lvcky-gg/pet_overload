@@ -25,6 +25,15 @@ export const questionsSlice = createSlice({
             .addCase(deleteQustion.rejected, (state, action) => {
                 console.log('Rejected with value:', action.payload);
                 state.loading = false;
+            })
+            .addCase(filterQuestions.fulfilled, (state, action) => {
+                state.loading = false;
+                console.log('payload', action.payload);
+                state.allQuestions = [...action.payload];
+            })
+            .addCase(filterQuestions.rejected, (state, action) => {
+                console.log('Rejected with value:', action.payload);
+                state.loading = false;
             });
     },
 });
@@ -44,6 +53,21 @@ export const getAllQuestions = createAsyncThunk(
 
         const data = await response.json();
         console.log('data:', data);
+
+        return data.questions;
+    }
+);
+export const filterQuestions = createAsyncThunk(
+    'questions/filterQuestions',
+    async (parameter, { rejectWithValue }) => {
+        console.log(parameter);
+        const response = await fetch(`/api/questions${parameter}`);
+        if (!response.ok) {
+            rejectWithValue(await response.json());
+        }
+
+        const data = await response.json();
+        console.log('filtered question:', data);
 
         return data.questions;
     }
