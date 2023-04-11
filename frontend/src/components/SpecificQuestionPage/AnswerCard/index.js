@@ -18,7 +18,7 @@ const AnswerCard = ({details, votes_score, user_id }) => {
             arrowRef.current.classList.remove('fa-beat');
         }, 800);
     };
-    const handleAlertClick = (e) => {
+    const handleDeleteClick = (e) => {
         e.preventDefault()
         let txt;
         if (window.confirm("Are you sure?")) {
@@ -27,7 +27,7 @@ const AnswerCard = ({details, votes_score, user_id }) => {
             txt = false;
           }
           console.log(sessionUser.user.id)
-          
+          //here we can delete
     }
 
     return (
@@ -56,7 +56,7 @@ const AnswerCard = ({details, votes_score, user_id }) => {
                     {sessionUser.user.id===user_id &&(
                     <div className='answerCardButtonContainer'>
                         <button id="answerCardButton" className='modalButton'>Edit</button>
-                        <button id="answerCardButton" className='modalButton' onClick={handleAlertClick}>Delete</button>
+                        <button id="answerCardButton" className='modalButton' onClick={handleDeleteClick}>Delete</button>
                     </div>
                     )}
                     
