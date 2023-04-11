@@ -36,7 +36,7 @@ function App() {
     const showSidebar =
         location.pathname.startsWith('/all-questions') ||
         location.pathname.startsWith('/all-questions/search') ||
-        location.pathname.startsWith('/user/profile');
+        location.pathname.startsWith('/user/profile')||
         location.pathname.startsWith('/all-users');
 
     return (
