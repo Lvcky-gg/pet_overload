@@ -8,14 +8,13 @@ import { useSelector } from 'react-redux';
 import './QuestionCard.css';
 import { NavLink } from 'react-router-dom';
 
-const QuestionCard = ({ id, title, details, votes_score, answers_count }) => {
-    // const [hidden, setHidden] = useState(false);
+const QuestionCard = ({ id, title, details, votes_score, answers_count, showAnswers }) => {
     const upvoteArrowRef = useRef(null);
     const downvoteArrowRef = useRef(null);
     // const currentVote = useSelector((state, id) => id);
     const { questionId } = useParams();
 
-    // const answersMessage = answers_count === 1 ? 'answer' : 'answers';
+    const answersMessage = answers_count === 1 ? 'answer' : 'answers';
 
     const handleVoteArrowClick = (arrowRef) => {
         arrowRef.current.classList.add('fa-beat');
@@ -50,10 +49,12 @@ const QuestionCard = ({ id, title, details, votes_score, answers_count }) => {
                     <NavLink to={`/all-questions/${id}`}>
                         <h2>{title}</h2>
                     </NavLink>
+                    
                     <p>{details}</p>
-                    {/* <p className={className} onClick={showAnswers}>
+                    
+                    <p className={className} onClick={showAnswers}>
                         {answers_count} {answersMessage}
-                    </p> */}
+                    </p>
                 </div>
             </div>
         </div>
