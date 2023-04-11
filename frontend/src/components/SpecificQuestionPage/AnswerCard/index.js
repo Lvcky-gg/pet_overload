@@ -12,7 +12,6 @@ const AnswerCard = ({details, votes_score, user_id }) => {
     const upvoteArrowRef = useRef(null);
     const downvoteArrowRef = useRef(null);
     const sessionUser = useSelector((state) => state.session.user);
-
     const handleVoteArrowClick = (arrowRef) => {
         arrowRef.current.classList.add('fa-beat');
 
@@ -69,7 +68,7 @@ const AnswerCard = ({details, votes_score, user_id }) => {
                     
                 </div>
             </div>
-            {richTextEditor && (<div><RichEditor></RichEditor></div>)}
+            {richTextEditor && (<div><RichEditor details={details}></RichEditor></div>)}
         </div>
     );
 };

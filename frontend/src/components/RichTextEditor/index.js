@@ -5,17 +5,15 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { useState } from "react";
 import { convertToHTML } from 'draft-convert';
 import { useEffect } from "react";
-// import DOMPurify from 'dompurify'
 import draftToMarkdown from 'draftjs-to-markdown';
 import { convertToRaw } from 'draft-js'
-// import RenderMarkup from "./renderMarkup";
 import'./editor.css'
 
 //handle submission is meant to be passed down here to tell it how to submit data
 
-const RichEditor = ({handleEditorSubmit}) => {
+const RichEditor = ({handleEditorSubmit, details}) => {
     const [editorState, setEditorState] = useState(() => EditorState.createEmpty())
-    const [contentState, setcontentState] = useState(null);
+    const [contentState, setcontentState] = useState(details);
     const hashConfig = {
         trigger: '#',
         separator: ' ',
@@ -24,7 +22,7 @@ const RichEditor = ({handleEditorSubmit}) => {
         blockTypesMapping : {/* mappings */},
         emptyLineBeforeBlock : true
       }
-    
+    console.log(contentState)
 
     const rawContentState = convertToRaw(editorState.getCurrentContent());
     const markup = draftToMarkdown(contentState, hashConfig, config);
