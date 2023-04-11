@@ -21,6 +21,7 @@ import { Footer } from './components/footer';
 import SearchResults from './components/SearchResults';
 import SpecificQuestion from './components/SpecificQuestionPage';
 import Sidebar from './components/Sidebar';
+import AllUsersPage from './components/allUsersPage'
 
 function App() {
     const dispatch = useDispatch();
@@ -52,6 +53,11 @@ function App() {
                             exact
                             path="/all-questions/"
                             element={<AllQuestionsPage />}
+                        />
+                        <Route
+                            exact
+                            path="/all-users/"
+                            element={<AllUsersPage />}
                         />
                         <Route
                             path="/all-questions/search"
