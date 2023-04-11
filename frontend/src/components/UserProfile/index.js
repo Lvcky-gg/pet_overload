@@ -18,7 +18,7 @@ const UserProfile = ({ isLoaded }) => {
     useEffect(() => {
         dispatch(authenticate());
     }, [dispatch, isDelete]);
-    console.log('load', isLoaded);
+
     if (!user) {
         // redirect to home
         return (

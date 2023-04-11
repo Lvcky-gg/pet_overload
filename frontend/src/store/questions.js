@@ -4,6 +4,7 @@ export const questionsSlice = createSlice({
     name: 'questions',
     initialState: {
         allQuestions: [],
+        error: null,
     },
     reducers: {},
     extraReducers: (builder) => {
@@ -12,6 +13,7 @@ export const questionsSlice = createSlice({
             // })
             .addCase(getAllQuestions.fulfilled, (state, action) => {
                 state.allQuestions = action.payload;
+                state.error = null;
             })
             .addCase(getAllQuestions.rejected, (state, action) => {
                 console.log('Rejected with value:', action.payload);
@@ -21,19 +23,22 @@ export const questionsSlice = createSlice({
                 state.allQuestions = state.allQuestions.filter(
                     (vote) => vote.id === action.payload
                 );
+                state.error = null;
             })
             .addCase(deleteQustion.rejected, (state, action) => {
                 console.log('Rejected with value:', action.payload);
                 state.loading = false;
+                state.error = action.payload.error;
             })
             .addCase(filterQuestions.fulfilled, (state, action) => {
                 state.loading = false;
-                console.log('payload', action.payload);
                 state.allQuestions = [...action.payload];
+                state.error = null;
             })
             .addCase(filterQuestions.rejected, (state, action) => {
                 console.log('Rejected with value:', action.payload);
                 state.loading = false;
+                state.error = action.payload.error;
             });
     },
 });
@@ -41,14 +46,14 @@ export const questionsSlice = createSlice({
 export const getAllQuestions = createAsyncThunk(
     'questions/getAllQuestions',
     async (_, { rejectWithValue }) => {
-        const response = await fetch('/api/questions', {
+        const response = await fetch('/api/questions/', {
             headers: {
                 'Content-Type': 'application/json',
             },
         });
 
         if (!response.ok) {
-            rejectWithValue(await response.json());
+            return rejectWithValue(await response.json());
         }
 
         const data = await response.json();
@@ -60,14 +65,12 @@ export const getAllQuestions = createAsyncThunk(
 export const filterQuestions = createAsyncThunk(
     'questions/filterQuestions',
     async (parameter, { rejectWithValue }) => {
-        console.log(parameter);
         const response = await fetch(`/api/questions${parameter}`);
         if (!response.ok) {
-            rejectWithValue(await response.json());
+            return rejectWithValue(await response.json());
         }
-
         const data = await response.json();
-        console.log('filtered question:', data);
+        console.log('data:', data);
 
         return data.questions;
     }

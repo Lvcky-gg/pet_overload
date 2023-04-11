@@ -36,7 +36,6 @@ const ActivityList = ({
         dispatch(getAnswerVotes());
         dispatch(getAllQuestions());
         dispatch(getAllAnswers());
-        console.log('re-rendering');
     }, [dispatch, isDelete, activeTab]);
 
     const getQuestion = (questionId) => {
@@ -72,8 +71,6 @@ const ActivityList = ({
             return sortedData;
         } else {
             const sortedData = data.sort((a, b) => {
-                console.log('a b:', typeof a.votes_score, b.votes_score);
-                console.log('a,b answer', a);
                 let aScore;
                 let bScore;
                 if (typeof a.votes_score === 'number') {
