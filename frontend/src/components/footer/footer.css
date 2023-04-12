@@ -9,6 +9,7 @@
     padding-right: 15%;
     box-sizing: border-box;
     font-size: 12px;
+    position: absolute;
 }
 .footer-img-container {
     height: 50px;
