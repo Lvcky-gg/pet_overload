@@ -11,7 +11,7 @@ import './editor.css';
 
 //handle submission is meant to be passed down here to tell it how to submit data
 
-const RichEditor = ({ handleEditorSubmit, details }) => {
+const RichEditor = ({ handleEditorSubmit, details,questionId }) => {
     const [editorState, setEditorState] = useState(() =>
         EditorState.createEmpty()
     );
@@ -26,7 +26,6 @@ const RichEditor = ({ handleEditorSubmit, details }) => {
         },
         emptyLineBeforeBlock: true,
     };
-    console.log(contentState);
 
     const rawContentState = convertToRaw(editorState.getCurrentContent());
     const markup = draftToMarkdown(contentState, hashConfig, config);
@@ -70,7 +69,7 @@ const RichEditor = ({ handleEditorSubmit, details }) => {
                 toolbarClassName="toolbar-class"
             />
             <div className="preview" dangerouslySetInnerHTML={theObj}></div>
-            <button className="modalButton" onSubmit={handleEditorSubmit}>
+            <button className="modalButton" onSubmit={handleEditorSubmit({details:htmlString})}>
                 Submit
             </button>
         </div>

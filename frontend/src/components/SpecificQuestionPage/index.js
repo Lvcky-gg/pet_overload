@@ -6,6 +6,7 @@ import { getAllQuestions } from "../../store/questions";
 import  './SpecificQuestion.css'
 import AnswerCard from "./AnswerCard";
 import RichEditor from "../RichTextEditor";
+import { createAnswerByQuestion } from "../../store/answers";
 
 const { useSelector, useDispatch } = require('react-redux');
 
@@ -34,6 +35,13 @@ const SpecificQuestion = () => {
         dispatch(getAllQuestions());
         dispatch(getAllAnswers())
     }, []);
+    const handleEditorSubmit = (details, e) => {
+        // e.preventDefault()
+        const val = dispatch(createAnswerByQuestion({details:details},questionId))
+        return val
+        
+
+    }
 
     if (loading) {
         return null;
@@ -76,7 +84,7 @@ const SpecificQuestion = () => {
                     </button>
                 </div>
             </div>
-            {editor && <RichEditor/>}
+            {editor && <RichEditor handleEditorSubmit={handleEditorSubmit} questionId={questionId}/>}
 
            <QuestionCard
             key={id}

@@ -20,6 +20,7 @@ export const answerSlice = createSlice({
                 state.allAnswers.push(createdAnswer);
             })
             .addCase(createAnswerByQuestion.rejected, (state, action) => {
+    
                 console.log('Rejected with value:', action.payload);
             })
             .addCase(updateAnswerByQuestion.fulfilled, (state, action) => {
@@ -83,14 +84,16 @@ export const getAnswersByQuestion = createAsyncThunk(
 );
 
 export const createAnswerByQuestion = createAsyncThunk(
-    'answers/createAnswerByQuestion',
-    async (questionId, { rejectWithValue }) => {
+    '/answers/createAnswerByQuestion',
+    async ({ details },questionId, { rejectWithValue }) => {
         const response = await fetch(`/api/questions/${questionId}/answers`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
+        body: JSON.stringify( {details} ),
         });
+        console.log(response)
 
         if (!response.ok) {
             rejectWithValue(await response.json());
@@ -98,7 +101,7 @@ export const createAnswerByQuestion = createAsyncThunk(
 
         const data = await response.json();
 
-        return data.Answers;
+        return data;
     }
 );
 
