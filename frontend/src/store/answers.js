@@ -125,7 +125,7 @@ export const updateAnswerByQuestion = createAsyncThunk(
 export const deleteAnswer = createAsyncThunk(
     'answers/deleteAnswer',
     async (answerId, { rejectWithValue }) => {
-        const response = await fetch(`/api//answers/${answerId}`, {
+        const response = await fetch(`/api/answers/${answerId}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',

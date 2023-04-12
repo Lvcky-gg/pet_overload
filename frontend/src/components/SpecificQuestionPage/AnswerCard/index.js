@@ -4,14 +4,24 @@ import session from '../../../store/session';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import RichEditor from '../../RichTextEditor';
+
+import { deleteAnswer } from '../../../store/answers';
+import DeleteButton from '../../UserProfile/ActivityLists/DeleteButton';
+import { authenticate } from '../../../store/session';
+import { redirect } from 'react-router-dom';
 import { updateAnswerByQuestion } from '../../../store/answers';
 
-const AnswerCard = ({ id, details, votes_score, user_id }) => {
-    const [richTextEditor, setRichTextEditor] = useState(false);
-    const dispatch = useDispatch();
+
+const AnswerCard = ({details, votes_score, userId, id, isDelete, setIsDelete}) => {
+    const [richTextEditor, setRichTextEditor] = useState(false)
+   
+    const dispatch = useDispatch()
+
     const upvoteArrowRef = useRef(null);
     const downvoteArrowRef = useRef(null);
     const sessionUser = useSelector((state) => state.session.user);
+    // const currUser = useSelector((state)=>state.)
+    const answerId = id
     const handleVoteArrowClick = (arrowRef) => {
         arrowRef.current.classList.add('fa-beat');
 
@@ -19,17 +29,20 @@ const AnswerCard = ({ id, details, votes_score, user_id }) => {
             arrowRef.current.classList.remove('fa-beat');
         }, 800);
     };
-    const handleDeleteClick = (e) => {
-        e.preventDefault();
-        let txt;
-        if (window.confirm('Are you sure?')) {
-            txt = true;
-        } else {
-            txt = false;
-        }
-        console.log(txt);
-        //here we can delete
-    };
+
+    // useEffect(() => {
+    //     dispatch(authenticate());
+    // }, [dispatch, isDelete]);
+
+
+    const handleDelete = () => {
+        dispatch(deleteAnswer(answerId))
+        // setIsDelete(!isDelete)
+        // redirect(`/all-questions/${answerId}`)
+        //   console.log(answers)
+    }
+
+
 
     const handleEditorSubmit = (e, { details, answerId }) => {
         e.preventDefault();
@@ -38,13 +51,16 @@ const AnswerCard = ({ id, details, votes_score, user_id }) => {
         );
         return val;
     };
-    console.log(sessionUser.id);
+
+
 
     const handleEditClick = (e) => {
+
         e.preventDefault();
         setRichTextEditor(!richTextEditor);
     };
     useEffect(() => {}, [richTextEditor]);
+
     return (
         <div className="question-card">
             <div className="row">
@@ -67,23 +83,15 @@ const AnswerCard = ({ id, details, votes_score, user_id }) => {
                 <div className="title-description-col">
                     <p>{details}</p>
 
-                    {sessionUser.id === user_id && (
-                        <div className="answerCardButtonContainer">
-                            <button
-                                id="answerCardButton"
-                                className="modalButton"
-                                onClick={handleEditClick}
-                            >
-                                Edit
-                            </button>
-                            <button
-                                id="answerCardButton"
-                                className="modalButton"
-                                onClick={handleDeleteClick}
-                            >
-                                Delete
-                            </button>
-                        </div>
+                    
+
+                    {sessionUser.id === userId &&(
+
+                    <div className='answerCardButtonContainer'>
+                        <button id="answerCardButton" className='modalButton' onClick={handleEditClick}>Edit</button>
+                        <DeleteButton className="modalButton" onDelete={handleDelete} setIsDelete={setIsDelete} type="answer" id={answerId}></DeleteButton>
+                    </div>
+
                     )}
                 </div>
             </div>
