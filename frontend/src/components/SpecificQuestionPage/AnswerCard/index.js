@@ -30,6 +30,7 @@ const AnswerCard = ({details, votes_score, user_id }) => {
           console.log(txt)
           //here we can delete
     }
+    console.log(sessionUser.id)
 
     const handleEditClick = (e) => {
         e.preventDefault()
@@ -59,7 +60,7 @@ const AnswerCard = ({details, votes_score, user_id }) => {
                     <p>{details}</p>
                     
                     
-                    {sessionUser.user.id===user_id &&(
+                    {sessionUser.id === user_id &&(
                     <div className='answerCardButtonContainer'>
                         <button id="answerCardButton" className='modalButton' onClick={handleEditClick}>Edit</button>
                         <button id="answerCardButton" className='modalButton' onClick={handleDeleteClick}>Delete</button>

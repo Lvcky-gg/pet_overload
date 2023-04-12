@@ -21,6 +21,7 @@ import { Footer } from './components/footer';
 import SearchResults from './components/SearchResults';
 import SpecificQuestion from './components/SpecificQuestionPage';
 import Sidebar from './components/Sidebar';
+import AllUsersPage from './components/allUsersPage'
 
 function App() {
     const dispatch = useDispatch();
@@ -35,7 +36,8 @@ function App() {
     const showSidebar =
         location.pathname.startsWith('/all-questions') ||
         location.pathname.startsWith('/all-questions/search') ||
-        location.pathname.startsWith('/user/profile');
+        location.pathname.startsWith('/user/profile')||
+        location.pathname.startsWith('/all-users');
 
     return (
         <>
@@ -52,6 +54,11 @@ function App() {
                             exact
                             path="/all-questions/"
                             element={<AllQuestionsPage />}
+                        />
+                        <Route
+                            exact
+                            path="/all-users/"
+                            element={<AllUsersPage />}
                         />
                         <Route
                             path="/all-questions/search"
