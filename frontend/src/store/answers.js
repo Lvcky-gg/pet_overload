@@ -85,13 +85,13 @@ export const getAnswersByQuestion = createAsyncThunk(
 
 export const createAnswerByQuestion = createAsyncThunk(
     '/answers/createAnswerByQuestion',
-    async ({ details },questionId, { rejectWithValue }) => {
+    async ({ details,questionId }, { rejectWithValue }) => {
         const response = await fetch(`/api/questions/${questionId}/answers`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-        body: JSON.stringify( {details} ),
+        body: JSON.stringify( details ),
         });
         console.log(response)
 

@@ -35,9 +35,10 @@ const SpecificQuestion = () => {
         dispatch(getAllQuestions());
         dispatch(getAllAnswers())
     }, []);
-    const handleEditorSubmit = (details, e) => {
-        // e.preventDefault()
-        const val = dispatch(createAnswerByQuestion({details:details},questionId))
+    const handleEditorSubmit = (e, {details,questionId}) => {
+        e.preventDefault()
+        console.log('Hello World', details)
+        const val = dispatch(createAnswerByQuestion({details:details,questionId:questionId}))
         return val
         
 

@@ -26,6 +26,7 @@ const RichEditor = ({ handleEditorSubmit, details,questionId }) => {
         },
         emptyLineBeforeBlock: true,
     };
+    // console.log(editorState)
 
     const rawContentState = convertToRaw(editorState.getCurrentContent());
     const markup = draftToMarkdown(contentState, hashConfig, config);
@@ -42,7 +43,7 @@ const RichEditor = ({ handleEditorSubmit, details,questionId }) => {
             .replace(/\*(.*)\*/gim, '<i>$1</i>'); // italic text
         return toHTML.trim(); // using trim method to remove whitespace
     };
-
+    // console.log(editorState)
     //HTML STRING CAN BE PASSED TO BACKEND
     const htmlString = markdownParser(markup);
     //THIS IS HOW WE PARSE
@@ -58,6 +59,7 @@ const RichEditor = ({ handleEditorSubmit, details,questionId }) => {
     useEffect(() => {
         setcontentState(rawContentState);
     }, [editorState]);
+// }, []);
 
     return (
         <div className="editor">
@@ -68,8 +70,8 @@ const RichEditor = ({ handleEditorSubmit, details,questionId }) => {
                 editorClassName="editor-class"
                 toolbarClassName="toolbar-class"
             />
-            <div className="preview" dangerouslySetInnerHTML={theObj}></div>
-            <button className="modalButton" onSubmit={handleEditorSubmit({details:htmlString})}>
+            {/* <div className="preview" dangerouslySetInnerHTML={theObj}></div> */}
+            <button className="modalButton" onSubmit={(e)=>handleEditorSubmit(e,{details:htmlString, questionId:questionId})}>
                 Submit
             </button>
         </div>
