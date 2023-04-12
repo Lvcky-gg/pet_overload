@@ -84,12 +84,13 @@ export const getAnswersByQuestion = createAsyncThunk(
 
 export const createAnswerByQuestion = createAsyncThunk(
     'answers/createAnswerByQuestion',
-    async (questionId, { rejectWithValue }) => {
+    async ({ details, questionId }, { rejectWithValue }) => {
         const response = await fetch(`/api/questions/${questionId}/answers`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
+            body: JSON.stringify(details),
         });
 
         if (!response.ok) {
@@ -98,18 +99,19 @@ export const createAnswerByQuestion = createAsyncThunk(
 
         const data = await response.json();
 
-        return data.Answers;
+        return data;
     }
 );
 
 export const updateAnswerByQuestion = createAsyncThunk(
     'answers/updateAnswerByQuestion',
-    async (answerId, { rejectWithValue }) => {
+    async ({ details, answerId }, { rejectWithValue }) => {
         const response = await fetch(`/api/answers/${answerId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
+            body: JSON.stringify(details),
         });
         if (!response.ok) {
             rejectWithValue(await response.json());
@@ -117,7 +119,7 @@ export const updateAnswerByQuestion = createAsyncThunk(
 
         const data = await response.json();
 
-        return data.Answers;
+        return data;
     }
 );
 export const deleteAnswer = createAsyncThunk(

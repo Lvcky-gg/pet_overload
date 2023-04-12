@@ -4,11 +4,11 @@ import session from '../../../store/session';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import RichEditor from '../../RichTextEditor';
+import { updateAnswerByQuestion } from '../../../store/answers';
 
-
-const AnswerCard = ({details, votes_score, user_id }) => {
-    const [richTextEditor, setRichTextEditor] = useState(false)
-    const dispatch = useDispatch()
+const AnswerCard = ({ id, details, votes_score, user_id }) => {
+    const [richTextEditor, setRichTextEditor] = useState(false);
+    const dispatch = useDispatch();
     const upvoteArrowRef = useRef(null);
     const downvoteArrowRef = useRef(null);
     const sessionUser = useSelector((state) => state.session.user);
@@ -20,23 +20,31 @@ const AnswerCard = ({details, votes_score, user_id }) => {
         }, 800);
     };
     const handleDeleteClick = (e) => {
-        e.preventDefault()
+        e.preventDefault();
         let txt;
-        if (window.confirm("Are you sure?")) {
+        if (window.confirm('Are you sure?')) {
             txt = true;
-          } else {
+        } else {
             txt = false;
-          }
-          console.log(txt)
-          //here we can delete
-    }
-    console.log(sessionUser.id)
+        }
+        console.log(txt);
+        //here we can delete
+    };
+
+    const handleEditorSubmit = (e, { details, answerId }) => {
+        e.preventDefault();
+        const val = dispatch(
+            updateAnswerByQuestion({ details: details, answerId: answerId })
+        );
+        return val;
+    };
+    console.log(sessionUser.id);
 
     const handleEditClick = (e) => {
-        e.preventDefault()
-        setRichTextEditor(!richTextEditor)
-    }
-    useEffect(()=>{},[richTextEditor])
+        e.preventDefault();
+        setRichTextEditor(!richTextEditor);
+    };
+    useEffect(() => {}, [richTextEditor]);
     return (
         <div className="question-card">
             <div className="row">
@@ -58,18 +66,36 @@ const AnswerCard = ({details, votes_score, user_id }) => {
 
                 <div className="title-description-col">
                     <p>{details}</p>
-                    
-                    
-                    {sessionUser.id === user_id &&(
-                    <div className='answerCardButtonContainer'>
-                        <button id="answerCardButton" className='modalButton' onClick={handleEditClick}>Edit</button>
-                        <button id="answerCardButton" className='modalButton' onClick={handleDeleteClick}>Delete</button>
-                    </div>
+
+                    {sessionUser.id === user_id && (
+                        <div className="answerCardButtonContainer">
+                            <button
+                                id="answerCardButton"
+                                className="modalButton"
+                                onClick={handleEditClick}
+                            >
+                                Edit
+                            </button>
+                            <button
+                                id="answerCardButton"
+                                className="modalButton"
+                                onClick={handleDeleteClick}
+                            >
+                                Delete
+                            </button>
+                        </div>
                     )}
-                    
                 </div>
             </div>
-            {richTextEditor && (<div><RichEditor details={details}></RichEditor></div>)}
+            {richTextEditor && (
+                <div>
+                    <RichEditor
+                        details={details}
+                        answerId={id}
+                        handleEditorSubmit={handleEditorSubmit}
+                    ></RichEditor>
+                </div>
+            )}
         </div>
     );
 };

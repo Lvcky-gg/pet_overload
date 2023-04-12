@@ -10,6 +10,7 @@ import QuestionCard from './QuestionCard';
 import Button from '../Button';
 import './AllQuestionsPage.css';
 import { getQuestionVotes } from '../../store/questionVotes';
+import { createAnswerByQuestion } from '../../store/answers';
 // import Sidebar from '../Sidebar';
 
 const { useSelector, useDispatch } = require('react-redux');
@@ -23,9 +24,9 @@ const AllQuestionsPage = () => {
 
     // const answers = useSelector((state) => state.answers.allAnswers);
     useEffect(() => {
-            dispatch(getAllQuestions());
-            dispatch(getAllAnswers());
-            dispatch(getQuestionVotes())
+        dispatch(getAllQuestions());
+        dispatch(getAllAnswers());
+        dispatch(getQuestionVotes());
     }, [dispatch]);
 
     const sortByNewest = () => {
