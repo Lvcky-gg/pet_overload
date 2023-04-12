@@ -129,6 +129,7 @@ code {
 }
 .main.container {
     display: flex;
+    height: 100%;
 }
 .main.container > .sideBar {
     flex: 0.05;
@@ -140,7 +141,7 @@ code {
 
 body::-webkit-scrollbar {
     background: var(--background-color);
-    width: 20px;
+    width: 10px;
 }
 
 body::-webkit-scrollbar-track {
@@ -149,9 +150,9 @@ body::-webkit-scrollbar-track {
 }
 
 body::-webkit-scrollbar-thumb {
-    background-color: #0e67b4;
+    background-color: #d2d5d9;
     /* color of the scroll thumb */
-    border-radius: 20px;
+    border-radius: 5px;
     /* roundness of the scroll thumb */
-    height: 30px;
+    height: 10px;
 }
