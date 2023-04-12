@@ -11,15 +11,18 @@ import './editor.css';
 
 //handle submission is meant to be passed down here to tell it how to submit data
 
-const RichEditor = ({ handleEditorSubmit, details,questionId }) => {
+const RichEditor = ({ handleEditorSubmit, details,questionId, answerId }) => {
     const [editorState, setEditorState] = useState(() =>
         EditorState.createEmpty()
     );
+    console.log(details)
     const [contentState, setcontentState] = useState(details);
     const hashConfig = {
         trigger: '#',
         separator: ' ',
     };
+
+
     const config = {
         blockTypesMapping: {
             /* mappings */
@@ -55,6 +58,10 @@ const RichEditor = ({ handleEditorSubmit, details,questionId }) => {
     // >
 
     // </div>
+    const submitMe = (e, htmlString, questionId, answerId)=>{
+        console.log('Hello World', details)
+       
+        return handleEditorSubmit(e,{details:htmlString, questionId:questionId, answerId:answerId})}
 
     useEffect(() => {
         setcontentState(rawContentState);
@@ -71,7 +78,7 @@ const RichEditor = ({ handleEditorSubmit, details,questionId }) => {
                 toolbarClassName="toolbar-class"
             />
             {/* <div className="preview" dangerouslySetInnerHTML={theObj}></div> */}
-            <button className="modalButton" onSubmit={(e)=>handleEditorSubmit(e,{details:htmlString, questionId:questionId})}>
+            <button className="modalButton" type="submit" onClick={(e)=>submitMe(e, htmlString, questionId, answerId)}>
                 Submit
             </button>
         </div>

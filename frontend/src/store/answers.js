@@ -93,7 +93,6 @@ export const createAnswerByQuestion = createAsyncThunk(
             },
         body: JSON.stringify( details ),
         });
-        console.log(response)
 
         if (!response.ok) {
             rejectWithValue(await response.json());
@@ -107,12 +106,13 @@ export const createAnswerByQuestion = createAsyncThunk(
 
 export const updateAnswerByQuestion = createAsyncThunk(
     'answers/updateAnswerByQuestion',
-    async (answerId, { rejectWithValue }) => {
+    async ({ details, answerId}, { rejectWithValue }) => {
         const response = await fetch(`/api/answers/${answerId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
+            body: JSON.stringify( details ),
         });
         if (!response.ok) {
             rejectWithValue(await response.json());
@@ -120,7 +120,7 @@ export const updateAnswerByQuestion = createAsyncThunk(
 
         const data = await response.json();
 
-        return data.Answers;
+        return data;
     }
 );
 export const deleteAnswer = createAsyncThunk(
