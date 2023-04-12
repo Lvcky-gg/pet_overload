@@ -1,14 +1,16 @@
 .search-bar-container {
     position: relative;
-    width: 400px;
-    margin: 0;
+    /* width: 400px; */
+    flex-grow: 1;
+    margin-left: 10%;
+    margin-right: 10%;
     padding: 0;
 }
 
 .search-dropdown {
     box-sizing: border-box;
     position: absolute;
-    top: 70%;
+    top: 55px;
     left: 0;
     width: 100%;
     background-color: #fff;
@@ -34,7 +36,7 @@
     box-sizing: border-box;
     height: 35px;
     position: relative;
-    top: 40px;
+    /* top: 5px; */
     padding-left: 40px;
     background-color: #fff;
     border: 1px solid #d2d5d9;
@@ -44,7 +46,7 @@
 .searchbar-wrapper i {
     position: absolute;
     left: 15px;
-    top: 50px;
+    top: 10px;
     color: gray;
     z-index: 0;
 }
