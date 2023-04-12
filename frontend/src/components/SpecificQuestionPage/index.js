@@ -6,6 +6,7 @@ import { getAllQuestions } from '../../store/questions';
 import './SpecificQuestion.css';
 import AnswerCard from './AnswerCard';
 import RichEditor from '../RichTextEditor';
+import { createAnswerByQuestion } from '../../store/answers';
 
 const { useSelector, useDispatch } = require('react-redux');
 
