@@ -4,6 +4,7 @@ import session from '../../../store/session';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import RichEditor from '../../RichTextEditor';
+import parse from 'html-react-parser'
 
 import { deleteAnswer } from '../../../store/answers';
 import DeleteButton from '../../UserProfile/ActivityLists/DeleteButton';
@@ -81,7 +82,7 @@ const AnswerCard = ({details, votes_score, userId, id, isDelete, setIsDelete}) =
                 </div>
 
                 <div className="title-description-col">
-                    <p>{details}</p>
+                    <div>{parse(details)}</div>
 
                     
 

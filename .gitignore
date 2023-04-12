@@ -201,5 +201,6 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+.vscode/
 
-# End of https://www.gitignore.io/api/osx
+# End of https://www.gitignore.io/api/osx.vscode/
