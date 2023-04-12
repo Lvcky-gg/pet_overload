@@ -12,9 +12,8 @@ questions_routes_blueprint = Blueprint("questions", __name__)
 def create_answers(id):
     question = Question.query.get(id)
     if question:
-        print(request.json)
-        if request.json != "":
-            answer = Answer(details=request.json,created_at =datetime.now(),updated_at=datetime.now(),user_id = int(session["_user_id"]),question_id = id)
+        if request.form["details"] != "":
+            answer = Answer(details=request.form["details"],created_at =datetime.now(),updated_at=datetime.now(),user_id = int(session["_user_id"]),question_id = id)
             db.session.add(answer)
             db.session.commit()
             return answer.to_dict()
