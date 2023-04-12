@@ -48,11 +48,19 @@ function ProfileButton({ user }) {
                     <>
                         <li>{user.username}</li>
                         <li>{user.email}</li>
-                        <li><NavLink to='/'>Home</NavLink></li>
-                        <li><NavLink to='/user-profile'>Profile</NavLink></li>
-                        <li><NavLink to='/all-questions'>Questions</NavLink></li>
-                        <li><NavLink to='/all-users'>Users</NavLink></li>
-                        <li><NavLink to='/team'>Our Team</NavLink></li>
+                        {/* home question user link in the side bar  */}
+                        {/* <li><NavLink to='/'>Home</NavLink></li> */}
+
+                        {/* <li>
+                            <NavLink to="/all-questions/">Questions</NavLink>
+                        </li> */}
+                        {/* <li>
+                            <NavLink to="/all-users">Users</NavLink>
+                        </li> */}
+                        {/* we can have it when the backend is ready for it */}
+                        {/* <li>
+                            <NavLink to="/team">Our Team</NavLink>
+                        </li> */}
                         <NavLink exact="true" to="/user/profile">
                             Profile
                         </NavLink>
