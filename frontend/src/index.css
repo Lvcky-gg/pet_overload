@@ -129,7 +129,12 @@ code {
 }
 .main.container {
     display: flex;
-    height: 100%;
+    /* height: calc(100%-120px); */
+    /* min-height: 1200px; */
+    /* height: 100vh; */
+    flex-grow: 1;
+    min-height: 100vh;
+    margin-top: 70px;
 }
 .main.container > .sideBar {
     flex: 0.05;
@@ -156,3 +161,6 @@ body::-webkit-scrollbar-thumb {
     /* roundness of the scroll thumb */
     height: 10px;
 }
+/* #root {
+    min-height: 100vh;
+} */

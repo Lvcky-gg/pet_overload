@@ -48,7 +48,8 @@
 }
 
 .nav {
-    position: sticky;
+    /* changed to fixed to the top */
+    position: fixed;
     top: 0;
     display: flex;
     justify-content: space-between;

@@ -5,17 +5,22 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: fixed;
-    bottom: 0;
     padding-left: 15%;
     padding-right: 15%;
     box-sizing: border-box;
     font-size: 12px;
 }
 .footer-img-container {
-    height: 150px;
-    overflow: hidden;
+    height: 50px;
+    width: 150px;
+    background-image: url('../footer/petoverload-1__2__720.png');
+    background-size: cover;
+    background-position: center;
 }
-.footer img {
+/* no need anymore */
+/* .footer img {
     height: 150px;
-}
+    position: relative;
+    margin-bottom: 150px;
+
+} */
