@@ -80,7 +80,7 @@ def update_answer(id):
         user_id = int(answer.user_id)
         check_user_id = int(session["_user_id"])
         if user_id == check_user_id:
-            answer.details = request.form["details"]
+            answer.details = request.json
             db.session.commit()
             answercheck = Answer.query.get(id)
             return jsonify(answer.to_dict())
