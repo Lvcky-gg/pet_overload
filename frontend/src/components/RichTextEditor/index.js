@@ -11,25 +11,22 @@ import './editor.css';
 
 //handle submission is meant to be passed down here to tell it how to submit data
 
-const RichEditor = ({ handleEditorSubmit, details,questionId, answerId }) => {
+const RichEditor = ({ handleEditorSubmit, details }) => {
     const [editorState, setEditorState] = useState(() =>
         EditorState.createEmpty()
     );
-    console.log(details)
     const [contentState, setcontentState] = useState(details);
     const hashConfig = {
         trigger: '#',
         separator: ' ',
     };
-
-
     const config = {
         blockTypesMapping: {
             /* mappings */
         },
         emptyLineBeforeBlock: true,
     };
-    // console.log(editorState)
+    console.log(contentState);
 
     const rawContentState = convertToRaw(editorState.getCurrentContent());
     const markup = draftToMarkdown(contentState, hashConfig, config);
@@ -46,7 +43,7 @@ const RichEditor = ({ handleEditorSubmit, details,questionId, answerId }) => {
             .replace(/\*(.*)\*/gim, '<i>$1</i>'); // italic text
         return toHTML.trim(); // using trim method to remove whitespace
     };
-    // console.log(editorState)
+
     //HTML STRING CAN BE PASSED TO BACKEND
     const htmlString = markdownParser(markup);
     //THIS IS HOW WE PARSE
@@ -58,15 +55,10 @@ const RichEditor = ({ handleEditorSubmit, details,questionId, answerId }) => {
     // >
 
     // </div>
-    const submitMe = (e, htmlString, questionId, answerId)=>{
-        console.log('Hello World', details)
-       
-        return handleEditorSubmit(e,{details:htmlString, questionId:questionId, answerId:answerId})}
 
     useEffect(() => {
         setcontentState(rawContentState);
     }, [editorState]);
-// }, []);
 
     return (
         <div className="editor">
@@ -77,8 +69,8 @@ const RichEditor = ({ handleEditorSubmit, details,questionId, answerId }) => {
                 editorClassName="editor-class"
                 toolbarClassName="toolbar-class"
             />
-            {/* <div className="preview" dangerouslySetInnerHTML={theObj}></div> */}
-            <button className="modalButton" type="submit" onClick={(e)=>submitMe(e, htmlString, questionId, answerId)}>
+            <div className="preview" dangerouslySetInnerHTML={theObj}></div>
+            <button className="modalButton" onSubmit={handleEditorSubmit}>
                 Submit
             </button>
         </div>

@@ -4,10 +4,9 @@ import session from '../../../store/session';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import RichEditor from '../../RichTextEditor';
-import { updateAnswerByQuestion } from '../../../store/answers';
 
 
-const AnswerCard = ({id,details, votes_score, user_id }) => {
+const AnswerCard = ({details, votes_score, user_id }) => {
     const [richTextEditor, setRichTextEditor] = useState(false)
     const dispatch = useDispatch()
     const upvoteArrowRef = useRef(null);
@@ -31,13 +30,7 @@ const AnswerCard = ({id,details, votes_score, user_id }) => {
           console.log(txt)
           //here we can delete
     }
-    const handleEditorSubmit = ( e,{details,answerId}) => {
-        e.preventDefault()
-        const val = dispatch(updateAnswerByQuestion({details:details,answerId:answerId}))
-        return val
-        
-
-    }
+    console.log(sessionUser.id)
 
     const handleEditClick = (e) => {
         e.preventDefault()
@@ -76,7 +69,7 @@ const AnswerCard = ({id,details, votes_score, user_id }) => {
                     
                 </div>
             </div>
-            {richTextEditor && (<div><RichEditor details={details} answerId={id} handleEditorSubmit={handleEditorSubmit}></RichEditor></div>)}
+            {richTextEditor && (<div><RichEditor details={details}></RichEditor></div>)}
         </div>
     );
 };
