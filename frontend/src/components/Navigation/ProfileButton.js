@@ -48,14 +48,22 @@ function ProfileButton({ user }) {
                     <>
                         <li>{user.username}</li>
                         <li>{user.email}</li>
-                        <li><NavLink to='/'>Home</NavLink></li>
-                        <li><NavLink to='/user-profile'>Profile</NavLink></li>
-                        <li><NavLink to='/all-questions'>Questions</NavLink></li>
-                        <li><NavLink to='/all-users'>Users</NavLink></li>
-                        <li><NavLink to='/team'>Our Team</NavLink></li>
-                        <NavLink exact="true" to="/user/profile">
-                            Profile
-                        </NavLink>
+                        <li>
+                            <NavLink to="/">Home</NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/user/profile">Profile</NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/all-questions">Questions</NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/all-users">Users</NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/team">Our Team</NavLink>
+                        </li>
+
                         <li>
                             <button
                                 className="modalButton"
