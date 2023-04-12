@@ -11,8 +11,11 @@ import { createAnswerByQuestion } from '../../store/answers';
 const { useSelector, useDispatch } = require('react-redux');
 
 const SpecificQuestion = () => {
-    const [hidden, setHidden] = useState(false);
-    const [editor, setEditor] = useState(false);
+
+    const [hidden, setHidden] = useState(false)
+    const [editor, setEditor] = useState(false)
+    const [isDelete, setIsDelete] = useState(false);
+    
 
     const questions = useSelector((state) => state.questions.allQuestions);
     const loading = useSelector((state) => state.questions.loading);
@@ -30,8 +33,10 @@ const SpecificQuestion = () => {
 
     useEffect(() => {
         dispatch(getAllQuestions());
-        dispatch(getAllAnswers());
-    }, []);
+
+        dispatch(getAllAnswers())
+    }, [isDelete]);
+
 
     const handleEditorSubmit = (e, { details, questionId }) => {
         e.preventDefault();
@@ -51,22 +56,24 @@ const SpecificQuestion = () => {
     let answers_count;
     let user_id;
 
-    const question = questions.filter(
-        (question) => +questionId === question.id
-    );
-    if (question[0]) {
-        id = question[0].id;
-        title = question[0].title;
-        details = question[0].details;
-        votes_score = question[0].votes_count;
-        answers_count = question[0].answers_count;
-        user_id = question[0].user_id;
+
+    const question = questions.filter((question)=>+questionId === question.id)
+    if (question[0]){
+        // console.log(question[0])
+        id = question[0].id
+        title = question[0].title
+        details = question[0].details
+        votes_score= question[0].votes_count
+        answers_count = question[0].answers_count
+        user_id = question[0].user_id
+
     }
     // const {id, title, details, votes_score, answers_count} = question[0]
 
-    const answer = answers.filter(
-        (answer) => +questionId === answer.questionId
-    );
+    // console.log(userId)
+    const answer = answers.filter((answer)=> +questionId === answer.questionId)
+    console.log(answer)
+
 
     return (
         <>
@@ -117,6 +124,33 @@ const SpecificQuestion = () => {
                             ))}
                     </div>
                 </div>
+
+            </div>
+            {editor && <RichEditor/>}
+
+           <QuestionCard
+            key={id}
+            id={id}
+            // title={title}
+            details={details}
+            votes_score={votes_score}
+            showAnswers={showAnswers}
+
+            answers_count={answers_count}></QuestionCard> 
+
+            <div>
+            {hidden && answer.map(
+                (a) => (
+                    <AnswerCard
+                    key = {a.id}
+                    id={a.id}
+                    details={a.details}
+                    votes_score={votes_score}
+                    userId={a.userId}
+                    isDelete={isDelete}
+                    setIsDelete={setIsDelete}
+                    ></AnswerCard>
+
             )}
         </>
     );
