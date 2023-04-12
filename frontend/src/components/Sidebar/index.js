@@ -5,9 +5,15 @@ import './sidebar.css';
 const Sidebar = () => {
     return (
         <div className="sideBar">
-            <NavLink to="/">Home</NavLink>
-            <NavLink to="/all-questions">Questions</NavLink>
-            <NavLink to="/all-users">Users</NavLink>
+            <NavLink className="sidebar-link" to="/">
+                Home
+            </NavLink>
+            <NavLink className="sidebar-link" to="/all-questions">
+                Questions
+            </NavLink>
+            <NavLink className="sidebar-link" to="/all-users">
+                Users
+            </NavLink>
         </div>
     );
 };
