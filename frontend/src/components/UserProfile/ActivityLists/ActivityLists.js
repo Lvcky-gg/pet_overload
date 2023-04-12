@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import parse from 'html-react-parser'
 
 import dateFormater from '../../../utils/dateFormater';
 import {
@@ -241,7 +242,8 @@ const ActivityList = ({
                                 <p id="question-title">
                                     {getQuestion(answer.questionId).title}
                                 </p>
-                                <p>{answer.details}</p>
+                                {/* <p>{answer.details}</p> */}
+                                <div id="centerAnswer">{parse(answer.details)}</div>
                                 <p>{dateFormater(answer.createdAt)}</p>
                                 <p>{answer.answerScore}</p>
 

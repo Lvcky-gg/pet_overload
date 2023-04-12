@@ -6,6 +6,7 @@ import { getAllQuestions } from '../../store/questions';
 import './SpecificQuestion.css';
 import AnswerCard from './AnswerCard';
 import RichEditor from '../RichTextEditor';
+import { createAnswerByQuestion } from '../../store/answers';
 
 const { useSelector, useDispatch } = require('react-redux');
 
@@ -81,7 +82,7 @@ const SpecificQuestion = () => {
                     {/* <div>
                 <h1>{title}</h1>
             </div> */}
-                    <div className="all-questions-header">
+                    <div className="all-answer-header">
                         <h1>{title}</h1>
                         <div className="ask-question-container">
                             <button
@@ -99,35 +100,8 @@ const SpecificQuestion = () => {
                             questionId={questionId}
                         />
                     )}
-
-                    <QuestionCard
-                        key={id}
-                        id={id}
-                        // title={title}
-                        details={details}
-                        votes_score={votes_score}
-                        showAnswers={showAnswers}
-                        answers_count={answers_count}
-                    ></QuestionCard>
-
-                    <div>
-                        {hidden &&
-                            answer.map(({ id, details, votes_score }) => (
-                                <AnswerCard
-                                    key={id}
-                                    id={id}
-                                    details={details}
-                                    votes_score={votes_score}
-                                    user_id={user_id}
-                                ></AnswerCard>
-                            ))}
-                    </div>
-                </div>
-
-            </div>
-            {editor && <RichEditor/>}
-
            <QuestionCard
+           className="qCard"
             key={id}
             id={id}
             // title={title}
@@ -150,9 +124,13 @@ const SpecificQuestion = () => {
                     setIsDelete={setIsDelete}
                     ></AnswerCard>
 
-            )}
+            ))}
+            </div>
+            </div>)}
+            
         </>
-    );
+        )
+
 };
 
 export default SpecificQuestion;

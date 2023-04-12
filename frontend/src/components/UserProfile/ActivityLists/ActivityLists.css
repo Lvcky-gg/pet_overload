@@ -33,6 +33,13 @@
     overflow-wrap: break-word;
     margin-left: 10px;
 }
+#centerAnswer{
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
 .user-activity-list.list-item {
     background-color: #ffffff;
     margin-top: 10px;
