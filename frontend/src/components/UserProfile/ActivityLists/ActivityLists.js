@@ -259,7 +259,7 @@ const ActivityList = ({
                             </li>
                         ))
                     ) : (
-                        <li id="no-record-msg">No Recorded Questions Voted</li>
+                        <li id="no-record-msg">No Recorded Answers Asked</li>
                     )}
                 </ul>
             )}

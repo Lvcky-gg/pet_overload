@@ -5,13 +5,37 @@
     align-items: center;
     padding: 5%;
 }
+.modalSignUp h1 {
+    margin-bottom: 0;
+}
 .modalLogo {
     height: 100px;
 }
 .modalSignUp form {
-    width: 50%;
+    width: 90%;
+    margin: auto;
+    padding: 10px 40px;
+    box-sizing: border-box;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto;
 }
-
+.modalSignUp form ul {
+    box-sizing: border-box;
+    margin: 0 auto 10px auto;
+    padding: 10px 15px;
+    width: 90%;
+    list-style: none;
+    background-color: rgba(252, 252, 252, 0.2);
+    font-size: 12px;
+    font-weight: 300;
+    text-align: left;
+}
+.modalSignUp form ul li {
+    color: red;
+}
 .modalSignUp form div {
     display: flex;
     flex-direction: column;
@@ -24,7 +48,7 @@
     border-radius: 5%;
 }
 .modalSignUp form div input {
-    width: 50%;
+    width: 80%;
 }
 
 .modalButton {
