@@ -3,15 +3,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import { signUp } from '../../store/session';
 import './SignupForm.css';
-import logo from './favicon2_720.png'
+import logo from './favicon2_720.png';
 
 function SignupFormModal() {
     const dispatch = useDispatch();
     // const loading = useSelector((state) => state.session.loading);
     const user = useSelector((state) => state.session.user);
-    const validationErrors = useSelector((state) => state.session.validationErrors);
+    const validationErrors = useSelector(
+        (state) => state.session.validationErrors
+    );
     const error = useSelector((state) => state.session.error);
-
+    const [errors, setErrors] = useState('');
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -24,6 +26,7 @@ function SignupFormModal() {
         if (password === confirmPassword) {
             dispatch(signUp({ username, email, password }));
         }
+        setErrors(['Password entered is not matching']);
     };
 
     useEffect(() => {
@@ -32,24 +35,27 @@ function SignupFormModal() {
             closeModal();
         }
     }, [user, closeModal]);
-
+    let errorObject = [];
+    if (validationErrors) {
+        errorObject = Object.values(
+            validationErrors.reduce((acc, error) => {
+                const [key, value] = error.split(' : ');
+                acc[key] = value;
+                return acc;
+            }, {})
+        );
+    }
+    if (errors) errorObject.push(errors);
     return (
-        <div className='modalSignUp'>
-            <img src={logo} alt="#" className='modalLogo'></img>
+        <div className="modalSignUp">
+            <img src={logo} alt="#" className="modalLogo"></img>
             <h1>Sign Up</h1>
             <form onSubmit={handleSubmit}>
-                {error && <div>{error}</div>}
+                {/* {error && <div>{error}</div>} */}
 
-                <ul>
-                    {validationErrors && validationErrors.map((error, idx) => (
-                        <li key={idx}>{error}</li>
-                    ))}
-                </ul>
                 <div>
-                <label>
-                    Email
-                </label>
-                <input
+                    <label>Email</label>
+                    <input
                         type="text"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
@@ -57,10 +63,8 @@ function SignupFormModal() {
                     />
                 </div>
                 <div>
-                <label>
-                    Username
-                </label>
-                <input
+                    <label>Username</label>
+                    <input
                         type="text"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
@@ -68,10 +72,8 @@ function SignupFormModal() {
                     />
                 </div>
                 <div>
-                <label>
-                    Password
-                </label>
-                <input
+                    <label>Password</label>
+                    <input
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
@@ -79,22 +81,32 @@ function SignupFormModal() {
                     />
                 </div>
                 <div>
-                <label>
-                    Confirm Password
-
-                </label>
-                <input
+                    <label>Confirm Password</label>
+                    <input
                         type="password"
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         required
                     />
                 </div>
+                <ul className="modal-form-list-err">
+                    {errorObject &&
+                        errorObject.map((error, idx) => (
+                            <li key={idx}>
+                                <span style={{ color: 'red', padding: '5px' }}>
+                                    <i className="fas fa-exclamation-circle"></i>
+                                </span>
+                                {error}
+                            </li>
+                        ))}
+                </ul>
                 <div>
-                <button type="submit" className="modalButton">Sign Up</button>
+                    <button type="submit" className="modalButton">
+                        Sign Up
+                    </button>
                 </div>
             </form>
-    </div>
+        </div>
     );
 }
 

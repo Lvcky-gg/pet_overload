@@ -19,9 +19,17 @@ export const sessionSlice = createSlice({
         builder
             .addCase(authenticate.fulfilled, (state, action) => {
                 state.user = action.payload;
+                state.error = null;
             })
             .addCase(login.fulfilled, (state, action) => {
                 state.user = action.payload;
+                state.error = null;
+                state.validationErrors = null;
+            })
+            .addCase(login.rejected, (state, action) => {
+                state.error = action.payload.message;
+                state.validationErrors = action.payload.errors;
+                state.user = null;
             })
             .addCase(logout.fulfilled, (state) => {
                 state.user = null;
