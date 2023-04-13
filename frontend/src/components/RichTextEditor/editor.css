@@ -20,3 +20,12 @@
     margin-top: 1rem;
     border-top:1px solid gray;
   }
+  .rdw-image-wrapper{
+    visibility: hidden;
+  }
+  /* .rdw-embedded-wrapper img{
+    visibility: hidden;
+  } */
+  /* .rdw-option-wrapper {
+    visibility: hidden;
+  } */

@@ -12,8 +12,9 @@ const { useSelector, useDispatch } = require('react-redux');
 
 const SpecificQuestion = () => {
 
+    const [richTextEditor, setRichTextEditor] = useState(false)
+
     const [hidden, setHidden] = useState(false)
-    const [editor, setEditor] = useState(false)
     const [isDelete, setIsDelete] = useState(false);
     
 
@@ -28,14 +29,18 @@ const SpecificQuestion = () => {
     };
     const showEditor = (e) => {
         e.preventDefault();
-        setEditor(!editor);
+        setRichTextEditor(!richTextEditor);
     };
 
     useEffect(() => {
         dispatch(getAllQuestions());
+        if(answers.length === 0){
+            setHidden(false)
+            dispatch(getAllAnswers())
+        }
 
         dispatch(getAllAnswers())
-    }, [isDelete]);
+    }, [isDelete, richTextEditor]);
 
 
     const handleEditorSubmit = (e, { details, questionId }) => {
@@ -43,6 +48,7 @@ const SpecificQuestion = () => {
         const val = dispatch(
             createAnswerByQuestion({ details: details, questionId: questionId })
         );
+        dispatch(getAllAnswers())
         return val;
     };
 
@@ -59,7 +65,6 @@ const SpecificQuestion = () => {
 
     const question = questions.filter((question)=>+questionId === question.id)
     if (question[0]){
-        // console.log(question[0])
         id = question[0].id
         title = question[0].title
         details = question[0].details
@@ -68,11 +73,7 @@ const SpecificQuestion = () => {
         user_id = question[0].user_id
 
     }
-    // const {id, title, details, votes_score, answers_count} = question[0]
-
-    // console.log(userId)
     const answer = answers.filter((answer)=> +questionId === answer.questionId)
-    console.log(answer)
 
 
     return (
@@ -94,10 +95,12 @@ const SpecificQuestion = () => {
                             </button>
                         </div>
                     </div>
-                    {editor && (
+                    {richTextEditor && (
                         <RichEditor
                             handleEditorSubmit={handleEditorSubmit}
                             questionId={questionId}
+                            setRichTextEditor={setRichTextEditor}
+                            richTextEditor={richTextEditor}
                         />
                     )}
            <QuestionCard
@@ -111,7 +114,7 @@ const SpecificQuestion = () => {
 
             answers_count={answers_count}></QuestionCard> 
 
-            <div>
+            <div className="answerHolder">
             {hidden && answer.map(
                 (a) => (
                     <AnswerCard

@@ -6,11 +6,12 @@ import { useSelector } from 'react-redux';
 import RichEditor from '../../RichTextEditor';
 import parse from 'html-react-parser'
 
-import { deleteAnswer } from '../../../store/answers';
+import { deleteAnswer, getAllAnswers } from '../../../store/answers';
 import DeleteButton from '../../UserProfile/ActivityLists/DeleteButton';
 import { authenticate } from '../../../store/session';
 import { redirect } from 'react-router-dom';
 import { updateAnswerByQuestion } from '../../../store/answers';
+import { getAllQuestions } from '../../../store/questions';
 
 
 const AnswerCard = ({details, votes_score, userId, id, isDelete, setIsDelete}) => {
@@ -21,7 +22,6 @@ const AnswerCard = ({details, votes_score, userId, id, isDelete, setIsDelete}) =
     const upvoteArrowRef = useRef(null);
     const downvoteArrowRef = useRef(null);
     const sessionUser = useSelector((state) => state.session.user);
-    // const currUser = useSelector((state)=>state.)
     const answerId = id
     const handleVoteArrowClick = (arrowRef) => {
         arrowRef.current.classList.add('fa-beat');
@@ -31,16 +31,14 @@ const AnswerCard = ({details, votes_score, userId, id, isDelete, setIsDelete}) =
         }, 800);
     };
 
-    // useEffect(() => {
-    //     dispatch(authenticate());
-    // }, [dispatch, isDelete]);
+
 
 
     const handleDelete = () => {
         dispatch(deleteAnswer(answerId))
-        // setIsDelete(!isDelete)
-        // redirect(`/all-questions/${answerId}`)
-        //   console.log(answers)
+        dispatch(getAllAnswers())
+        dispatch(getAllQuestions())
+
     }
 
 
@@ -49,7 +47,7 @@ const AnswerCard = ({details, votes_score, userId, id, isDelete, setIsDelete}) =
         e.preventDefault();
         const val = dispatch(
             updateAnswerByQuestion({ details: details, answerId: answerId })
-        );
+        ); 
         return val;
     };
 
@@ -63,7 +61,7 @@ const AnswerCard = ({details, votes_score, userId, id, isDelete, setIsDelete}) =
     useEffect(() => {}, [richTextEditor]);
 
     return (
-        <div className="question-card">
+        <div className="answer-card">
             <div className="row">
                 <div className="voting-score">
                     <FontAwesomeIcon
@@ -102,6 +100,8 @@ const AnswerCard = ({details, votes_score, userId, id, isDelete, setIsDelete}) =
                         details={details}
                         answerId={id}
                         handleEditorSubmit={handleEditorSubmit}
+                        richTextEditor={richTextEditor}
+                        setRichTextEditor={setRichTextEditor}
                     ></RichEditor>
                 </div>
             )}
