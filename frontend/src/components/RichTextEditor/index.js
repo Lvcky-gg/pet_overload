@@ -1,21 +1,51 @@
 import React from 'react';
-import { EditorState } from 'draft-js';
+import { EditorState, ContentState} from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { useState } from 'react';
-import { convertToHTML } from 'draft-convert';
+import { convertFromHTML, convertToHTML } from 'draft-convert';
 import { useEffect } from 'react';
 import draftToMarkdown from 'draftjs-to-markdown';
 import { convertToRaw } from 'draft-js';
+import parse from 'html-react-parser'
 import './editor.css';
+import htmlToDraft from 'html-to-draftjs'
+import { useDispatch } from 'react-redux';
+import { getAllAnswers } from '../../store/answers';
+
+
 
 //handle submission is meant to be passed down here to tell it how to submit data
 
-const RichEditor = ({ handleEditorSubmit, details, questionId, answerId }) => {
-    const [editorState, setEditorState] = useState(() =>
-        EditorState.createEmpty()
-    );
+const RichEditor = ({ handleEditorSubmit, details, questionId, answerId,richTextEditor, setRichTextEditor }) => {
+    const dispatch = useDispatch()
+
+
+    
     const [contentState, setcontentState] = useState(details);
+    const [editorState, setEditorState] = useState(() =>
+   
+    EditorState.createEmpty()
+
+);
+useEffect(()=>{
+
+    
+    if (details) {
+
+        const blocksFromHtml = htmlToDraft(details);
+        const { contentBlocks, entityMap } = blocksFromHtml;
+        const pushIn = ContentState.createFromBlockArray(contentBlocks, entityMap);
+        setEditorState(EditorState.createWithContent(pushIn)) 
+    } else {
+        setEditorState(EditorState.createEmpty());
+    }
+},[])
+
+ 
+
+
+    
     const hashConfig = {
         trigger: '#',
         separator: ' ',
@@ -26,7 +56,7 @@ const RichEditor = ({ handleEditorSubmit, details, questionId, answerId }) => {
         },
         emptyLineBeforeBlock: true,
     };
-    console.log(contentState);
+
 
     const rawContentState = convertToRaw(editorState.getCurrentContent());
     const markup = draftToMarkdown(contentState, hashConfig, config);
@@ -55,9 +85,10 @@ const RichEditor = ({ handleEditorSubmit, details, questionId, answerId }) => {
     // >
 
     // </div>
+    console.log(<Editor></Editor>)
 
     const submitMe = (e, htmlString, questionId, answerId) => {
-        console.log('Hello World', details);
+        setRichTextEditor(!richTextEditor)
 
         return handleEditorSubmit(e, {
             details: htmlString,
