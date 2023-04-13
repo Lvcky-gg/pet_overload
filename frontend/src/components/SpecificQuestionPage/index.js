@@ -12,16 +12,18 @@ import { getQuestionVotes } from '../../store/questionVotes';
 const { useSelector, useDispatch } = require('react-redux');
 
 const SpecificQuestion = () => {
+    const questions = useSelector((state) => state.questions.allQuestions);
+    const loading = useSelector((state) => state.questions.loading);
+    const answers = useSelector((state) => state.answers.allAnswers);
+    const questionVotes = useSelector((state)=>state.questionVotes.questionVotes);
+
 
     const [richTextEditor, setRichTextEditor] = useState(false)
-
     const [hidden, setHidden] = useState(false)
     const [isDelete, setIsDelete] = useState(false);
     
 
-    const questions = useSelector((state) => state.questions.allQuestions);
-    const loading = useSelector((state) => state.questions.loading);
-    const answers = useSelector((state) => state.answers.allAnswers);
+
     const dispatch = useDispatch();
 
     const { questionId } = useParams();
@@ -41,6 +43,7 @@ const SpecificQuestion = () => {
             dispatch(getAllAnswers())
         }
 
+        
         dispatch(getAllAnswers())
     }, [isDelete, richTextEditor]);
 
@@ -57,12 +60,14 @@ const SpecificQuestion = () => {
     if (loading) {
         return null;
     }
+    
     let id;
     let title;
     let details;
     let votes_score;
     let answers_count;
     let user_id;
+  
 
 
     const question = questions.filter((question)=>+questionId === question.id)
@@ -75,6 +80,9 @@ const SpecificQuestion = () => {
         user_id = question[0].user_id
 
     }
+
+
+
     const answer = answers.filter((answer)=> +questionId === answer.questionId)
 
 
