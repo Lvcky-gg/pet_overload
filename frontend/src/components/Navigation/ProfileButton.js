@@ -60,7 +60,9 @@ function ProfileButton({ user }) {
                         <li>{user.username}</li>
                         <li>{user.email}</li>
                         <li>
-                            <NavLink to="/user/profile">Profile</NavLink>
+                            <NavLink onClick={closeMenu} to="/user/profile">
+                                Profile
+                            </NavLink>
                         </li>
                         <li className="button-container">
                             <button
