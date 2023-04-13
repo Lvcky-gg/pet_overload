@@ -2,7 +2,7 @@
     position: absolute;
     background-color: white;
     box-shadow: 2px 2px 5px gray;
-    height: 100px;
+    height: 120px;
     width: 100px;
     display: flex;
     flex-direction: column;
@@ -22,6 +22,11 @@
     padding: 5px;
     text-align: center;
     margin: 5px 0;
+    width: 75%;
+}
+.profile-dropdown .button-container {
+    display: flex;
+    justify-content: center;
 }
 .profile-dropdown li {
     overflow: hidden;

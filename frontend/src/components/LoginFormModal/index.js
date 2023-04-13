@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../../store/session';
+import { login, clearErrors } from '../../store/session';
 import { useModal } from '../../context/Modal';
 import './LoginForm.css';
 import logo from './favicon2_720.png';
+import validateInput from '../../utils/validateInput';
 
 function LoginFormModal() {
     const dispatch = useDispatch();
@@ -16,12 +17,18 @@ function LoginFormModal() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const { closeModal } = useModal();
+    const { closeModal, setOnModalClose } = useModal();
+    const [inputValidate, setInputValidate] = useState([]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        dispatch(login({ email, password }));
+        const errors = validateInput({ email, password });
+        if (errors.length) {
+            setInputValidate(errors);
+        } else {
+            setInputValidate([]);
+            dispatch(login({ email, password }));
+        }
     };
 
     useEffect(() => {
@@ -29,7 +36,12 @@ function LoginFormModal() {
         if (user) {
             closeModal();
         }
-    }, [user, closeModal]);
+        // clean errors if modal closed
+        const clearErrorMessages = () => {
+            dispatch(clearErrors());
+        };
+        setOnModalClose(clearErrorMessages);
+    }, [user, closeModal, setOnModalClose, dispatch]);
     let errorObject = [];
     if (validationErrors) {
         errorObject = Object.values(
@@ -52,7 +64,7 @@ function LoginFormModal() {
                         type="text"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        required
+                        // required
                     />
                 </div>
                 <div>
@@ -61,10 +73,19 @@ function LoginFormModal() {
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        required
+                        // required
                     />
                 </div>
                 <ul className="modal-form-list-err">
+                    {inputValidate &&
+                        inputValidate.map((error, idx) => (
+                            <li key={idx}>
+                                <span style={{ color: 'red', padding: '5px' }}>
+                                    <i className="fas fa-exclamation-circle"></i>
+                                </span>
+                                {error}
+                            </li>
+                        ))}
                     {errorObject &&
                         errorObject.map((error, idx) => (
                             <li key={idx}>
