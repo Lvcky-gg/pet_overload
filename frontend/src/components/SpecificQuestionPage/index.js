@@ -7,6 +7,7 @@ import './SpecificQuestion.css';
 import AnswerCard from './AnswerCard';
 import RichEditor from '../RichTextEditor';
 import { createAnswerByQuestion } from '../../store/answers';
+import { getQuestionVotes } from '../../store/questionVotes';
 
 const { useSelector, useDispatch } = require('react-redux');
 
@@ -34,6 +35,7 @@ const SpecificQuestion = () => {
 
     useEffect(() => {
         dispatch(getAllQuestions());
+        dispatch(getQuestionVotes());
         if(answers.length === 0){
             setHidden(false)
             dispatch(getAllAnswers())
