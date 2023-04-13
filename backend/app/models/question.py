@@ -51,6 +51,9 @@ class Question(db.Model):
             "user_id": self.user_id,
             "answers_count": len(self.question_answers),
             "votes_score": self.question_vote_score,
+            # added user and answers to question response
+            "user":self.user.to_dict(),
+            "answers": [answer.to_dict() for answer in self.question_answers],
         }
 
     @classmethod
