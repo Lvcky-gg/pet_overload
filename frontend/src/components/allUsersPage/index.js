@@ -27,12 +27,11 @@ const AllUsersPage = () => {
         <div className="AllUsersPage">
             
             <div id="all-users-header" className="flex-row">
-                <div className="col-3">
+                
                     <h1>All Users</h1>
-                    <p>{users.length} users</p>
-               
             </div>
-
+            <div id="filter-row-user" className='filter-row'>
+            <p>{users.length} users</p>
             </div>
 
             <div id="user-list">

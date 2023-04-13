@@ -44,30 +44,29 @@ const QuestionCard = ({ id, title, details, votes_score: voteScore, answers_coun
     }, [currentVoteType])
 
     const handleVoteArrowClick = async (arrowRef) => {
-        arrowRef.current.classList.add('fa-beat');
-
-        setTimeout(() => {
-            arrowRef.current.classList.remove('fa-beat');
-        }, 800);
-
-        const voteTypeClicked = arrowRef.current.classList.contains('upvote-arrow')
-            ? voteType.UPVOTE
-            : voteType.DOWNVOTE;
-
-            if (!currentVote || currentVote.vote_status === voteType.NO_VOTE) {
-                const questionVote = await dispatch(createQuestionVote({ questionId: id, isLiked: voteTypeClicked }, voteTypeClicked));
-                const updatedQuestion = questionVote.payload.question;
-                dispatch(updateQuestionAfterVote(updatedQuestion))
-                setCurrentVoteScore(updatedQuestion.votes_score);
-            } else if (currentVoteType === voteTypeClicked) {
-                dispatch(deleteQuestionVoteById({ questionVoteId: currentVote.id }));
-                setCurrentVoteScore(currentVoteScore - 1);
-            } else {
-                const updatedQuestionVote = await dispatch(updateQuestionVoteById({ questionVoteId: currentVote.id, isLiked: voteTypeClicked }, voteTypeClicked));
-                const updatedQuestion = updatedQuestionVote.payload.question;
-                dispatch(updateQuestionAfterVote(updatedQuestion))
-                setCurrentVoteScore(updatedQuestion.votes_score);
-            }
+        const { current } = arrowRef;
+        const { UPVOTE, DOWNVOTE, NO_VOTE } = voteType;
+    
+        current.classList.add('fa-beat');
+        setTimeout(() => current.classList.remove('fa-beat'), 800);
+    
+        const voteTypeClicked = current.classList.contains('upvote-arrow') ? UPVOTE : DOWNVOTE;
+    
+        const updateVoteScore = (updatedQuestion) => {
+            dispatch(updateQuestionAfterVote(updatedQuestion));
+            setCurrentVoteScore(updatedQuestion.votes_score);
+        };
+    
+        if (!currentVote || currentVote.voteStatus === NO_VOTE) {
+            const questionVote = await dispatch(createQuestionVote({ questionId: id, isLiked: voteTypeClicked }, voteTypeClicked));
+            updateVoteScore(questionVote.payload.question);
+        } else if (currentVoteType === voteTypeClicked) {
+            dispatch(deleteQuestionVoteById({ questionVoteId: currentVote.id }));
+            setCurrentVoteScore(currentVoteScore + (voteTypeClicked === UPVOTE ? -1 : 1));
+        } else {
+            const updatedQuestionVote = await dispatch(updateQuestionVoteById({ questionVoteId: currentVote.id, isLiked: voteTypeClicked }, voteTypeClicked));
+            updateVoteScore(updatedQuestionVote.payload.question);
+        }
     };
 
     const className = questionId ? 'answers-msg true' : 'answers-msg';

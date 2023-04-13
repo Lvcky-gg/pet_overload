@@ -12,3 +12,8 @@
     "python.testing.pytestEnabled": false,
     "python.testing.unittestEnabled": true
 }
+{
+    "githubPullRequests.ignoredPullRequestBranches": [
+        "development"
+    ]
+}

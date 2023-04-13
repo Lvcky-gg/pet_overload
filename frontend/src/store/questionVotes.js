@@ -22,7 +22,7 @@ export const questionVotesSlice = createSlice({
             })
             .addCase(deleteQuestionVotes.fulfilled, (state, action) => {
                 state.loading = false;
-                state.questionVotes = state.questionVotes.fileter(
+                state.questionVotes = state.questionVotes.filter(
                     (vote) => vote.id === action.payload
                 );
             })
