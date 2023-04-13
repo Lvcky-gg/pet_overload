@@ -32,6 +32,7 @@ class Answer(db.Model):
             'userId':self.user_id,
             'questionId':self.question_id,
             "answerScore": self.answer_vote_score,
+            "user":self.user.to_dict()
         }
 
     @property
