@@ -1,8 +1,24 @@
 .AllUsersPage{
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1rem;
-    padding-bottom: 40%;
+    max-width: 800px;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    margin:auto;
+    margin-top:0px;
+
+}
+#all-users-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0.5rem 0;  
+    /* margin-top:1rem; */
+    padding-bottom:50.59px;
+    /* border-bottom: 1px solid var(--border-color); */
+    /* margin-bottom: 2rem; */
+    
+}
+.all-users-header h1 {
+   padding-left:1rem;
 
 }
 #all-users-header {
@@ -10,6 +26,9 @@
     justify-content: flex-start;
     align-items: center;
     gap: 1rem;
+}
+#filter-row-user{
+    margin-bottom:2rem;
 }
 #user-list {
     width:80%;

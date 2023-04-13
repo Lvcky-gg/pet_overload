@@ -33,7 +33,7 @@ export const answerSlice = createSlice({
                 console.log('Rejected with value:', action.payload);
             })
             .addCase(deleteAnswer.fulfilled, (state, action) => {
-                state.allAnswers = state.allAnswers.fileter(
+                state.allAnswers = state.allAnswers.filter(
                     (answer) => answer.id === action.payload
                 );
             })
