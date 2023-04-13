@@ -21,6 +21,7 @@ const SpecificQuestion = () => {
     const [richTextEditor, setRichTextEditor] = useState(false)
     const [hidden, setHidden] = useState(false)
     const [isDelete, setIsDelete] = useState(false);
+    const [voteClicked, setVoteClicked] = useState(false);
     
 
 
@@ -67,6 +68,9 @@ const SpecificQuestion = () => {
     let votes_score;
     let answers_count;
     let user_id;
+    let created_at;
+    let updated_at;
+    let user;
   
 
 
@@ -78,10 +82,12 @@ const SpecificQuestion = () => {
         votes_score= question[0].votes_count
         answers_count = question[0].answers_count
         user_id = question[0].user_id
-
+        created_at = question[0].created_at
+        updated_at = question[0].updated_at
+        user = question[0].user
     }
 
-
+console.log(question[0])
 
     const answer = answers.filter((answer)=> +questionId === answer.questionId)
 
@@ -90,9 +96,6 @@ const SpecificQuestion = () => {
         <>
             {question && (
                 <div className="container" id="Single-questions-container">
-                    {/* <div>
-                <h1>{title}</h1>
-            </div> */}
                     <div className="all-answer-header">
                         <h1>{title}</h1>
                         <div className="ask-question-container">
@@ -113,7 +116,7 @@ const SpecificQuestion = () => {
                             richTextEditor={richTextEditor}
                         />
                     )}
-           <QuestionCard
+           {question[0] &&<QuestionCard
            className="qCard"
             key={id}
             id={id}
@@ -121,8 +124,13 @@ const SpecificQuestion = () => {
             details={details}
             votes_score={votes_score}
             showAnswers={showAnswers}
-
-            answers_count={answers_count}></QuestionCard> 
+            answers_count={answers_count}
+            answers={answers}
+            updated_at={updated_at}
+            created_at={created_at}
+            user={user}
+            >
+                </QuestionCard> }
 
             <div className="answerHolder">
             {hidden && answer.map(

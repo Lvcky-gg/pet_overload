@@ -18,6 +18,7 @@ const QuestionCard = ({
     updated_at,
     setVoteClicked,
 }) => {
+    console.log(id)
     const { questionId } = useParams();
     const answersMessage = answers_count === 1 ? 'answer' : 'answers';
     const className = questionId ? 'answers-msg true' : 'answers-msg';
