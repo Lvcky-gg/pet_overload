@@ -14,6 +14,10 @@ export const sessionSlice = createSlice({
         removeUser: (state) => {
             state.user = null;
         },
+        clearErrors: (state) => {
+            state.error = null;
+            state.validationErrors = null;
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -145,6 +149,6 @@ export const signUp = createAsyncThunk(
     }
 );
 
-export const { setUser, removeUser } = sessionSlice.actions;
+export const { setUser, removeUser, clearErrors } = sessionSlice.actions;
 
 export default sessionSlice.reducer;
