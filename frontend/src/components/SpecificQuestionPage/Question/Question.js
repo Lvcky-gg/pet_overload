@@ -6,7 +6,7 @@ import { authenticate } from '../../../store/session';
 import Voting from '../../AllQuestionsPage/Voting/Voting';
 import dateFormater from '../../../utils/dateFormater';
 import DeleteButton from '../../UserProfile/ActivityLists/DeleteButton';
-
+import parse from 'html-react-parser';
 import { deleteQuestion, updateQuestion } from '../../../store/questions';
 const { useSelector, useDispatch } = require('react-redux');
 const Question = ({ question, setIsDelete }) => {
@@ -68,7 +68,7 @@ const Question = ({ question, setIsDelete }) => {
                     />
                 </div>
                 <div id="question-info-container">
-                    <p className="card-details">{details}</p>
+                    <div className="card-details">{parse(details)}</div>
 
                     <div className="card-bottom">
                         {/* author only */}

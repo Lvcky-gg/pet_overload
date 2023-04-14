@@ -56,7 +56,7 @@ const AnswerCard = ({ answer, setVoteClicked, setIsDelete, setIsUpdated }) => {
                     />
                 </div>
                 <div id="answer-info-container">
-                    <p className="card-details">{details}</p>
+                    <div className="card-details">{parse(details)}</div>
                     {/* author only edit delete */}
                     <div className="card-bottom">
                         <div className="modify-button-container">
