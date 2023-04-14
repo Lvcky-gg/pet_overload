@@ -45,7 +45,7 @@ const SearchResults = () => {
             <div id="question-list">
                 {!questions.length && <p>No Result Found.</p>}
                 {questions.map(
-                    ({ id, title, details, votes_score, answers_count }) => (
+                    ({ id, title, details, votes_score, answers_count, user, created_at, updated_at }) => (
                         <QuestionCard
                             key={id}
                             id={id}
@@ -53,6 +53,9 @@ const SearchResults = () => {
                             details={details}
                             votes_score={votes_score}
                             answers_count={answers_count}
+                            user={user}
+                            created_at={created_at}
+                            updated_at={updated_at}
                         />
                     )
                 )}
