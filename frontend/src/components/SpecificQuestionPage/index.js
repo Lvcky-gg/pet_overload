@@ -8,6 +8,7 @@ import AnswerCard from './AnswerCard';
 import RichEditor from '../RichTextEditor';
 import { createAnswerByQuestion } from '../../store/answers';
 import { getQuestionVotes } from '../../store/questionVotes';
+import session from '../../store/session';
 
 const { useSelector, useDispatch } = require('react-redux');
 
@@ -16,6 +17,7 @@ const SpecificQuestion = () => {
     const loading = useSelector((state) => state.questions.loading);
     const answers = useSelector((state) => state.answers.allAnswers);
     const questionVotes = useSelector((state)=>state.questionVotes.questionVotes);
+    const sessionUser = useSelector((state) => state.session.user);
 
 
     const [richTextEditor, setRichTextEditor] = useState(false)
@@ -79,7 +81,7 @@ const SpecificQuestion = () => {
         id = question[0].id
         title = question[0].title
         details = question[0].details
-        votes_score= question[0].votes_count
+        votes_score= question[0].votes_score
         answers_count = question[0].answers_count
         user_id = question[0].user_id
         created_at = question[0].created_at
@@ -99,13 +101,13 @@ console.log(question[0])
                     <div className="all-answer-header">
                         <h1>{title}</h1>
                         <div className="ask-question-container">
-                            <button
+                            {sessionUser &&<button
                                 id="ask-question-button"
                                 className="button"
                                 onClick={showEditor}
                             >
                                 Answer question
-                            </button>
+                            </button>}
                         </div>
                     </div>
                     {richTextEditor && (
