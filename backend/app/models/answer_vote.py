@@ -27,7 +27,8 @@ class AnswerVote(db.Model):
             'updatedAt':self.updated_at,
             'userId':self.user_id,
             'answerId':self.answer_id,
-            'answer': self.answer.to_dict()if self.answer is not None else None,
+            # 'answer': self.answer.to_dict()if self.answer is not None else None,
+            "answer":self.answer.to_dict()
         }
 
     #factory method to create Answer instance
