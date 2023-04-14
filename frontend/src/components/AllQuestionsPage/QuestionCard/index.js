@@ -18,11 +18,10 @@ const QuestionCard = ({
     updated_at,
     setVoteClicked,
 }) => {
-    console.log(id)
     const { questionId } = useParams();
     const answersMessage = answers_count === 1 ? 'answer' : 'answers';
     const className = questionId ? 'answers-msg true' : 'answers-msg';
-    console.log('update', updated_at);
+
     return (
         <div className="question-card">
             <div className="row">
@@ -39,7 +38,7 @@ const QuestionCard = ({
 
                     <p>{details}</p>
 
-                    <div id="card-bottom-container">
+                    <div className="card-bottom-container">
                         <p className={className} onClick={showAnswers}>
                             {answers_count} {answersMessage}
                         </p>

@@ -1,5 +1,5 @@
-import React from 'react';
-import { EditorState, ContentState} from 'draft-js';
+import React, { createElement } from 'react';
+import { EditorState, ContentState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { useState } from 'react';
@@ -7,45 +7,42 @@ import { convertFromHTML, convertToHTML } from 'draft-convert';
 import { useEffect } from 'react';
 import draftToMarkdown from 'draftjs-to-markdown';
 import { convertToRaw } from 'draft-js';
-import parse from 'html-react-parser'
+import parse from 'html-react-parser';
 import './editor.css';
-import htmlToDraft from 'html-to-draftjs'
+import htmlToDraft from 'html-to-draftjs';
 import { useDispatch } from 'react-redux';
 import { getAllAnswers } from '../../store/answers';
 
-
-
 //handle submission is meant to be passed down here to tell it how to submit data
 
-const RichEditor = ({ handleEditorSubmit, details, questionId, answerId,richTextEditor, setRichTextEditor }) => {
-    const dispatch = useDispatch()
+const RichEditor = ({
+    handleEditorSubmit,
+    details,
+    questionId,
+    answerId,
+    richTextEditor,
+    setRichTextEditor,
+}) => {
+    const dispatch = useDispatch();
 
-
-    
     const [contentState, setcontentState] = useState(details);
     const [editorState, setEditorState] = useState(() =>
-   
-    EditorState.createEmpty()
+        EditorState.createEmpty()
+    );
+    useEffect(() => {
+        if (details) {
+            const blocksFromHtml = htmlToDraft(details);
+            const { contentBlocks, entityMap } = blocksFromHtml;
+            const pushIn = ContentState.createFromBlockArray(
+                contentBlocks,
+                entityMap
+            );
+            setEditorState(EditorState.createWithContent(pushIn));
+        } else {
+            setEditorState(EditorState.createEmpty());
+        }
+    }, []);
 
-);
-useEffect(()=>{
-
-    
-    if (details) {
-
-        const blocksFromHtml = htmlToDraft(details);
-        const { contentBlocks, entityMap } = blocksFromHtml;
-        const pushIn = ContentState.createFromBlockArray(contentBlocks, entityMap);
-        setEditorState(EditorState.createWithContent(pushIn)) 
-    } else {
-        setEditorState(EditorState.createEmpty());
-    }
-},[])
-
- 
-
-
-    
     const hashConfig = {
         trigger: '#',
         separator: ' ',
@@ -56,7 +53,6 @@ useEffect(()=>{
         },
         emptyLineBeforeBlock: true,
     };
-
 
     const rawContentState = convertToRaw(editorState.getCurrentContent());
     const markup = draftToMarkdown(contentState, hashConfig, config);
@@ -85,16 +81,19 @@ useEffect(()=>{
     // >
 
     // </div>
-    console.log(<Editor></Editor>)
+    console.log(<Editor></Editor>);
 
     const submitMe = (e, htmlString, questionId, answerId) => {
-        setRichTextEditor(!richTextEditor)
+        setRichTextEditor(!richTextEditor);
 
-        return handleEditorSubmit(e, {
+        const result = handleEditorSubmit(e, {
             details: htmlString,
             questionId: questionId,
             answerId: answerId,
         });
+        // reset to empty
+        setEditorState(EditorState.createEmpty());
+        return result;
     };
 
     useEffect(() => {
