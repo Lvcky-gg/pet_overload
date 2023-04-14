@@ -12,8 +12,12 @@ import author from '../../image/author.png';
 import team from '../../image/team.png';
 import catbackground from '../../image/background.jpg';
 
+import session from '../../store/session';
+
 import Highlight from './Highlights';
+import { useSelector } from 'react-redux';
 export const HomePage = () => {
+    const sessionUser = useSelector((state) => state.session.user);
     return (
         <div className="homePage">
             <div className="homePageTopImage"></div>
@@ -39,7 +43,7 @@ export const HomePage = () => {
                             className="placeHolderImageHome"
                         />
                         <div>
-                            <NavLink to="/all-users">Authors</NavLink>
+                            {sessionUser ?(<NavLink to="/all-users">Authors</NavLink>):(<NavLink to='/login'>Authors</NavLink>)}
                         </div>
                     </div>
 

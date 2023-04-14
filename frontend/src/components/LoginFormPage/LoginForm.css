@@ -1,0 +1,38 @@
+.loginPage{
+    display:flex;
+    flex-direction: column; 
+    margin:auto;
+    margin-top:20%;
+    width:40%;
+    height:80%;
+    padding:10%;  
+    border-radius: 5%;
+    background-color: #ffffff;
+}
+.loginPage:hover{
+    box-shadow: 3px 3px 3px gray;
+}
+.loginPage h1 {
+    width:fit-content;
+    margin:auto;
+}
+.handleLoginBox{
+    display:flex;
+    flex-direction: column; 
+    width:50%;
+    margin:auto;
+}
+.handleLoginBox label {
+    width:fit-content;
+    margin:auto;
+    padding-top:12%;
+}
+.handleLoginBox input {
+    margin:auto;
+    margin-bottom: 5%;
+    width:50%;
+}
+.handleLoginBox button{
+    width:fit-content;
+    margin:auto;
+}

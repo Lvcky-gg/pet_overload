@@ -1,8 +1,11 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useSearchParams } from 'react-router-dom';
 import './sidebar.css';
+import session from '../../store/session';
+import { useSelector } from 'react-redux';
 
 const Sidebar = () => {
+    const sessionUser = useSelector((state) => state.session.user);
     return (
         <div className="sideBar">
             <NavLink className="sidebar-link" to="/">
@@ -11,9 +14,9 @@ const Sidebar = () => {
             <NavLink className="sidebar-link" to="/all-questions">
                 Questions
             </NavLink>
-            <NavLink className="sidebar-link" to="/all-users">
+            {sessionUser && <NavLink className="sidebar-link" to="/all-users">
                 Users
-            </NavLink>
+            </NavLink>}
         </div>
     );
 };

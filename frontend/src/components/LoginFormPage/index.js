@@ -3,54 +3,111 @@ import { login } from '../../store/session';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import './LoginForm.css';
+import validateInput from '../../utils/validateInput';
+import { clearErrors } from '../../store/session';
+import { useEffect } from 'react';
+import { setUser } from '../../store/session';
+
 
 function LoginFormPage() {
     const dispatch = useDispatch();
     const sessionUser = useSelector((state) => state.session.user);
+    console.log(sessionUser)
+    const validationErrors = useSelector(
+        (state) => state.session.validationErrors
+    );
+    const error = useSelector((state) => state.session.error);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [errors, setErrors] = useState([]);
+    const [inputValidate, setInputValidate] = useState([]);
+    
 
-    if (sessionUser) return <Navigate to="/" />;
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const data = await dispatch(login(email, password));
-        if (data) {
-            setErrors(data);
+        const errors = validateInput({email, password});
+        if(errors.length){
+            setInputValidate(errors);
+        }else{
+            setInputValidate([])
+            dispatch(login({ email, password }));  
         }
-    };
+    }
+    useEffect(() => {
+        // Login successful?
+        if (sessionUser) {
+            return <Navigate to="/" />;
+        }
+        // clean errors if modal closed
+        const clearErrorMessages = () => {
+            dispatch(clearErrors());
+        };
+    }, [sessionUser,  dispatch]);
+    if (sessionUser) return <Navigate to="/" />
+    let errorObject = [];
+    if (validationErrors) {
+        errorObject = Object.values(
+            validationErrors.reduce((acc, error) => {
+                const [key, value] = error.split(' : ');
+                acc[key] = value;
+                return acc;
+            }, {})
+        );
+    }
 
     return (
-        <>
+        <div className='loginPage'>
             <h1>Log In</h1>
             <form onSubmit={handleSubmit}>
-                <ul>
-                    {errors.map((error, idx) => (
-                        <li key={idx}>{error}</li>
-                    ))}
-                </ul>
+ 
+                <div className="handleLoginBox">
                 <label>
-                    Email
+                Email
+                </label>
                     <input
                         type="text"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
                     />
-                </label>
+                </div>
+                <div className="handleLoginBox">
                 <label>
                     Password
-                    <input
+
+                </label>
+                <input
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
                     />
-                </label>
-                <button type="submit">Log In</button>
+                </div>
+                <div className="handleLoginBox">
+                <button type="submit" className='modalButton'>Log In</button>
+                </div>
             </form>
-        </>
+            <ul className="modal-form-list-err">
+                    {inputValidate &&
+                        inputValidate.map((error, idx) => (
+                            <li key={idx}>
+                                <span style={{ color: 'red', padding: '5px' }}>
+                                    <i className="fas fa-exclamation-circle"></i>
+                                </span>
+                                {error}
+                            </li>
+                        ))}
+                    {errorObject &&
+                        errorObject.map((error, idx) => (
+                            <li key={idx}>
+                                <span style={{ color: 'red', padding: '5px' }}>
+                                    <i className="fas fa-exclamation-circle"></i>
+                                </span>
+                                {error}
+                            </li>
+                        ))}
+                </ul>
+            </div>
     );
 }
 
