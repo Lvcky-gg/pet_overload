@@ -106,6 +106,8 @@ const Question = ({ question, setIsDelete }) => {
                                 style={{
                                     display: 'flex',
                                     marginRight: '5px',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
                                 }}
                             >
                                 <i

@@ -22,7 +22,8 @@ const SpecificQuestion = () => {
     // const [hidden, setHidden] = useState(false);
     const [isDelete, setIsDelete] = useState(false);
     const [voteClicked, setVoteClicked] = useState(false);
-
+    const [isCreated, setIsCreated] = useState(false);
+    const [isUpdated, setIsUpdated] = useState(false);
     const showEditor = (e) => {
         e.preventDefault();
         setRichTextEditor(!richTextEditor);
@@ -37,14 +38,14 @@ const SpecificQuestion = () => {
         //     setHidden(false);
         //     dispatch(getAllAnswers());
         // }
-    }, [isDelete, richTextEditor, voteClicked, dispatch]);
+    }, [isDelete, richTextEditor, voteClicked, dispatch, isCreated, isUpdated]);
 
     const handleEditorSubmit = (e, { details, questionId }) => {
         e.preventDefault();
         const val = dispatch(
             createAnswerByQuestion({ details: details, questionId: questionId })
         );
-
+        setIsCreated((prev) => !prev);
         dispatch(getAllAnswers());
         return val;
     };
@@ -72,15 +73,17 @@ const SpecificQuestion = () => {
                                 answers={answers}
                                 setVoteClicked={setVoteClicked}
                                 setIsDelete={setIsDelete}
+                                setIsUpdated={setIsUpdated}
                             />
                         </>
                     )}
                     <h2>Your Answer</h2>
+                    {/* create answer editor */}
                     <RichEditor
                         handleEditorSubmit={handleEditorSubmit}
                         questionId={questionId}
                         setRichTextEditor={setRichTextEditor}
-                        // richTextEditor={richTextEditor}
+                        richTextEditor={richTextEditor}
                     />
                 </div>
             )}

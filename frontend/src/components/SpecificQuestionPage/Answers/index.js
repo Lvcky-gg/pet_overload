@@ -1,6 +1,6 @@
 import AnswerCard from './AnswerCard';
 
-const Answers = ({ answers, setIsDelete, setVoteClicked }) => {
+const Answers = ({ answers, setIsDelete, setVoteClicked, setIsUpdated }) => {
     return (
         <>
             <div className="answers-container">
@@ -13,6 +13,7 @@ const Answers = ({ answers, setIsDelete, setVoteClicked }) => {
                                 // isDelete={isDelete}
                                 setIsDelete={setIsDelete}
                                 setVoteClicked={setVoteClicked}
+                                setIsUpdated={setIsUpdated}
                             ></AnswerCard>
                         ))}
                 </div>

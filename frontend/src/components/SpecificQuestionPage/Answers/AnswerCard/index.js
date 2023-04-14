@@ -14,20 +14,12 @@ import { updateAnswerByQuestion } from '../../../../store/answers';
 import { getAllQuestions } from '../../../../store/questions';
 import VotingAnswers from '../../VotingAnswers';
 import dateFormater from '../../../../utils/dateFormater';
-const AnswerCard = ({ answer, setVoteClicked, setIsDelete }) => {
-    const {
-        details,
-        userId,
-        id,
-        isDelete,
-
-        answerScore,
-        user,
-        createdAt,
-    } = answer;
+const AnswerCard = ({ answer, setVoteClicked, setIsDelete, setIsUpdated }) => {
+    const { details, userId, id, answerScore, user, createdAt } = answer;
     const dispatch = useDispatch();
     const sessionUser = useSelector((state) => state.session.user);
     const [richTextEditor, setRichTextEditor] = useState(false);
+
     useEffect(() => {
         dispatch(authenticate());
     }, [dispatch]);
@@ -36,12 +28,13 @@ const AnswerCard = ({ answer, setVoteClicked, setIsDelete }) => {
         dispatch(getAllAnswers());
         dispatch(getAllQuestions());
     };
-
+    // NEED TO RESET TO EMPTY AFTER SUBMIT
     const handleEditorSubmit = (e, { details, answerId }) => {
         e.preventDefault();
         const val = dispatch(
             updateAnswerByQuestion({ details: details, answerId: answerId })
         );
+        setIsUpdated((prev) => !prev);
         return val;
     };
 
@@ -96,10 +89,22 @@ const AnswerCard = ({ answer, setVoteClicked, setIsDelete }) => {
                                 style={{
                                     display: 'flex',
                                     marginRight: '5px',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
                                 }}
                             >
-                                <i className="fas fa-crown"></i>
-                                <p>{user.reputation}</p>
+                                <i
+                                    className="fas fa-crown"
+                                    style={{ color: 'gold' }}
+                                ></i>
+                                <p
+                                    style={{
+                                        color: '#0e67b4',
+                                        fontSize: '13px',
+                                    }}
+                                >
+                                    {user.reputation}
+                                </p>
                             </div>
                             <p className="answered-date">
                                 Answered at:{dateFormater(createdAt)}
