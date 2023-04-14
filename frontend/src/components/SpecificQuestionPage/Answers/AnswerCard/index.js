@@ -27,6 +27,7 @@ const AnswerCard = ({ answer, setVoteClicked, setIsDelete, setIsUpdated }) => {
         dispatch(deleteAnswer(id));
         dispatch(getAllAnswers());
         dispatch(getAllQuestions());
+        setIsDelete((prev) => !prev);
     };
     // NEED TO RESET TO EMPTY AFTER SUBMIT
     const handleEditorSubmit = (e, { details, answerId }) => {

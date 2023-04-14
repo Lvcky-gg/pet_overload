@@ -27,10 +27,11 @@ const Question = ({ question, setIsDelete }) => {
     useEffect(() => {
         dispatch(authenticate());
     }, [dispatch]);
+
     const handleDelete = () => {
         dispatch(deleteQuestion(id));
-        navigate('/all-questions/');
         setIsDelete((prev) => !prev);
+        navigate('/all-questions/');
     };
     const handleEditClick = (e) => {
         e.preventDefault();
@@ -86,7 +87,7 @@ const Question = ({ question, setIsDelete }) => {
                                         className="modalButton"
                                         onDelete={handleDelete}
                                         setIsDelete={setIsDelete}
-                                        type="answer"
+                                        type="question"
                                         id={id}
                                     ></DeleteButton>
                                 </div>
