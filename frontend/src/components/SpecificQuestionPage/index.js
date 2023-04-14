@@ -23,12 +23,9 @@ const SpecificQuestion = () => {
     const { questionId } = useParams();
     const questions = useSelector((state) => state.questions.allQuestions);
 
-   /*
-    const answers = useSelector((state) => state.answers.allAnswers);
-    const questionVotes = useSelector((state)=>state.questionVotes.questionVotes);
-    const sessionUser = useSelector((state) => state.session.user);
-    /*
-
+    // const answers = useSelector((state) => state.answers.allAnswers);
+    // const questionVotes = useSelector((state)=>state.questionVotes.questionVotes);
+    // const sessionUser = useSelector((state) => state.session.user);
 
     const loading = useSelector((state) => state.questions.loading);
 
@@ -70,12 +67,11 @@ const SpecificQuestion = () => {
 
     const question = questions.find((question) => question.id === +questionId);
 
-
     let answers_count, answers;
     if (question) {
         ({ answers_count, answers } = question);
 
-    /*const question = questions.filter((question)=>+questionId === question.id)
+        /*const question = questions.filter((question)=>+questionId === question.id)
     if (question[0]){
         id = question[0].id
         title = question[0].title
@@ -86,13 +82,11 @@ const SpecificQuestion = () => {
         created_at = question[0].created_at
         updated_at = question[0].updated_at
         user = question[0].user*/
-
     }
     return (
         <>
             {question && (
                 <div className="container" id="Single-questions-container">
-
                     <Question question={question} setIsDelete={setIsDelete} />
                     {answers_count > 0 && (
                         <>
@@ -105,9 +99,9 @@ const SpecificQuestion = () => {
                                 setIsUpdated={setIsUpdated}
                             />
                         </>
-                        )}
+                    )}
 
-                   /* <div className="all-answer-header">
+                    {/* <div className="all-answer-header">
                         <h1>{title}</h1>
                         <div className="ask-question-container">
                             {sessionUser &&<button
@@ -124,10 +118,9 @@ const SpecificQuestion = () => {
                             handleEditorSubmit={handleEditorSubmit}
                             questionId={questionId}
                             setRichTextEditor={setRichTextEditor}
-                            richTextEditor={richTextEditor}*/
-                        />
+                            richTextEditor={richTextEditor}
+                        /> */}
 
-                    )}
                     <h2>Your Answer</h2>
                     {/* create answer editor */}
                     <RichEditor
