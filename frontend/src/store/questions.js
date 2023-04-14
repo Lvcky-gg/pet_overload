@@ -39,6 +39,11 @@ export const questionsSlice = createSlice({
                 state.displayedQuestions = action.payload;
             })
             .addCase(getAllQuestions.rejected, (state, action) => {})
+            .addCase(createQuestion.fulfilled, (state, action) => {
+                state.allQuestions.push(action.payload);
+                state.displayedQuestions.push(action.payload);
+                state.error = null;
+            })
             .addCase(deleteQuestion.fulfilled, (state, action) => {
                 state.loading = false;
                 state.allQuestions = state.allQuestions.filter(
@@ -46,9 +51,7 @@ export const questionsSlice = createSlice({
                 );
                 state.error = null;
             })
-
             .addCase(deleteQuestion.rejected, (state, action) => {
-                console.log('Rejected with value:', action.payload);
                 state.loading = false;
                 state.error = action.payload.error;
             })
@@ -58,14 +61,9 @@ export const questionsSlice = createSlice({
                 state.error = null;
             })
             .addCase(filterQuestions.rejected, (state, action) => {
-                console.log('Rejected with value:', action.payload);
                 state.loading = false;
                 state.error = action.payload.error;
             });
-
-//duplicate?
-            //.addCase(deleteQuestion.rejected, (state, action) => {});
-
     },
 });
 
@@ -76,16 +74,37 @@ export const getAllQuestions = createAsyncThunk(
             headers: {
                 'Content-Type': 'application/json',
             },
+            credentials: 'include',
         });
 
         const data = await response.json();
 
         if (!response.ok) {
             return rejectWithValue(await response.json());
-
         }
 
         return data.questions;
+    }
+);
+
+export const createQuestion = createAsyncThunk(
+    'questions/createQuestion',
+    async ({ title, details }, { rejectWithValue }) => {
+        const response = await fetch('/api/questions/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ title, details }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            return rejectWithValue(data);
+        }
+
+        return data;
     }
 );
 
@@ -102,9 +121,6 @@ export const filterQuestions = createAsyncThunk(
         return data.questions;
     }
 );
-//duplicate?
-//export const deleteQustion = createAsyncThunk(
-
 
 export const deleteQuestion = createAsyncThunk(
     'questions/deleteQuestion',

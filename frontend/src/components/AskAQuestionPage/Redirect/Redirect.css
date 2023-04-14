@@ -1,0 +1,73 @@
+.ask-question-page-container>h2.redirect-timer-message {
+    color: var(--secondary-color);
+    font-size: 1.4rem;
+}
+
+.ask-question-page-container>button.redirect-button {
+    background-color: var(--primary-color) !important;
+    font-size: 1.4rem;
+    color: var(--button-text-color) !important;
+    font-weight: 600;
+    width: 100%;
+    margin: 1rem 0;
+    border: none;
+    background: none;
+    margin-top: 1rem;
+    box-shadow: var(--box-shadow);
+}
+
+.ask-question-page-container .spinner {
+    position: relative;
+    width: 85px;
+    height: 85px;
+    border-radius: 50%;
+    border: 5px solid rgba(0, 0, 0, 0.1);
+    border-top-color: var(--primary-color);
+    animation: spin 2s linear infinite;
+    margin: 0 auto;
+}
+
+.ask-question-page-container .inner-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    background-color: var(--secondary-color);
+    transform-origin: center;
+    transform: translate(-50%, -50%);
+    opacity: 0.5;
+    animation: none !important;
+}
+
+.spinner>span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(0deg);
+    font-size: 3em;
+    font-weight: bold;
+    color: var(--secondary-color);
+    animation: backward-spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes backward-spin {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(-50%, -50%) rotate(-360deg);
+    }
+}

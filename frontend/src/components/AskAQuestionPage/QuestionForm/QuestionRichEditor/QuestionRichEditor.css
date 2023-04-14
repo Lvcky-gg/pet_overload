@@ -18,11 +18,11 @@
     font-size: 0.85rem;
 }
 
-.question-editor-toolbar .rdw-option-wrapper {
+.question-editor-toolbar>.rdw-option-wrapper {
     height: 70%;
     width: 10px;
 }
 
-.question-editor-toolbar img {
+.question-editor-toolbar .rdw-option-wrapper>img {
     height: 70%;
 }

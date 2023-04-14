@@ -74,10 +74,10 @@ def post_new_question():
         new_question = Question.create_question(
             title=title, details=details, user_id=current_user.get_id()
         )
+        return jsonify(new_question), 201
     except BaseException as e:
         return handle_error(e)
 
-    return jsonify(new_question), 201
 
 
 @questions_routes_blueprint.route("/<int:id>", methods=["PUT"])
