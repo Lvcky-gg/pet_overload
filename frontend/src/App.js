@@ -21,7 +21,8 @@ import { Footer } from './components/footer';
 import SearchResults from './components/SearchResults';
 import SpecificQuestion from './components/SpecificQuestionPage';
 import Sidebar from './components/Sidebar';
-import AllUsersPage from './components/allUsersPage'
+import AllUsersPage from './components/allUsersPage';
+import AskAQuestionPage from './components/AskAQuestionPage';
 
 function App() {
     const dispatch = useDispatch();
@@ -36,7 +37,7 @@ function App() {
     const showSidebar =
         location.pathname.startsWith('/all-questions') ||
         location.pathname.startsWith('/all-questions/search') ||
-        location.pathname.startsWith('/user/profile')||
+        location.pathname.startsWith('/user/profile') ||
         location.pathname.startsWith('/all-users');
 
     return (
@@ -52,8 +53,17 @@ function App() {
                         <Route path="/" element={<HomePage />} />
                         <Route
                             exact
-                            path="/all-questions/"
+                            path="/all-questions"
                             element={<AllQuestionsPage />}
+                        />
+                        <Route
+                            path={`/all-questions/:questionId`}
+                            element={<SpecificQuestion />}
+                        />
+                        <Route
+                            path="/all-questions/ask-a-question"
+                            exact
+                            element={<AskAQuestionPage />}
                         />
                         <Route
                             exact
@@ -69,10 +79,6 @@ function App() {
                             element={<UserProfile isLoaded={isLoaded} />}
                         />
 
-                        <Route
-                            path={`/all-questions/:questionId`}
-                            element={<SpecificQuestion />}
-                        />
                         <Route path="/team" element={<Team />} />
                     </Routes>
                 )}

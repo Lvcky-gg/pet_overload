@@ -4,12 +4,14 @@ import { getAllQuestions } from '../../store/questions';
 import QuestionCard from './QuestionCard';
 import './AllQuestionsPage.css';
 import { getQuestionVotes } from '../../store/questionVotes';
-
+import { useNavigate } from 'react-router-dom';
 import SortingTabs from './SortingTabs/SortingTabs';
+
 const { useSelector, useDispatch } = require('react-redux');
 
 const AllQuestionsPage = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const loading = useSelector((state) => state.questions.loading);
     const questions = useSelector(
         (state) => state.questions.displayedQuestions
@@ -22,6 +24,11 @@ const AllQuestionsPage = () => {
         dispatch(getQuestionVotes());
     }, [dispatch, voteClicked]);
 
+    const navigateToAskAQuestionPage = () => {
+        // Navigate to the route '/all-questions/ask-a-question'
+        navigate('/all-questions/ask-a-question');
+    };
+
     if (loading) {
         return null;
     }
@@ -31,7 +38,11 @@ const AllQuestionsPage = () => {
             <div className="all-questions-header">
                 <h1>All Questions</h1>
                 <div className="ask-question-container">
-                    <button id="ask-question-button" className="button">
+                    <button
+                        id="ask-question-button"
+                        className="button"
+                        onClick={navigateToAskAQuestionPage}
+                    >
                         Ask a question
                     </button>
                 </div>
