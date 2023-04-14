@@ -46,7 +46,6 @@ export const questionsSlice = createSlice({
                 );
                 state.error = null;
             })
-
             .addCase(deleteQuestion.rejected, (state, action) => {
                 console.log('Rejected with value:', action.payload);
                 state.loading = false;
@@ -61,11 +60,19 @@ export const questionsSlice = createSlice({
                 console.log('Rejected with value:', action.payload);
                 state.loading = false;
                 state.error = action.payload.error;
+            })
+            .addCase(updateQuestion.fulfilled, (state, action) => {
+                state.loading = false;
+                const updateQuestion = action.payload;
+                const idx = state.allQuestions.findIndex(
+                    (question) =>
+                        question.questionId === updateQuestion.questionId
+                );
+                state.allQuestions[idx] = updateQuestion;
             });
 
-//duplicate?
-            //.addCase(deleteQuestion.rejected, (state, action) => {});
-
+        //duplicate?
+        //.addCase(deleteQuestion.rejected, (state, action) => {});
     },
 });
 
@@ -82,7 +89,6 @@ export const getAllQuestions = createAsyncThunk(
 
         if (!response.ok) {
             return rejectWithValue(await response.json());
-
         }
 
         return data.questions;
@@ -105,7 +111,6 @@ export const filterQuestions = createAsyncThunk(
 //duplicate?
 //export const deleteQustion = createAsyncThunk(
 
-
 export const deleteQuestion = createAsyncThunk(
     'questions/deleteQuestion',
     async (questionId, { rejectWithValue }) => {
@@ -125,7 +130,25 @@ export const deleteQuestion = createAsyncThunk(
         return questionId;
     }
 );
+export const updateQuestion = createAsyncThunk(
+    'questions/updateQuestion',
+    async ({ title, details, questionId }, { rejectWithValue }) => {
+        const response = await fetch(`/api/questions/${questionId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ title, details }),
+        });
+        if (!response.ok) {
+            rejectWithValue(await response.json());
+        }
 
+        const data = await response.json();
+
+        return data;
+    }
+);
 export const {
     sortQuestionsByNewest,
     sortQuestionsByScore,
