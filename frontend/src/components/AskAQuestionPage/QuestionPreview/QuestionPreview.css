@@ -1,0 +1,18 @@
+#question-preview-container {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 800px;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    line-height: 0.4;
+}
+
+#question-preview-container h2 {
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 20px;
+    font-size: 2rem;
+}

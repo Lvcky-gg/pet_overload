@@ -1,0 +1,28 @@
+.question-editor-wrapper {
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+    background-color: #fff;
+    margin-bottom: 25px;
+}
+
+.question-editor-editor {
+    margin-bottom: 25px;
+    margin-top: 0;
+    margin-left: 25px;
+    margin-right: 25px;
+    min-height: 300px;
+    line-height: 0.4;
+}
+
+.question-editor-toolbar {
+    font-size: 0.85rem;
+}
+
+.question-editor-toolbar .rdw-option-wrapper {
+    height: 70%;
+    width: 10px;
+}
+
+.question-editor-toolbar img {
+    height: 70%;
+}
