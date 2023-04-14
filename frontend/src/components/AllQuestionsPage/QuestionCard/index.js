@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
+import parse from 'html-react-parser'
 
 import './QuestionCard.css';
 import Voting from '../Voting/Voting';
@@ -37,7 +38,7 @@ const QuestionCard = ({
                         <h2>{title}</h2>
                     </NavLink>
 
-                    <p>{details}</p>
+                   <div>{parse(details)}</div>
 
                     <div id="card-bottom-container">
                         <p className={className} onClick={showAnswers}>
