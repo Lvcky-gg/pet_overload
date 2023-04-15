@@ -14,6 +14,7 @@ const Question = ({ question, setIsDelete }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const currentUser = useSelector((state) => state.session.user);
+    
     const {
         id,
         title,
@@ -101,9 +102,9 @@ const Question = ({ question, setIsDelete }) => {
                             }}
                         >
                             <NavLink to={`/users/${user.id}`}>
-                                <p className="author-name-date">
+                                {currentUser &&<p className="author-name-date">
                                     Author:{user.username}
-                                </p>
+                                </p>}
                             </NavLink>
                             <div
                                 style={{

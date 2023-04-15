@@ -10,6 +10,8 @@ import { createAnswerByQuestion } from '../../store/answers';
 import Question from './Question/Question';
 import Answers from './Answers';
 import { getAnswerVotes } from '../../store/answerVotes';
+import { getAllUsers } from '../../store/users';
+import session from '../../store/session';
 
 /*
 import { getQuestionVotes } from '../../store/questionVotes';
@@ -22,6 +24,8 @@ const SpecificQuestion = () => {
     const dispatch = useDispatch();
     const { questionId } = useParams();
     const questions = useSelector((state) => state.questions.allQuestions);
+    const allUsers = useSelector((state) => state.users.allUsers);
+    const sessionUser = useSelector((state) => state.session.user);
 
     // const answers = useSelector((state) => state.answers.allAnswers);
     // const questionVotes = useSelector((state)=>state.questionVotes.questionVotes);
@@ -44,6 +48,7 @@ const SpecificQuestion = () => {
         dispatch(getAllQuestions());
         dispatch(getAllAnswers());
         dispatch(getAnswerVotes());
+        dispatch(getAllUsers())
 
         // if (answers.length === 0) {
         //     setHidden(false);
@@ -121,14 +126,19 @@ const SpecificQuestion = () => {
                             richTextEditor={richTextEditor}
                         /> */}
 
-                    <h2>Your Answer</h2>
+                    
                     {/* create answer editor */}
-                    <RichEditor
+                    {sessionUser &&
+                    <>
+                    <h2>Your Answer</h2>
+                     <RichEditor
                         handleEditorSubmit={handleEditorSubmit}
                         questionId={questionId}
                         setRichTextEditor={setRichTextEditor}
                         richTextEditor={richTextEditor}
                     />
+                    </>
+                    }
                 </div>
             )}
         </>

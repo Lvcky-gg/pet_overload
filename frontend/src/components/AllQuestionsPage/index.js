@@ -6,6 +6,7 @@ import './AllQuestionsPage.css';
 import { getQuestionVotes } from '../../store/questionVotes';
 import { useNavigate } from 'react-router-dom';
 import SortingTabs from './SortingTabs/SortingTabs';
+import { getAllUsers } from '../../store/users';
 
 
 const { useSelector, useDispatch } = require('react-redux');
@@ -14,6 +15,8 @@ const AllQuestionsPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const loading = useSelector((state) => state.questions.loading);
+    const allUsers = useSelector((state) => state.users.allUsers);
+    
     const questions = useSelector(
         (state) => state.questions.displayedQuestions
     );
@@ -23,6 +26,7 @@ const AllQuestionsPage = () => {
         dispatch(getAllQuestions());
         dispatch(getAllAnswers());
         dispatch(getQuestionVotes());
+        dispatch(getAllUsers())
     }, [dispatch, voteClicked]);
 
     const navigateToAskAQuestionPage = () => {
@@ -50,7 +54,7 @@ const AllQuestionsPage = () => {
             </div>
             <SortingTabs questions={questions} />
             <div id="question-list">
-                {questions.map(
+                { questions.map(
                     ({
                         id,
                         title,
