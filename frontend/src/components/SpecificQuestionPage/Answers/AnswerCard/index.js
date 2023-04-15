@@ -1,19 +1,17 @@
-import { useEffect, useRef, useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import session from '../../../../store/session';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import RichEditor from '../../../RichTextEditor';
 import parse from 'html-react-parser';
-
 import { deleteAnswer, getAllAnswers } from '../../../../store/answers';
 import DeleteButton from '../../../UserProfile/ActivityLists/DeleteButton';
 import { authenticate } from '../../../../store/session';
-import { NavLink, redirect } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { updateAnswerByQuestion } from '../../../../store/answers';
 import { getAllQuestions } from '../../../../store/questions';
 import VotingAnswers from '../../VotingAnswers';
 import dateFormater from '../../../../utils/dateFormater';
+
 const AnswerCard = ({ answer, setVoteClicked, setIsDelete, setIsUpdated }) => {
     const { details, userId, id, answerScore, user, createdAt } = answer;
     const dispatch = useDispatch();
@@ -23,12 +21,14 @@ const AnswerCard = ({ answer, setVoteClicked, setIsDelete, setIsUpdated }) => {
     useEffect(() => {
         dispatch(authenticate());
     }, [dispatch]);
+
     const handleDelete = () => {
         dispatch(deleteAnswer(id));
         dispatch(getAllAnswers());
         dispatch(getAllQuestions());
         setIsDelete((prev) => !prev);
     };
+
     // NEED TO RESET TO EMPTY AFTER SUBMIT
     const handleEditorSubmit = (e, { details, answerId }) => {
         e.preventDefault();
@@ -43,7 +43,6 @@ const AnswerCard = ({ answer, setVoteClicked, setIsDelete, setIsUpdated }) => {
         e.preventDefault();
         setRichTextEditor(!richTextEditor);
     };
-    useEffect(() => {}, [richTextEditor]);
 
     return (
         <div className="answer-editor-container question-card">

@@ -42,9 +42,15 @@ def create_app():
     # Application Security
     flask_env = os.environ.get("FLASK_ENV")
     if flask_env == "development":
-        CORS(app, origins=["http://localhost:3000", "http://localhost:5000"], supports_credentials=True)
+        CORS(
+            app,
+            origins=["http://localhost:3000", "http://localhost:5000"],
+            supports_credentials=True,
+        )
     elif flask_env == "production":
-        CORS(app, origins="https://pet-overload.onrender.com/", supports_credentials=True)
+        CORS(
+            app, origins="https://pet-overload.onrender.com/", supports_credentials=True
+        )
 
     @app.before_request
     def https_redirect():
@@ -53,7 +59,6 @@ def create_app():
                 url = request.url.replace("http://", "https://", 1)
                 code = 301
                 return redirect(url, code=code)
-
 
     @app.after_request
     def inject_csrf_token(response):
@@ -77,7 +82,6 @@ app = create_app()
 # Therefore, we need to make sure that in production any
 # request made over http is redirected to https.
 # Well.........
-
 
 
 @app.route("/api/docs")

@@ -8,11 +8,9 @@ export const answerSlice = createSlice({
     reducers: {
         updateAnswerAfterVote(state, action) {
             const updatedAnswer = action.payload;
-            console.log('line11', updatedAnswer);
             const idx = state.allAnswers.findIndex(
                 (answer) => answer.id === updatedAnswer.id
             );
-            console.log('answer', updatedAnswer);
             state.allAnswers[idx] = updatedAnswer;
         },
     },
@@ -21,16 +19,10 @@ export const answerSlice = createSlice({
             .addCase(getAllAnswers.fulfilled, (state, action) => {
                 state.allAnswers = action.payload;
             })
-            .addCase(getAllAnswers.rejected, (state, action) => {
-                console.log('Rejected with value:', action.payload);
-            })
             .addCase(createAnswerByQuestion.fulfilled, (state, action) => {
                 const createdAnswer = action.payload;
 
                 state.allAnswers.push(createdAnswer);
-            })
-            .addCase(createAnswerByQuestion.rejected, (state, action) => {
-                console.log('Rejected with value:', action.payload);
             })
             .addCase(updateAnswerByQuestion.fulfilled, (state, action) => {
                 const updatedAnswer = action.payload;
@@ -39,16 +31,10 @@ export const answerSlice = createSlice({
                 );
                 state.allAnswers[idx] = updatedAnswer;
             })
-            .addCase(updateAnswerByQuestion.rejected, (state, action) => {
-                console.log('Rejected with value:', action.payload);
-            })
             .addCase(deleteAnswer.fulfilled, (state, action) => {
                 state.allAnswers = state.allAnswers.filter(
                     (answer) => answer.id === action.payload
                 );
-            })
-            .addCase(deleteAnswer.rejected, (state, action) => {
-                console.log('Rejected with value:', action.payload);
             });
     },
 });

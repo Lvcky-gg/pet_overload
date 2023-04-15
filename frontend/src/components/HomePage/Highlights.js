@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
@@ -6,9 +6,9 @@ import { getAllQuestions } from '../../store/questions';
 import { getAllAnswers } from '../../store/answers';
 import imageTwo from './images/PXL_20230205_182244672~2.jpg';
 import dogImage from '../../image/dog.png';
-// import parse from 'html-react-parser';
 import plainText from '../../utils/plainText';
-const Highlight = ({ isLoaded }) => {
+
+const Highlight = () => {
     const dispatch = useDispatch();
     const questions = useSelector((state) => state.questions.allQuestions);
     const answers = useSelector((state) => state.answers.allAnswers);
@@ -16,9 +16,9 @@ const Highlight = ({ isLoaded }) => {
     useEffect(() => {
         dispatch(getAllQuestions());
         dispatch(getAllAnswers());
-    }, [dispatch]);
+    }, [dispatch, getAllQuestions, getAllAnswers]);
+
     const getNewItems = (data) => {
-        console.log('popular', data);
         let questionId = 0;
 
         let flag1 = new Date(0);
@@ -40,7 +40,6 @@ const Highlight = ({ isLoaded }) => {
         const question = questions.find(
             (question) => question.id === questionId
         );
-        // new question , cat, dog
 
         return { question, dog, cat };
     };
@@ -67,15 +66,7 @@ const Highlight = ({ isLoaded }) => {
                                     ? question.title
                                     : question.details}
                             </NavLink>
-                            <p>
-                                {/* {question.details.length > 45
-                                    ? `${parse(question.details).slice(
-                                          0,
-                                          45
-                                      )}...`
-                                    : parse(question.details)} */}
-                                {plainText(question.details, 45)}
-                            </p>
+                            <p>{plainText(question.details, 45)}</p>
                         </>
                     ) : (
                         <p>No posts yet.</p>
@@ -94,12 +85,7 @@ const Highlight = ({ isLoaded }) => {
                         <NavLink to={`/all-questions/search?keyword=dog`}>
                             {dog.title ? dog.title : dog.details}
                         </NavLink>
-                        <p>
-                            {/* {dog.details.length > 45
-                                ? `${parse(dog.details.slice(0, 45))}...`
-                                : parse(dog.details)} */}
-                            {plainText(dog.details, 45)}
-                        </p>
+                        <p>{plainText(dog.details, 45)}</p>
                     </div>
                 </div>
             )}
@@ -115,12 +101,7 @@ const Highlight = ({ isLoaded }) => {
                         <NavLink to={`/all-questions/search?keyword=cat`}>
                             {cat.title ? cat.title : cat.details}
                         </NavLink>
-                        <p>
-                            {/* {cat.details.length > 50
-                                ? `${parse(cat.details.slice(0, 100))}...`
-                                : parse(cat.details)} */}
-                            {plainText(cat.details, 45)}
-                        </p>
+                        <p>{plainText(cat.details, 45)}</p>
                     </div>
                 </div>
             )}

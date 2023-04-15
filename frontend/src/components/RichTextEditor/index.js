@@ -1,19 +1,14 @@
-import React, { createElement } from 'react';
+import React from 'react';
 import { EditorState, ContentState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { useState } from 'react';
-import { convertFromHTML, convertToHTML } from 'draft-convert';
 import { useEffect } from 'react';
 import draftToMarkdown from 'draftjs-to-markdown';
 import { convertToRaw } from 'draft-js';
-import parse from 'html-react-parser';
-import './editor.css';
 import htmlToDraft from 'html-to-draftjs';
-import { useDispatch } from 'react-redux';
-import { getAllAnswers } from '../../store/answers';
 
-//handle submission is meant to be passed down here to tell it how to submit data
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import './Editor.css';
 
 const RichEditor = ({
     handleEditorSubmit,
@@ -23,8 +18,6 @@ const RichEditor = ({
     richTextEditor,
     setRichTextEditor,
 }) => {
-    const dispatch = useDispatch();
-
     const [contentState, setcontentState] = useState(details);
     const [editorState, setEditorState] = useState(() =>
         EditorState.createEmpty()
@@ -48,9 +41,7 @@ const RichEditor = ({
         separator: ' ',
     };
     const config = {
-        blockTypesMapping: {
-            /* mappings */
-        },
+        blockTypesMapping: {},
         emptyLineBeforeBlock: true,
     };
 
@@ -73,15 +64,6 @@ const RichEditor = ({
     //HTML STRING CAN BE PASSED TO BACKEND
     const htmlString = markdownParser(markup);
     //THIS IS HOW WE PARSE
-    const theObj = { __html: htmlString };
-    //THIS IS HOW WE VIEW
-    //  <div
-    //  className="preview"
-    //  dangerouslySetInnerHTML={theObj}
-    // >
-
-    // </div>
-    console.log(<Editor></Editor>);
 
     const submitMe = (e, htmlString, questionId, answerId) => {
         setRichTextEditor(!richTextEditor);
@@ -109,7 +91,6 @@ const RichEditor = ({
                 editorClassName="editor-class"
                 toolbarClassName="toolbar-class"
             />
-            {/* <div className="preview" dangerouslySetInnerHTML={theObj}></div> */}
             <button
                 className="modalButton"
                 type="submit"

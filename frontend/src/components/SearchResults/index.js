@@ -4,6 +4,7 @@ import { filterQuestions } from '../../store/questions';
 
 import QuestionCard from '../AllQuestionsPage/QuestionCard';
 import Button from '../Button';
+
 import './SearchResults.css';
 
 const { useSelector, useDispatch } = require('react-redux');
@@ -45,7 +46,16 @@ const SearchResults = () => {
             <div id="question-list">
                 {!questions.length && <p>No Result Found.</p>}
                 {questions.map(
-                    ({ id, title, details, votes_score, answers_count, user, created_at, updated_at }) => (
+                    ({
+                        id,
+                        title,
+                        details,
+                        votes_score,
+                        answers_count,
+                        user,
+                        created_at,
+                        updated_at,
+                    }) => (
                         <QuestionCard
                             key={id}
                             id={id}

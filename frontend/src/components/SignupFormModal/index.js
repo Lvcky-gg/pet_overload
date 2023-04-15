@@ -2,18 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import { signUp, clearErrors } from '../../store/session';
-import './SignupForm.css';
 import logo from './favicon2_720.png';
 import validateInput from '../../utils/validateInput';
 
+import './SignupForm.css';
+
 function SignupFormModal() {
     const dispatch = useDispatch();
-    // const loading = useSelector((state) => state.session.loading);
     const user = useSelector((state) => state.session.user);
     const validationErrors = useSelector(
         (state) => state.session.validationErrors
     );
-    const error = useSelector((state) => state.session.error);
     const [errors, setErrors] = useState('');
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
@@ -48,6 +47,7 @@ function SignupFormModal() {
         };
         setOnModalClose(clearErrorMessages);
     }, [user, closeModal, dispatch, setOnModalClose]);
+
     let errorObject = [];
     if (validationErrors) {
         errorObject = Object.values(
@@ -58,14 +58,14 @@ function SignupFormModal() {
             }, {})
         );
     }
+
     if (errors) errorObject.push(errors);
+
     return (
         <div className="modalSignUp">
             <img src={logo} alt="#" className="modalLogo"></img>
             <h1>Sign Up</h1>
             <form onSubmit={handleSubmit}>
-                {/* {error && <div>{error}</div>} */}
-
                 <div>
                     <label>Email</label>
                     <input

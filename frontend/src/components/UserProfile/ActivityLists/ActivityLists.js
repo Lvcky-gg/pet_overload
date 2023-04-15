@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-// import parse from 'html-react-parser';
 import plainText from '../../../utils/plainText';
 import dateFormater from '../../../utils/dateFormater';
 import {
@@ -33,26 +32,30 @@ const ActivityList = ({
 
     const userAVotes = useSelector((state) => state.answerVotes.answerVotes);
 
-    // const loading = useSelector((state) => state.questionVotes.loading);
+    const getQuestion = useCallback(
+        (questionId) => {
+            const question = questions.find(
+                (question) => question.id === questionId
+            );
+
+            return question ? question : 'No Questions voted';
+        },
+        [questions]
+    );
 
     useEffect(() => {
         dispatch(getQuestionVotes());
         dispatch(getAnswerVotes());
         dispatch(getAllQuestions());
         dispatch(getAllAnswers());
-    }, [dispatch, isDelete, activeTab]);
+    }, [dispatch, isDelete, activeTab, getQuestion]);
 
-    const getQuestion = (questionId) => {
-        const question = questions.find(
-            (question) => question.id === questionId
-        );
-
-        return question ? question : 'No Questions voted';
-    };
     const userQuestions = questions.filter((question) => {
         return question.user_id === user.id;
     });
+
     const userAnswers = answers.filter((answer) => answer.userId === user.id);
+
     const handleDelete = (type, id) => {
         if (type === 'question') {
             dispatch(deleteQuestion(id));
@@ -64,6 +67,7 @@ const ActivityList = ({
             dispatch(deleteAnswerVotes(id));
         }
     };
+
     const sortList = (list) => {
         const data = [...list];
         if (activeSort === 'newest') {
@@ -171,10 +175,6 @@ const ActivityList = ({
                                 className="user-activity-list list-item"
                                 key={idx}
                             >
-                                {/* <p id="question-title">
-                                    {getQuestion(aVote.answer.questionId).title}
-                                </p> */}
-                                {/* <p id="answer-detail">{aVote.answer.details}</p> */}
                                 <p id="answer-detail">
                                     {plainText(aVote.answer.details, 50)}
                                 </p>
@@ -262,13 +262,7 @@ const ActivityList = ({
                                 >
                                     {getQuestion(answer.questionId).title}
                                 </NavLink>
-                                {/* <p id="question-title">
-                                    {getQuestion(answer.questionId).title}
-                                </p> */}
-                                {/* <p>{answer.details}</p> */}
-                                {/* <div id="centerAnswer">
-                                    {parse(answer.details)}
-                                </div> */}
+
                                 <div id="centerAnswer">
                                     {plainText(answer.details, 50)}
                                 </div>
