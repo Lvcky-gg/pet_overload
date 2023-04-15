@@ -8,7 +8,11 @@ const initialState = {
 export const questionVotesSlice = createSlice({
     name: 'questionVotes',
     initialState,
-    reducers: {},
+    reducers: {
+        clearQuestionVotes: (state) => {
+            state.questionVotes = [];
+        },
+    },
     extraReducers: (builder) => {
         // actions
         //payload in the extraReducers is the value returned by the fulfilled or rejected promise in the async thunk function
@@ -207,5 +211,7 @@ export const selectVoteStatus = (state, questionId) => {
 };
 
 // export const { addNewQuestionVote } = questionVotesSlice.actions;
+
+export const { clearQuestionVotes } = questionVotesSlice.actions;
 
 export default questionVotesSlice.reducer;
