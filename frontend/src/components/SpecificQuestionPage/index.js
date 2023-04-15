@@ -91,7 +91,11 @@ const SpecificQuestion = () => {
                     <Question question={question} setIsDelete={setIsDelete} />
                     {answers_count > 0 && (
                         <>
-                            <h2>{answers_count} Answers</h2>
+                            {answers_count > 0 ? (
+                                <h2>{answers_count} Answers</h2>
+                            ) : (
+                                <h2> No Answers</h2>
+                            )}
                             {/* pass state to show texteditor or not */}
                             <Answers
                                 answers={answers}

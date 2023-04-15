@@ -162,6 +162,9 @@
 
 .card-details {
     padding-left: 20px;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
 }
 
 .modify-button {
