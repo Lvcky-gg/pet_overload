@@ -6,10 +6,11 @@ import QuestionCard from '../AllQuestionsPage/QuestionCard';
 import Button from '../Button';
 
 import './SearchResults.css';
-
+import { useNavigate } from 'react-router-dom';
 const { useSelector, useDispatch } = require('react-redux');
 
 const SearchResults = () => {
+    const navigate = useNavigate();
     const location = useLocation();
     const parameter = location.search;
     const dispatch = useDispatch();
@@ -19,6 +20,11 @@ const SearchResults = () => {
     useEffect(() => {
         dispatch(filterQuestions(parameter));
     }, [dispatch, parameter]);
+
+    const navigateToAskAQuestionPage = () => {
+        // Navigate to the route '/all-questions/ask-a-question'
+        navigate('/all-questions/ask-a-question');
+    };
     if (loading) {
         return null;
     }
@@ -28,7 +34,11 @@ const SearchResults = () => {
             <div className="all-questions-header">
                 <h1>Search Results</h1>
                 <div className="ask-question-container">
-                    <button id="ask-question-button" className="button">
+                    <button
+                        id="ask-question-button"
+                        className="button"
+                        onClick={navigateToAskAQuestionPage}
+                    >
                         Ask a question
                     </button>
                 </div>

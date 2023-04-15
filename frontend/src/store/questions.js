@@ -73,6 +73,9 @@ export const questionsSlice = createSlice({
                 );
                 state.allQuestions[idx] = updateQuestion;
             });
+
+        //duplicate?
+        //.addCase(deleteQuestion.rejected, (state, action) => {});
     },
 });
 
@@ -129,6 +132,8 @@ export const filterQuestions = createAsyncThunk(
         return data.questions;
     }
 );
+//duplicate?
+//export const deleteQustion = createAsyncThunk(
 
 export const deleteQuestion = createAsyncThunk(
     'questions/deleteQuestion',

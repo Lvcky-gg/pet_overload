@@ -32,13 +32,14 @@ class AnswerVote(db.Model):
 
     def to_dict(self):
         return {
-            "id": self.id,
-            "isLiked": self.is_liked,
-            "createdAt": self.created_at,
-            "updatedAt": self.updated_at,
-            "userId": self.user_id,
-            "answerId": self.answer_id,
-            "answer": self.answer.to_dict() if self.answer is not None else None,
+            'id': self.id,
+            'isLiked': self.is_liked,
+            'createdAt':self.created_at,
+            'updatedAt':self.updated_at,
+            'userId':self.user_id,
+            'answerId':self.answer_id,
+            # 'answer': self.answer.to_dict()if self.answer is not None else None,
+            "answer":self.answer.to_dict()
         }
 
     # factory method to create Answer instance

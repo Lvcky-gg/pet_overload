@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react';
-import { redirect, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import './Redirect.css';
+import { useSelector } from 'react-redux';
 
 const Redirect = () => {
     const [redirectTimer, setRedirectTimer] = useState(5);
     const navigate = useNavigate();
+    const redirectMessage = useSelector(
+        (state) => state.session.redirectMessage
+    );
 
     useEffect(() => {
         const startTime = Date.now();
@@ -26,7 +30,10 @@ const Redirect = () => {
 
     return (
         <div className="ask-question-page-container">
-            <h1>You must be logged in to ask a question.</h1>
+            <h1>
+                You must be logged in to{' '}
+                {redirectMessage ?? 'perform this action.'}
+            </h1>
             <h2 className="redirect-timer-message">Redirecting you...</h2>
 
             <div className="spinner">

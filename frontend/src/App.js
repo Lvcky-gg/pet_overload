@@ -7,16 +7,14 @@ import {
     faUpLong,
     faDownLong,
     faUserCircle,
-   
 } from '@fortawesome/free-solid-svg-icons';
 import {
     faFacebook,
     faInstagram,
     faLinkedinIn,
     faSquareGithub,
-    faTwitter
-}
-from '@fortawesome/free-brands-svg-icons';
+    faTwitter,
+} from '@fortawesome/free-brands-svg-icons';
 import SignupFormPage from './components/SignupFormPage';
 import LoginFormPage from './components/LoginFormPage';
 import AllQuestionsPage from './components/AllQuestionsPage';
@@ -32,7 +30,7 @@ import SpecificQuestion from './components/SpecificQuestionPage';
 import Sidebar from './components/Sidebar';
 import AllUsersPage from './components/allUsersPage';
 import AskAQuestionPage from './components/AskAQuestionPage';
-
+import Redirect from './components/Redirect';
 
 function App() {
     const dispatch = useDispatch();
@@ -43,7 +41,17 @@ function App() {
     }, [dispatch]);
 
     // FontAwesome icons to be installed globally.
-    library.add(fas, faUpLong, faDownLong, faUserCircle, faFacebook, faInstagram, faLinkedinIn, faSquareGithub, faTwitter);
+    library.add(
+        fas,
+        faUpLong,
+        faDownLong,
+        faUserCircle,
+        faFacebook,
+        faInstagram,
+        faLinkedinIn,
+        faSquareGithub,
+        faTwitter
+    );
     const showSidebar =
         location.pathname.startsWith('/all-questions') ||
         location.pathname.startsWith('/all-questions/search') ||
@@ -79,10 +87,7 @@ function App() {
                             exact
                             element={<AskAQuestionPage />}
                         />
-                        <Route
-                            path="/team"
-                            element={<Team />}
-                        />
+                        <Route path="/team" element={<Team />} />
                         <Route
                             exact
                             path="/all-users/"
@@ -102,7 +107,11 @@ function App() {
                             path="/users/:userId"
                             element={<UserProfile isLoaded={isLoaded} />}
                         />
-
+                        <Route
+                            exact
+                            path="/redirect-page"
+                            element={<Redirect />}
+                        />
                         <Route path="/team" element={<Team />} />
                     </Routes>
                 )}

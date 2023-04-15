@@ -262,7 +262,6 @@ const ActivityList = ({
                                 >
                                     {getQuestion(answer.questionId).title}
                                 </NavLink>
-
                                 <div id="centerAnswer">
                                     {plainText(answer.details, 50)}
                                 </div>
