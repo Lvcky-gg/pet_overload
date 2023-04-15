@@ -1,52 +1,97 @@
 .profile-dropdown {
-  position: absolute;
-  background-color:white ;
-  box-shadow: 2px 2px 5px gray;
-  height:200px;
-  width:100px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+    position: absolute;
+    background-color: white;
+    box-shadow: 2px 2px 5px gray;
+    height: 120px;
+    width: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 10px;
+    margin: 0;
+    border-radius: 5px;
+    font-size: 14px;
 }
-.profile-dropdown button{
-  position: relative;
-  right:20px;
-  margin-top:5%;
 
+.profile-dropdown button {
+    /* position: relative;
+    right: 20px; */
+    /* margin-top: 5%; */
+    font-size: 12px;
+    box-sizing: border-box;
+    padding: 5px;
+    text-align: center;
+    margin: 5px 0;
+    width: 75%;
 }
-.profile-dropdown li{
-  overflow: hidden;
-  width: 100%;
-  position: relative;
-  right: 50%;
-  margin: auto;
 
+.profile-dropdown .button-container {
+    display: flex;
+    justify-content: center;
 }
+
+.profile-dropdown li {
+    overflow: hidden;
+    width: 100%;
+    /* position: relative; */
+    /* right: 50%; */
+    text-align: left;
+    /* margin: auto; */
+    box-sizing: border-box;
+}
+
+.nav-img-container {
+    height: 70px;
+    overflow: hidden;
+    justify-self: flex-start;
+}
+
 .navLogo {
-  width:8%;
+    height: 150px;
+    position: relative;
+    bottom: 40px;
 }
 
 .hidden {
-  display: none;
+    display: none;
 }
 
 .nav {
-  position: sticky;
-  top:0;
-  display:flex;
-  justify-content: space-around;
-  background-color:#F79B26 ;
+    /* changed to fixed to the top */
+    position: fixed;
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    background-color: #f79b26;
+    z-index: 10;
+    width: 100%;
+    padding-left: 15%;
+    padding-right: 15%;
+    box-sizing: border-box;
+    height: 70px;
+    align-items: center;
 }
-.navDrop{
-  /* position: relative;
-  top: 2.9rem; */
-  margin-top: 2.7%;
-  text-decoration: none;
-  list-style: none;
-  display: flex;
 
+.navDrop {
+    /* position: relative;
+  top: 2.9rem; */
+    /* will not be in the center with the margin */
+    /* margin-top: 2.7%; */
+    text-decoration: none;
+    list-style: none;
+    display: flex;
+    box-sizing: border-box;
+    justify-content: space-between;
+    width: 200px;
+    align-items: center;
 }
-.navDrop li {
-  padding-left: 50%;
+
+/* overhang the icon */
+/* .navDrop li {
+    padding-left: 50%;
+} */
+
+.nav-img-container:hover {
+    cursor: pointer;
 }

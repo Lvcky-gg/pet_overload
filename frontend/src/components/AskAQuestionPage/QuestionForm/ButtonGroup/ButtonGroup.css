@@ -1,0 +1,27 @@
+.ask-question-page-container .button-container {
+    display: flex;
+    gap: 1rem;
+    align-self: center;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.submit-button,
+.preview-button {
+    background-color: var(--primary-color) !important;
+    color: var(--button-text-color);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+    font-weight: 500;
+    padding: 0.5rem 1.5rem;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    border: none;
+    max-width: 49%;
+    width: 49%;
+    height: 40px;
+}
+
+.submit-button {
+    background-color: var(--secondary-color) !important;
+}

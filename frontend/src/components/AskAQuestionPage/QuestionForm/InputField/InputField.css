@@ -1,0 +1,20 @@
+.ask-question-page-container input[type="text"] {
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-family: inherit;
+    max-width: 100%;
+    width: 98%;
+    margin-bottom: 1.25rem;
+}
+
+.ask-question-page-container label {
+    font-weight: bold;
+}
+
+.ask-question-page-container .subtitle {
+    font-size: 0.9rem;
+    color: #777;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}

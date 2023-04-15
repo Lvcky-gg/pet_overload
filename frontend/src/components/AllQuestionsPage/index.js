@@ -1,22 +1,39 @@
-import { useEffect } from 'react';
-import { getAllQuestions } from '../../store/questions';
+import { useEffect, useState } from 'react';
 import { getAllAnswers } from '../../store/answers';
+import { getAllQuestions } from '../../store/questions';
 import QuestionCard from './QuestionCard';
-import Button from '../Button';
+import { getQuestionVotes } from '../../store/questionVotes';
+import { authenticate } from '../../store/session';
+import { useNavigate } from 'react-router-dom';
+import SortingTabs from './SortingTabs/SortingTabs';
+import { getAllUsers } from '../../store/users';
+
 import './AllQuestionsPage.css';
 
 const { useSelector, useDispatch } = require('react-redux');
 
 const AllQuestionsPage = () => {
     const dispatch = useDispatch();
-    const questions = useSelector((state) => state.questions.allQuestions);
+    const navigate = useNavigate();
     const loading = useSelector((state) => state.questions.loading);
-    const answers = useSelector((state)=>state.answers.allAnswers)
+    const allUsers = useSelector((state) => state.users.allUsers);
+
+    const questions = useSelector(
+        (state) => state.questions.displayedQuestions
+    );
+    const [voteClicked, setVoteClicked] = useState(false);
 
     useEffect(() => {
         dispatch(getAllQuestions());
-        dispatch(getAllAnswers())
-    }, []);
+        dispatch(getAllAnswers());
+        dispatch(getQuestionVotes());
+        dispatch(authenticate());
+        dispatch(getAllUsers());
+    }, [dispatch, voteClicked]);
+
+    const navigateToAskAQuestionPage = () => {
+        navigate('/all-questions/ask-a-question');
+    };
 
     if (loading) {
         return null;
@@ -27,26 +44,29 @@ const AllQuestionsPage = () => {
             <div className="all-questions-header">
                 <h1>All Questions</h1>
                 <div className="ask-question-container">
-                    <button id="ask-question-button" className="button">
+                    <button
+                        id="ask-question-button"
+                        className="button"
+                        onClick={navigateToAskAQuestionPage}
+                    >
                         Ask a question
                     </button>
                 </div>
             </div>
-            <div className="filter-row">
-                <div className="question-count-container">
-                    <p className="question-count">
-                        {questions.length} questions
-                    </p>
-                </div>
-                <div className="filter-options">
-                    <Button id="newest-button" text="Newest" />
-                    <Button id="unanswered-button" text="Unanswered" />
-                    <Button id="score-button" text="Score" />
-                </div>
-            </div>
+            <SortingTabs questions={questions} />
             <div id="question-list">
                 {questions.map(
-                    ({ id, title, details, votes_score, answers_count }) => (
+                    ({
+                        id,
+                        title,
+                        details,
+                        votes_score,
+                        answers_count,
+                        answers,
+                        user,
+                        created_at,
+                        updated_at,
+                    }) => (
                         <QuestionCard
                             key={id}
                             id={id}
@@ -54,6 +74,11 @@ const AllQuestionsPage = () => {
                             details={details}
                             votes_score={votes_score}
                             answers_count={answers_count}
+                            user={user}
+                            answers={answers}
+                            created_at={created_at}
+                            updated_at={updated_at}
+                            setVoteClicked={setVoteClicked}
                         />
                     )
                 )}

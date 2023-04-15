@@ -6,6 +6,7 @@ export const sessionSlice = createSlice({
         user: null,
         error: null,
         validationErrors: null,
+        redirectMessage: null,
     },
     reducers: {
         setUser: (state, action) => {
@@ -14,31 +15,43 @@ export const sessionSlice = createSlice({
         removeUser: (state) => {
             state.user = null;
         },
+        clearErrors: (state) => {
+            state.error = null;
+            state.validationErrors = null;
+        },
+        setRedirectMessage: (state, action) => {
+            state.redirectMessage = action.payload;
+        },
     },
     extraReducers: (builder) => {
         builder
             .addCase(authenticate.fulfilled, (state, action) => {
                 state.user = action.payload;
+                state.error = null;
             })
             .addCase(login.fulfilled, (state, action) => {
                 state.user = action.payload;
+                state.error = null;
+                state.validationErrors = null;
+            })
+            .addCase(login.rejected, (state, action) => {
+                state.error = action.payload.message;
+                state.validationErrors = action.payload.errors;
+                state.user = null;
             })
             .addCase(logout.fulfilled, (state) => {
                 state.user = null;
             })
             .addCase(signUp.pending, (state) => {
-
                 state.error = null;
                 state.validationErrors = null;
             })
             .addCase(signUp.fulfilled, (state, action) => {
-
                 state.user = action.payload;
                 state.error = null;
                 state.validationErrors = null;
             })
             .addCase(signUp.rejected, (state, action) => {
-
                 state.error = action.payload.message;
                 state.validationErrors = action.payload.errors;
                 state.user = null;
@@ -62,7 +75,7 @@ export const authenticate = createAsyncThunk(
                 return;
             }
 
-            return data;
+            return data.user;
         }
     }
 );
@@ -140,6 +153,7 @@ export const signUp = createAsyncThunk(
     }
 );
 
-export const { setUser, removeUser } = sessionSlice.actions;
+export const { setUser, removeUser, clearErrors, setRedirectMessage } =
+    sessionSlice.actions;
 
 export default sessionSlice.reducer;

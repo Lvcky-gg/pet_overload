@@ -1,0 +1,52 @@
+#name-card {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+
+#name-card .profile-photo {
+    margin-right: 10px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: right;
+}
+
+.user-detail {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-detail h3 {
+    margin: 0;
+}
+
+.icon-date {
+    display: flex;
+    align-items: center;
+}
+
+.icon-date i,
+.reputation-container i {
+    margin-right: 5px;
+}
+#member-date {
+    color: #0e67b4;
+}
+
+#user-info-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.reputation-container {
+    font-size: 40px;
+    display: flex;
+    flex-direction: row;
+    color: #4b5563;
+    align-items: center;
+}
+#reputation-score {
+    color: #f74726;
+}

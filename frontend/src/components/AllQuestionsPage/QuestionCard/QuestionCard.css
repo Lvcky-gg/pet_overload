@@ -68,3 +68,25 @@
 .downvote-arrow.selected {
     color: var(--secondary-color);
 }
+.true {
+    cursor: pointer;
+}
+.author-name {
+    color: var(--secondary-color);
+    font-size: 14px;
+    margin-top: 8px;
+}
+.card-date {
+    color: var(--text-color);
+    font-size: 12px;
+}
+.card-bottom-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#rightside-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}

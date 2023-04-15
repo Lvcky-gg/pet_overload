@@ -1,0 +1,22 @@
+#userProfile-container ul {
+    list-style: none;
+}
+#activity-title {
+    color: #0e67b4;
+    font-size: 35px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+#userProfile-container {
+    background-color: #f5f5f5;
+    width: 100%;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-self: flex-start;
+    box-sizing: border-box;
+    padding-left: 40px;
+    margin-left: auto;
+}

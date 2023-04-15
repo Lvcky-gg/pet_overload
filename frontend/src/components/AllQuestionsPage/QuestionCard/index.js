@@ -1,46 +1,77 @@
-import { useRef } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
+import { useParams } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import parse from 'html-react-parser';
 import './QuestionCard.css';
-
-const QuestionCard = ({ title, details, votes_score, answers_count }) => {
-    const answers_msg = answers_count === 1 ? 'answer' : 'answers';
-    const upvoteArrowRef = useRef(null);
-    const downvoteArrowRef = useRef(null);
-
-    const handleVoteArrowClick = (arrowRef) => {
-        arrowRef.current.classList.add('fa-beat');
-
-        setTimeout(() => {
-            arrowRef.current.classList.remove('fa-beat');
-        }, 800);
-    };
+import Voting from '../Voting/Voting';
+import dateFormater from '../../../utils/dateFormater';
+import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+const QuestionCard = ({
+    id,
+    title,
+    details,
+    votes_score: voteScore,
+    answers_count,
+    showAnswers,
+    user,
+    created_at,
+    updated_at,
+    setVoteClicked,
+}) => {
+    const { questionId } = useParams();
+    const answersMessage = answers_count === 1 ? 'answer' : 'answers';
+    const className = questionId ? 'answers-msg true' : 'answers-msg';
+    const sessionUser = useSelector((state) => state.session.user);
 
     return (
         <div className="question-card">
             <div className="row">
-                <div className="voting-score">
-                    <FontAwesomeIcon
-                        className="upvote-arrow"
-                        icon="fa-up-long"
-                        ref={upvoteArrowRef}
-                        onClick={() => handleVoteArrowClick(upvoteArrowRef)}
-                    />
-                    <p className="voting-score-value">{votes_score}</p>
-                    <FontAwesomeIcon
-                        className="downvote-arrow"
-                        icon="fa-down-long"
-                        ref={downvoteArrowRef}
-                        onClick={() => handleVoteArrowClick(downvoteArrowRef)}
-                    />
-                </div>
+                <Voting
+                    questionId={id}
+                    voteScore={voteScore}
+                    onClick={() => setVoteClicked((prev) => !prev)}
+                />
 
                 <div className="title-description-col">
-                    <h2>{title}</h2>
-                    <p>{details}</p>
-                    <p className="answers-msg">
-                        {answers_count} {answers_msg}
-                    </p>
+                    <NavLink to={`/all-questions/${id}`}>
+                        <h2>{title}</h2>
+                    </NavLink>
+
+                    <div>{parse(details)}</div>
+
+                    <div className="card-bottom-container">
+                        <p className={className} onClick={showAnswers}>
+                            {answers_count} {answersMessage}
+                        </p>
+                        <div id="rightside-info">
+                            {/* direct to user page */}
+                            {sessionUser ? (
+                                <NavLink to={`/users/${user.id}`}>
+                                    <p className="author-name">
+                                        Author:{user.username}
+                                    </p>
+                                </NavLink>
+                            ) : (
+                                <p className="author-name">
+                                    Author:{user.username}
+                                </p>
+                            )}
+                            {!updated_at ? (
+                                <>
+                                    <p className="card-date">
+                                        Asked on:{dateFormater(created_at)}
+                                    </p>
+                                </>
+                            ) : (
+                                <>
+                                    <p className="card-date">
+                                        Updated Question on:
+                                        {dateFormater(updated_at)}
+                                    </p>
+                                </>
+                            )}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

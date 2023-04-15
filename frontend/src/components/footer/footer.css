@@ -1,11 +1,38 @@
 .footer {
-    background-color: #f74726;
-    height:200px;
-    display:flex;
-    flex-direction: row;
-    justify-content: space-evenly;
+    background-color: #f7a926;
+    height: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
+    padding-left: 15%;
+    padding-right: 15%;
+    box-sizing: border-box;
+    font-size: 12px;
+    position: fixed;
+    bottom: 0;
+    z-index: 1000;
 }
-.footer img {
-    height:200px;
+.footer-img-container {
+    height: 50px;
+    width: 150px;
+    background-image: url('../footer/petoverload-1__2__720.png');
+    background-size: cover;
+    background-position: center;
 }
+.copy-right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+.copy-right a i {
+    font-size: 20px;
+}
+/* no need anymore */
+/* .footer img {
+    height: 150px;
+    position: relative;
+    margin-bottom: 150px;
+
+} */

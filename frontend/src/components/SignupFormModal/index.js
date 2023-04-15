@@ -1,27 +1,37 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useModal } from '../../context/Modal';
-import { signUp } from '../../store/session';
+import { signUp, clearErrors } from '../../store/session';
+import logo from './favicon2_720.png';
+import validateInput from '../../utils/validateInput';
+
 import './SignupForm.css';
-import logo from './favicon2_720.png'
 
 function SignupFormModal() {
     const dispatch = useDispatch();
-    // const loading = useSelector((state) => state.session.loading);
     const user = useSelector((state) => state.session.user);
-    const validationErrors = useSelector((state) => state.session.validationErrors);
-    const error = useSelector((state) => state.session.error);
-
+    const validationErrors = useSelector(
+        (state) => state.session.validationErrors
+    );
+    const [errors, setErrors] = useState('');
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const { closeModal } = useModal();
+    const { closeModal, setOnModalClose } = useModal();
+    const [inputValidate, setInputValidate] = useState([]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        if (password === confirmPassword) {
+        const errors = validateInput({
+            username,
+            email,
+            password,
+            confirmPassword,
+        });
+        if (errors.length) {
+            setInputValidate(errors);
+        } else {
             dispatch(signUp({ username, email, password }));
         }
     };
@@ -30,71 +40,95 @@ function SignupFormModal() {
         // Signup was successful?
         if (user) {
             closeModal();
-        }
-    }, [user, closeModal]);
+            setErrors('');
+        } // clean errors if modal closed
+        const clearErrorMessages = () => {
+            dispatch(clearErrors());
+        };
+        setOnModalClose(clearErrorMessages);
+    }, [user, closeModal, dispatch, setOnModalClose]);
+
+    let errorObject = [];
+    if (validationErrors) {
+        errorObject = Object.values(
+            validationErrors.reduce((acc, error) => {
+                const [key, value] = error.split(' : ');
+                acc[key] = value;
+                return acc;
+            }, {})
+        );
+    }
+
+    if (errors) errorObject.push(errors);
 
     return (
-        <div className='modalSignUp'>
-            <img src={logo} alt="#" className='modalLogo'></img>
+        <div className="modalSignUp">
+            <img src={logo} alt="#" className="modalLogo"></img>
             <h1>Sign Up</h1>
             <form onSubmit={handleSubmit}>
-                {error && <div>{error}</div>}
-
-                <ul>
-                    {validationErrors && validationErrors.map((error, idx) => (
-                        <li key={idx}>{error}</li>
-                    ))}
-                </ul>
                 <div>
-                <label>
-                    Email
-                </label>
-                <input
+                    <label>Email</label>
+                    <input
                         type="text"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        required
+                        // required
                     />
                 </div>
                 <div>
-                <label>
-                    Username
-                </label>
-                <input
+                    <label>Username</label>
+                    <input
                         type="text"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
-                        required
+                        // required
                     />
                 </div>
                 <div>
-                <label>
-                    Password
-                </label>
-                <input
+                    <label>Password</label>
+                    <input
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        required
+                        // required
                     />
                 </div>
                 <div>
-                <label>
-                    Confirm Password
-
-                </label>
-                <input
+                    <label>Confirm Password</label>
+                    <input
                         type="password"
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
-                        required
+                        // required
                     />
                 </div>
+                <ul className="modal-form-list-err">
+                    {inputValidate &&
+                        inputValidate.map((error, idx) => (
+                            <li key={idx}>
+                                <span style={{ color: 'red', padding: '5px' }}>
+                                    <i className="fas fa-exclamation-circle"></i>
+                                </span>
+                                {error}
+                            </li>
+                        ))}
+                    {errorObject &&
+                        errorObject.map((error, idx) => (
+                            <li key={idx}>
+                                <span style={{ color: 'red', padding: '5px' }}>
+                                    <i className="fas fa-exclamation-circle"></i>
+                                </span>
+                                {error}
+                            </li>
+                        ))}
+                </ul>
                 <div>
-                <button type="submit" className="modalButton">Sign Up</button>
+                    <button type="submit" className="modalButton">
+                        Sign Up
+                    </button>
                 </div>
             </form>
-    </div>
+        </div>
     );
 }
 
