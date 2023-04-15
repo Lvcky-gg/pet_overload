@@ -40,7 +40,7 @@ const SearchBar = () => {
     };
 
     const handleBlur = () => {
-        setShowDropdown(false);
+        if (!errorMsg) setShowDropdown(false);
     };
     useEffect(() => {
         if (searchUrl) {
@@ -53,6 +53,7 @@ const SearchBar = () => {
         }
         if (!error) setErrorMsg('');
     }, [searchUrl, navigate, error]);
+
     useEffect(() => {
         if (searchInputRef.current) {
             if (!errorMsg) {
@@ -62,6 +63,7 @@ const SearchBar = () => {
             }
         }
     }, [errorMsg]);
+
     return (
         <div className="search-bar-container">
             <form onSubmit={handleSearchSubmit} className="search-bar-form">

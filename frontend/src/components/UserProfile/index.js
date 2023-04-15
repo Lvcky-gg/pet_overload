@@ -20,6 +20,7 @@ const UserProfile = ({ isLoaded }) => {
     const allUsers = useSelector((state) => state.users.allUsers);
     // user with id in url
     const { userId } = useParams();
+
     useEffect(() => {
         setLinkUser(allUsers.find((user) => user?.id === Number(userId)));
     }, [allUsers]);
@@ -31,6 +32,7 @@ const UserProfile = ({ isLoaded }) => {
             setUser(currentUser);
         }
     }, [linkUser, currentUser, userId]);
+
 
     const [activeTab, setActiveTab] = useState('questions');
     const [activeSort, setActiveSort] = useState('newest');
