@@ -128,7 +128,6 @@ export const filterQuestions = createAsyncThunk(
             return rejectWithValue(await response.json());
         }
         const data = await response.json();
-        console.log('data:', data);
 
         return data.questions;
     }
@@ -155,6 +154,7 @@ export const deleteQuestion = createAsyncThunk(
         return questionId;
     }
 );
+
 export const updateQuestion = createAsyncThunk(
     'questions/updateQuestion',
     async ({ title, details, questionId }, { rejectWithValue }) => {
@@ -174,6 +174,7 @@ export const updateQuestion = createAsyncThunk(
         return data;
     }
 );
+
 export const {
     sortQuestionsByNewest,
     sortQuestionsByScore,

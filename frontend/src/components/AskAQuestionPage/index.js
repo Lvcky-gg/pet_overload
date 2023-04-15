@@ -7,9 +7,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createQuestion } from '../../store/questions';
 import { useNavigate } from 'react-router-dom';
 
-import './AskAQuestionPage.css';
 import ErrorList from './ErrorList';
 import Redirect from './Redirect';
+
+import './AskAQuestionPage.css';
 
 const DEFAULT_DETAILS_STATE = '<p></p>';
 

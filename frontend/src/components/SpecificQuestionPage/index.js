@@ -11,34 +11,34 @@ import Question from './Question/Question';
 import Answers from './Answers';
 import { getAnswerVotes } from '../../store/answerVotes';
 import { authenticate } from '../../store/session';
-/*
-import { getQuestionVotes } from '../../store/questionVotes';
-import session from '../../store/session';
-*/
 
-const { useSelector, useDispatch } = require('react-redux');
+import { getQuestionVotes } from '../../store/questionVotes';
+
+
+import { useSelector, useDispatch } from 'react-redux';
+import { getAllUsers } from '../../store/users';
+import session from '../../store/session';
+
+
+import './SpecificQuestion.css';
 
 const SpecificQuestion = () => {
     const dispatch = useDispatch();
     const { questionId } = useParams();
     const questions = useSelector((state) => state.questions.allQuestions);
+    const allUsers = useSelector((state) => state.users.allUsers);
+    const sessionUser = useSelector((state) => state.session.user);
 
     // const answers = useSelector((state) => state.answers.allAnswers);
     // const questionVotes = useSelector((state)=>state.questionVotes.questionVotes);
     // const sessionUser = useSelector((state) => state.session.user);
 
     const loading = useSelector((state) => state.questions.loading);
-
     const [richTextEditor, setRichTextEditor] = useState(false);
-    // const [hidden, setHidden] = useState(false);
     const [isDelete, setIsDelete] = useState(false);
     const [voteClicked, setVoteClicked] = useState(false);
     const [isCreated, setIsCreated] = useState(false);
     const [isUpdated, setIsUpdated] = useState(false);
-    const showEditor = (e) => {
-        e.preventDefault();
-        setRichTextEditor(!richTextEditor);
-    };
 
     useEffect(() => {
         dispatch(getAllQuestions());
@@ -50,6 +50,7 @@ const SpecificQuestion = () => {
         //     setHidden(false);
         //     dispatch(getAllAnswers());
         // }
+        dispatch(getAllUsers());
     }, [isDelete, richTextEditor, voteClicked, dispatch, isCreated, isUpdated]);
 
     const handleEditorSubmit = (e, { details, questionId }) => {
@@ -106,34 +107,20 @@ const SpecificQuestion = () => {
                         </>
                     )}
 
-                    {/* <div className="all-answer-header">
-                        <h1>{title}</h1>
-                        <div className="ask-question-container">
-                            {sessionUser &&<button
-                                id="ask-question-button"
-                                className="button"
-                                onClick={showEditor}
-                            >
-                                Answer question
-                            </button>}
-                        </div>
-                    </div>
-                    {richTextEditor && (
-                        <RichEditor
-                            handleEditorSubmit={handleEditorSubmit}
-                            questionId={questionId}
-                            setRichTextEditor={setRichTextEditor}
-                            richTextEditor={richTextEditor}
-                        /> */}
-
                     <h2>Your Answer</h2>
+
                     {/* create answer editor */}
-                    <RichEditor
-                        handleEditorSubmit={handleEditorSubmit}
-                        questionId={questionId}
-                        setRichTextEditor={setRichTextEditor}
-                        richTextEditor={richTextEditor}
-                    />
+                    {sessionUser && (
+                        <>
+                            <h2>Your Answer</h2>
+                            <RichEditor
+                                handleEditorSubmit={handleEditorSubmit}
+                                questionId={questionId}
+                                setRichTextEditor={setRichTextEditor}
+                                richTextEditor={richTextEditor}
+                            />
+                        </>
+                    )}
                 </div>
             )}
         </>

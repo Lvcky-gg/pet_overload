@@ -8,10 +8,12 @@ const initialState = {
 export const questionVotesSlice = createSlice({
     name: 'questionVotes',
     initialState,
-    reducers: {},
+    reducers: {
+        clearQuestionVotes: (state) => {
+            state.questionVotes = [];
+        },
+    },
     extraReducers: (builder) => {
-        // actions
-        //payload in the extraReducers is the value returned by the fulfilled or rejected promise in the async thunk function
         builder
             .addCase(getQuestionVotes.fulfilled, (state, action) => {
                 state.loading = false;
@@ -59,7 +61,6 @@ export const questionVotesSlice = createSlice({
     },
 });
 
-// thunks
 export const getQuestionVotes = createAsyncThunk(
     'questionVotes/getQuestionVotes',
     async (_, { rejectWithValue }) => {
@@ -133,7 +134,6 @@ export const deleteQuestionVoteById = createAsyncThunk(
         });
 
         const data = await response.json();
-        console.log('Delete Question Vote Response:', data);
 
         if (!response.ok) {
             return false;
@@ -207,5 +207,7 @@ export const selectVoteStatus = (state, questionId) => {
 };
 
 // export const { addNewQuestionVote } = questionVotesSlice.actions;
+
+export const { clearQuestionVotes } = questionVotesSlice.actions;
 
 export default questionVotesSlice.reducer;

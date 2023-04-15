@@ -8,12 +8,10 @@ import validateInput from '../../utils/validateInput';
 
 function LoginFormModal() {
     const dispatch = useDispatch();
-    // const loading = useSelector((state) => state.session.loading);
     const user = useSelector((state) => state.session.user);
     const validationErrors = useSelector(
         (state) => state.session.validationErrors
     );
-    const error = useSelector((state) => state.session.error);
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -23,6 +21,7 @@ function LoginFormModal() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const errors = validateInput({ email, password });
+
         if (errors.length) {
             setInputValidate(errors);
         } else {
@@ -42,6 +41,7 @@ function LoginFormModal() {
         };
         setOnModalClose(clearErrorMessages);
     }, [user, closeModal, setOnModalClose, dispatch]);
+
     let errorObject = [];
     if (validationErrors) {
         errorObject = Object.values(
@@ -52,12 +52,12 @@ function LoginFormModal() {
             }, {})
         );
     }
+
     return (
         <div className="modalLogin">
             <img src={logo} alt="#" className="modalLogo"></img>
             <h1>Log In</h1>
             <form onSubmit={handleSubmit} className="login-form">
-                {/* {error && <div>{error}</div>} */}
                 <div>
                     <label>Email</label>
                     <input

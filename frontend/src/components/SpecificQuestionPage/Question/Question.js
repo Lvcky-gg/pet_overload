@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { getAllQuestions } from '../../../store/questions';
 import { authenticate } from '../../../store/session';
 import Voting from '../../AllQuestionsPage/Voting/Voting';
 import dateFormater from '../../../utils/dateFormater';
 import DeleteButton from '../../UserProfile/ActivityLists/DeleteButton';
 import parse from 'html-react-parser';
 import { deleteQuestion, updateQuestion } from '../../../store/questions';
+
 const { useSelector, useDispatch } = require('react-redux');
+
 const Question = ({ question, setIsDelete }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();

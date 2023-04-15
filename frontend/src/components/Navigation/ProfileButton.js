@@ -6,6 +6,9 @@ import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { login } from '../../store/session';
+import { clearQuestionVotes } from '../../store/questionVotes';
+import { clearAnswerVotes } from '../../store/answerVotes';
+
 function ProfileButton({ user }) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -33,7 +36,10 @@ function ProfileButton({ user }) {
 
     const handleLogout = (e) => {
         e.preventDefault();
+
         dispatch(logout());
+        dispatch(clearQuestionVotes());
+        dispatch(clearAnswerVotes());
         // added
         closeMenu();
         navigate('/');
@@ -48,7 +54,9 @@ function ProfileButton({ user }) {
         dispatch(login(credential));
         closeMenu();
     };
+
     const ulClassName = 'profile-dropdown' + (showMenu ? '' : ' hidden');
+
     return (
         <>
             <button onClick={openMenu} className="modalButton">

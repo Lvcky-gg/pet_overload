@@ -5,11 +5,10 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import RichEditor from '../../../RichTextEditor';
 import parse from 'html-react-parser';
-
 import { deleteAnswer, getAllAnswers } from '../../../../store/answers';
 import DeleteButton from '../../../UserProfile/ActivityLists/DeleteButton';
 import { authenticate } from '../../../../store/session';
-import { NavLink, redirect } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { updateAnswerByQuestion } from '../../../../store/answers';
 import { getAllQuestions } from '../../../../store/questions';
 import VotingAnswers from '../../VotingAnswers';

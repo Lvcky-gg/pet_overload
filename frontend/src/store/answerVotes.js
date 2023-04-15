@@ -7,7 +7,11 @@ const initialState = {
 export const answerVotesSlice = createSlice({
     name: 'answerVotes',
     initialState,
-    reducers: {},
+    reducers: {
+        clearAnswerVotes: (state) => {
+            state.answerVotes = [];
+        },
+    },
     extraReducers: (builder) => {
         builder
             .addCase(getAnswerVotes.fulfilled, (state, action) => {
@@ -15,7 +19,6 @@ export const answerVotesSlice = createSlice({
                 state.answerVotes = action.payload;
             })
             .addCase(getAnswerVotes.rejected, (state, action) => {
-                console.log('Rejected with value:', action.payload);
                 state.loading = false;
             })
             .addCase(deleteAnswerVotes.fulfilled, (state, action) => {
@@ -25,7 +28,6 @@ export const answerVotesSlice = createSlice({
                 );
             })
             .addCase(deleteAnswerVotes.rejected, (state, action) => {
-                console.log('Rejected with value:', action.payload);
                 state.loading = false;
             })
             .addCase(updateAnswerVotes.fulfilled, (state, action) => {
@@ -37,14 +39,12 @@ export const answerVotesSlice = createSlice({
                 state.answerVotes[idx] = updateVote;
             })
             .addCase(updateAnswerVotes.rejected, (state, action) => {
-                console.log('Rejected with value:', action.payload);
                 state.loading = false;
             })
             .addCase(createAnswerVote.fulfilled, (state, action) => {
                 state.answerVotes.push(action.payload);
             })
             .addCase(createAnswerVote.rejected, (state, action) => {
-                console.log('Rejected with value:', action.payload);
                 state.loading = false;
             })
             .addCase(deleteAnswerVoteById.fulfilled, (state, action) => {
@@ -53,7 +53,6 @@ export const answerVotesSlice = createSlice({
                 );
             })
             .addCase(deleteAnswerVoteById.rejected, (state, action) => {
-                console.log('Rejected with value:', action.payload);
                 state.loading = false;
             });
     },
@@ -141,7 +140,6 @@ export const deleteAnswerVoteById = createAsyncThunk(
             },
         });
         const data = await response.json();
-        console.log('Delete Answer Vote Response:', data);
 
         if (!response.ok) {
             return false;
@@ -161,4 +159,7 @@ export const answerVoteStatus = (state, answerId) => {
 
     return answerVote;
 };
+
+export const { clearAnswerVotes } = answerVotesSlice.actions;
+
 export default answerVotesSlice.reducer;

@@ -12,10 +12,8 @@ const QuestionCard = ({
     details,
     votes_score: voteScore,
     answers_count,
-    // ?
     showAnswers,
     user,
-    answers,
     created_at,
     updated_at,
     setVoteClicked,
@@ -23,7 +21,8 @@ const QuestionCard = ({
     const { questionId } = useParams();
     const answersMessage = answers_count === 1 ? 'answer' : 'answers';
     const className = questionId ? 'answers-msg true' : 'answers-msg';
-    const currentUser = useSelector((state) => state.session.user);
+    const sessionUser = useSelector((state) => state.session.user);
+
     return (
         <div className="question-card">
             <div className="row">
@@ -46,7 +45,7 @@ const QuestionCard = ({
                         </p>
                         <div id="rightside-info">
                             {/* direct to user page */}
-                            {currentUser ? (
+                            {sessionUser ? (
                                 <NavLink to={`/users/${user.id}`}>
                                     <p className="author-name">
                                         Author:{user.username}

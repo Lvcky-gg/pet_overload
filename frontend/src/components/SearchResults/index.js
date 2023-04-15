@@ -4,6 +4,7 @@ import { filterQuestions } from '../../store/questions';
 
 import QuestionCard from '../AllQuestionsPage/QuestionCard';
 import Button from '../Button';
+
 import './SearchResults.css';
 import { useNavigate } from 'react-router-dom';
 const { useSelector, useDispatch } = require('react-redux');

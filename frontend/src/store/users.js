@@ -11,9 +11,6 @@ export const userSlice = createSlice({
             .addCase(getAllUsers.fulfilled, (state, action) => {
                 state.allUsers = action.payload;
             })
-            .addCase(getAllUsers.rejected, (state, action) => {
-                console.log('Rejected with value:', action.payload);
-            });
     },
 });
 
@@ -31,7 +28,6 @@ export const getAllUsers = createAsyncThunk(
             rejectWithValue(await response.json());
         }
         const data = await response.json();
-        console.log('data', data);
         return data.users;
     }
 );

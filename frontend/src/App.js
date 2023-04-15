@@ -7,7 +7,16 @@ import {
     faUpLong,
     faDownLong,
     faUserCircle,
+   
 } from '@fortawesome/free-solid-svg-icons';
+import {
+    faFacebook,
+    faInstagram,
+    faLinkedinIn,
+    faSquareGithub,
+    faTwitter
+}
+from '@fortawesome/free-brands-svg-icons';
 import SignupFormPage from './components/SignupFormPage';
 import LoginFormPage from './components/LoginFormPage';
 import AllQuestionsPage from './components/AllQuestionsPage';
@@ -24,6 +33,7 @@ import Sidebar from './components/Sidebar';
 import AllUsersPage from './components/allUsersPage';
 import AskAQuestionPage from './components/AskAQuestionPage';
 
+
 function App() {
     const dispatch = useDispatch();
     const [isLoaded, setIsLoaded] = useState(false);
@@ -33,7 +43,7 @@ function App() {
     }, [dispatch]);
 
     // FontAwesome icons to be installed globally.
-    library.add(fas, faUpLong, faDownLong, faUserCircle);
+    library.add(fas, faUpLong, faDownLong, faUserCircle, faFacebook, faInstagram, faLinkedinIn, faSquareGithub, faTwitter);
     const showSidebar =
         location.pathname.startsWith('/all-questions') ||
         location.pathname.startsWith('/all-questions/search') ||
@@ -68,6 +78,10 @@ function App() {
                             path="/all-questions/ask-a-question"
                             exact
                             element={<AskAQuestionPage />}
+                        />
+                        <Route
+                            path="/team"
+                            element={<Team />}
                         />
                         <Route
                             exact

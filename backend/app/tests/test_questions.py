@@ -1,5 +1,6 @@
 from ..models.question import Question
 
+
 def test_create_question(sqlalchemy_session):
     question = Question(
         title="Test Question", details="This is a test question.", user_id=1
