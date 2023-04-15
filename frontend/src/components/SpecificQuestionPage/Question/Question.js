@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { getAllQuestions } from '../../../store/questions';
 import { authenticate } from '../../../store/session';
@@ -7,6 +8,7 @@ import dateFormater from '../../../utils/dateFormater';
 import DeleteButton from '../../UserProfile/ActivityLists/DeleteButton';
 import parse from 'html-react-parser';
 import { deleteQuestion, updateQuestion } from '../../../store/questions';
+
 const { useSelector, useDispatch } = require('react-redux');
 const Question = ({ question, setIsDelete }) => {
     const navigate = useNavigate();
@@ -32,6 +34,7 @@ const Question = ({ question, setIsDelete }) => {
         setIsDelete((prev) => !prev);
         navigate('/all-questions/');
     };
+
     const handleEditClick = (e) => {
         e.preventDefault();
         dispatch(updateQuestion({ id, title, details }));
