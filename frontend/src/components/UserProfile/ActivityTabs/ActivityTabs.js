@@ -1,9 +1,12 @@
 import React from 'react';
+
 import './ActivityTabs.css';
+
 const ActivityTabs = ({ activeTab, setActiveTab }) => {
     const handleTabClick = (tab) => {
         setActiveTab(tab);
     };
+
     return (
         <div id="activity-tabs-container">
             <nav className="header-menu">

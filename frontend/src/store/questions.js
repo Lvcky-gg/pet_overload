@@ -73,9 +73,6 @@ export const questionsSlice = createSlice({
                 );
                 state.allQuestions[idx] = updateQuestion;
             });
-
-        //duplicate?
-        //.addCase(deleteQuestion.rejected, (state, action) => {});
     },
 });
 
@@ -128,13 +125,10 @@ export const filterQuestions = createAsyncThunk(
             return rejectWithValue(await response.json());
         }
         const data = await response.json();
-        console.log('data:', data);
 
         return data.questions;
     }
 );
-//duplicate?
-//export const deleteQustion = createAsyncThunk(
 
 export const deleteQuestion = createAsyncThunk(
     'questions/deleteQuestion',
@@ -155,6 +149,7 @@ export const deleteQuestion = createAsyncThunk(
         return questionId;
     }
 );
+
 export const updateQuestion = createAsyncThunk(
     'questions/updateQuestion',
     async ({ title, details, questionId }, { rejectWithValue }) => {
@@ -174,6 +169,7 @@ export const updateQuestion = createAsyncThunk(
         return data;
     }
 );
+
 export const {
     sortQuestionsByNewest,
     sortQuestionsByScore,

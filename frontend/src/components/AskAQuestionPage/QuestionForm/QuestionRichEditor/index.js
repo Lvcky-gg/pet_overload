@@ -19,7 +19,7 @@ const QuestionRichEditor = ({ details, setDetails }) => {
             const html = draftToHtml(convertToRaw(currentContentState));
             setDetails(html);
         }
-    }, [editorState]);
+    }, [editorState, setDetails]);
 
     return (
         <Editor

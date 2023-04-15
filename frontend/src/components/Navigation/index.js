@@ -6,7 +6,6 @@ import './Navigation.css';
 
 import logo from './images/logo.png';
 import SearchBar from './SearchBar/SearchBar';
-//import SearchBar from '../SearchBar';
 
 function Navigation({ isLoaded }) {
     const sessionUser = useSelector((state) => state.session.user);
@@ -19,9 +18,6 @@ function Navigation({ isLoaded }) {
             </div>
             <SearchBar />
             <ul className="navDrop">
-                {/* <li>
-                <NavLink to="/">Home</NavLink>
-            </li> */}
                 {isLoaded && (
                     <>
                         <li>

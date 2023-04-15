@@ -38,8 +38,12 @@ class Question(db.Model):
     )
 
     user = db.relationship("User", back_populates="user_questions")
-    question_answers = db.relationship("Answer", back_populates="question",cascade="all, delete")
-    question_votes = db.relationship("QuestionVote", back_populates="question",cascade="all, delete")
+    question_answers = db.relationship(
+        "Answer", back_populates="question", cascade="all, delete"
+    )
+    question_votes = db.relationship(
+        "QuestionVote", back_populates="question", cascade="all, delete"
+    )
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -52,7 +56,7 @@ class Question(db.Model):
             "answers_count": len(self.question_answers),
             "votes_score": self.question_vote_score,
             # added user and answers to question response
-            "user":self.user.to_dict(),
+            "user": self.user.to_dict(),
             "answers": [answer.to_dict() for answer in self.question_answers],
         }
 
@@ -102,8 +106,8 @@ class Question(db.Model):
     def _filter_question_by_score(cls, score=None):
         #  query question_score>= score
         try:
-            score=int(score)
-        except (TypeError,ValueError):
+            score = int(score)
+        except (TypeError, ValueError):
             raise ValidationException("Score must be integer")
         question_records = [
             q for q in cls.query.all() if q.question_vote_score >= int(score)

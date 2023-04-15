@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { getAllQuestions } from '../../../store/questions';
 import { authenticate } from '../../../store/session';
 import Voting from '../../AllQuestionsPage/Voting/Voting';
 import dateFormater from '../../../utils/dateFormater';
@@ -10,6 +8,7 @@ import parse from 'html-react-parser';
 import { deleteQuestion, updateQuestion } from '../../../store/questions';
 
 const { useSelector, useDispatch } = require('react-redux');
+
 const Question = ({ question, setIsDelete }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -49,11 +48,7 @@ const Question = ({ question, setIsDelete }) => {
                         <h1>{title}</h1>
                     </div>
                     <div className="ask-question-container">
-                        <button
-                            id="ask-question-button"
-                            className="button"
-                            // onClick={showEditor}
-                        >
+                        <button id="ask-question-button" className="button">
                             Answer question
                         </button>
                     </div>

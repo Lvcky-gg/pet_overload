@@ -28,6 +28,7 @@ const VotingAnswers = ({ answerId, answerScore }) => {
     const [currentVoteType, setCurrentVoteType] = useState(
         currentVote ? currentVote.vote_status : voteType.NO_VOTE
     );
+
     useEffect(() => {
         setCurrentVoteType(
             currentVote
@@ -36,7 +37,14 @@ const VotingAnswers = ({ answerId, answerScore }) => {
                     : voteType.DOWNVOTE
                 : voteType.NO_VOTE
         );
-    }, [currentVote]);
+    }, [
+        currentVote,
+        voteType.UPVOTE,
+        voteType.DOWNVOTE,
+        voteType.NO_VOTE,
+        setCurrentVoteType,
+    ]);
+
     useEffect(() => {
         if (currentVoteType === voteType.UPVOTE) {
             upvoteArrowRef.current.classList.add('selected');
@@ -48,7 +56,8 @@ const VotingAnswers = ({ answerId, answerScore }) => {
             upvoteArrowRef.current.classList.remove('selected');
             downvoteArrowRef.current.classList.remove('selected');
         }
-    }, [currentVoteType]);
+    }, [currentVoteType, voteType.UPVOTE, voteType.DOWNVOTE]);
+
     const handleVoteArrowClick = async (arrowRef) => {
         const { current } = arrowRef;
         const { UPVOTE, DOWNVOTE, NO_VOTE } = voteType;
@@ -96,6 +105,7 @@ const VotingAnswers = ({ answerId, answerScore }) => {
             updateVoteScore(updatedAnswerVote.payload.answer);
         }
     };
+
     return (
         <div className="voting-score">
             <FontAwesomeIcon
