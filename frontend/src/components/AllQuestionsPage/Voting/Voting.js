@@ -8,15 +8,22 @@ import {
 } from '../../../store/questionVotes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { updateQuestionAfterVote } from '../../../store/questions';
+import { setRedirectMessage } from '../../../store/session';
+import { useNavigate } from 'react-router-dom';
 
 const Voting = ({ questionId, voteScore }) => {
+    const navigate = useNavigate();
     const [currentVoteScore, setCurrentVoteScore] = useState(voteScore);
+    const [shouldRedirect, setShouldRedirect] = useState(false);
 
     const upvoteArrowRef = useRef(null);
     const downvoteArrowRef = useRef(null);
     const currentVote = useSelector((state) =>
         selectVoteStatus(state.questionVotes, questionId)
     );
+
+    const currentUser = useSelector((state) => state.session.user);
+
     const voteType = {
         UPVOTE: 1,
         DOWNVOTE: -1,
@@ -38,6 +45,13 @@ const Voting = ({ questionId, voteScore }) => {
     }, [currentVote, voteType.DOWNVOTE, voteType.UPVOTE, voteType.NO_VOTE]);
 
     useEffect(() => {
+        if (!currentUser) {
+            upvoteArrowRef.current.classList.remove('selected');
+            downvoteArrowRef.current.classList.remove('selected');
+        }
+    }, [currentUser]);
+
+    useEffect(() => {
         if (currentVoteType === voteType.UPVOTE) {
             upvoteArrowRef.current.classList.add('selected');
             downvoteArrowRef.current.classList.remove('selected');
@@ -51,6 +65,11 @@ const Voting = ({ questionId, voteScore }) => {
     }, [currentVoteType, voteType.DOWNVOTE, voteType.UPVOTE, voteType.NO_VOTE]);
 
     const handleVoteArrowClick = async (arrowRef) => {
+        if (!currentUser) {
+            setShouldRedirect(true);
+            return;
+        }
+
         const { current } = arrowRef;
         const { UPVOTE, DOWNVOTE, NO_VOTE } = voteType;
 
@@ -94,6 +113,13 @@ const Voting = ({ questionId, voteScore }) => {
             updateVoteScore(updatedQuestionVote.payload.question);
         }
     };
+
+    useEffect(() => {
+        if (!shouldRedirect) return;
+
+        dispatch(setRedirectMessage('vote.'));
+        navigate('/redirect-page');
+    }, [shouldRedirect]);
 
     return (
         <div className="voting-score">
