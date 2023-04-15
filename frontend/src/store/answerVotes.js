@@ -7,7 +7,11 @@ const initialState = {
 export const answerVotesSlice = createSlice({
     name: 'answerVotes',
     initialState,
-    reducers: {},
+    reducers: {
+        clearAnswerVotes: (state) => {
+            state.answerVotes = [];
+        },
+    },
     extraReducers: (builder) => {
         builder
             .addCase(getAnswerVotes.fulfilled, (state, action) => {
@@ -161,4 +165,7 @@ export const answerVoteStatus = (state, answerId) => {
 
     return answerVote;
 };
+
+export const { clearAnswerVotes } = answerVotesSlice.actions;
+
 export default answerVotesSlice.reducer;
