@@ -20,9 +20,9 @@ export const HomePage = () => {
     const sessionUser = useSelector((state) => state.session.user);
     return (
         <div className="homePage">
-            <div className="homePageTopImage"></div>
+            {/* <div className="homePageTopImage"></div> */}
             <div className="homePageHighlights">
-                <h1>Lorem Ipsum</h1>
+                <h1 id="main-title">Where pet lovers ask, learn, and share.</h1>
 
                 <div className="homePageCards">
                     <div className="homePageCard">
@@ -43,7 +43,11 @@ export const HomePage = () => {
                             className="placeHolderImageHome"
                         />
                         <div>
-                            {sessionUser ?(<NavLink to="/all-users">Authors</NavLink>):(<NavLink to='/login'>Authors</NavLink>)}
+                            {sessionUser ? (
+                                <NavLink to="/all-users">Authors</NavLink>
+                            ) : (
+                                <NavLink to="/login">Authors</NavLink>
+                            )}
                         </div>
                     </div>
 
@@ -62,20 +66,20 @@ export const HomePage = () => {
             <div className="homePageMiddleImage">
                 <Highlight />
             </div>
-            <div className="homePageOtherResource">
+            {/* <div className="homePageOtherResource">
                 <div>
                     <h2>Other Resources?</h2>
                     <p>PlaceHolder</p>
                 </div>
                 <img src={imageFour} alt="#" />
-            </div>
-            <div className="homePageBottomImage">
+            </div> */}
+            {/* <div className="homePageBottomImage">
                 <img src={imageThree} alt="#" />
             </div>
-            <div className="homePageWhiteSpace"></div>
-            <div className="bottom-background">
+            <div className="homePageWhiteSpace"></div> */}
+            {/* <div className="bottom-background">
                 <img src={catbackground} alt="#" id="home-bottom-bc" />
-            </div>
+            </div> */}
         </div>
     );
 };

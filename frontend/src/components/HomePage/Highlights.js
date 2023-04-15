@@ -6,12 +6,13 @@ import { getAllQuestions } from '../../store/questions';
 import { getAllAnswers } from '../../store/answers';
 import imageTwo from './images/PXL_20230205_182244672~2.jpg';
 import dogImage from '../../image/dog.png';
-
+// import parse from 'html-react-parser';
+import plainText from '../../utils/plainText';
 const Highlight = ({ isLoaded }) => {
     const dispatch = useDispatch();
     const questions = useSelector((state) => state.questions.allQuestions);
     const answers = useSelector((state) => state.answers.allAnswers);
-    console.log('answer', answers);
+
     useEffect(() => {
         dispatch(getAllQuestions());
         dispatch(getAllAnswers());
@@ -47,10 +48,11 @@ const Highlight = ({ isLoaded }) => {
     const question = items.question;
     const dog = items.dog;
     const cat = items.cat;
+
     return (
         <div className="highlight-container homePageCards">
             <div className="post-card top">
-                <h1>What's new ?</h1>
+                <h2>What's new ?</h2>
 
                 <div className="image-card">
                     <img
@@ -66,9 +68,13 @@ const Highlight = ({ isLoaded }) => {
                                     : question.details}
                             </NavLink>
                             <p>
-                                {question.details.length > 50
-                                    ? `${question.details.slice(0, 100)}...`
-                                    : question.details}
+                                {/* {question.details.length > 45
+                                    ? `${parse(question.details).slice(
+                                          0,
+                                          45
+                                      )}...`
+                                    : parse(question.details)} */}
+                                {plainText(question.details, 45)}
                             </p>
                         </>
                     ) : (
@@ -78,7 +84,7 @@ const Highlight = ({ isLoaded }) => {
             </div>
             {dog && (
                 <div className="post-card mid">
-                    <h1>Dog</h1>
+                    <h2>Dog</h2>
                     <div className="image-card">
                         <img
                             src={dogImage}
@@ -89,16 +95,17 @@ const Highlight = ({ isLoaded }) => {
                             {dog.title ? dog.title : dog.details}
                         </NavLink>
                         <p>
-                            {dog.details.length > 50
-                                ? `${dog.details.slice(0, 100)}...`
-                                : dog.details}
+                            {/* {dog.details.length > 45
+                                ? `${parse(dog.details.slice(0, 45))}...`
+                                : parse(dog.details)} */}
+                            {plainText(dog.details, 45)}
                         </p>
                     </div>
                 </div>
             )}
             {cat && (
                 <div className="post-card bottom">
-                    <h1>Cat</h1>
+                    <h2>Cat</h2>
                     <div className="image-card">
                         <img
                             src={imageTwo}
@@ -109,9 +116,10 @@ const Highlight = ({ isLoaded }) => {
                             {cat.title ? cat.title : cat.details}
                         </NavLink>
                         <p>
-                            {cat.details.length > 50
-                                ? `${cat.details.slice(0, 100)}...`
-                                : cat.details}
+                            {/* {cat.details.length > 50
+                                ? `${parse(cat.details.slice(0, 100))}...`
+                                : parse(cat.details)} */}
+                            {plainText(cat.details, 45)}
                         </p>
                     </div>
                 </div>
