@@ -73,11 +73,13 @@ const Team = () => {
 
             <div className="TeamCard">
                 <div className="TeamCardContainer">
-                    <img
-                        src="https://media.licdn.com/dms/image/D5603AQEoVdGpfgwzHw/profile-displayphoto-shrink_200_200/0/1680562672497?e=1686787200&v=beta&t=RxooXxincMT54VKbVjs4GfjvXzuZmEWWlz4hGSVvdZU"
+                <img
+                        src="https://avatars.githubusercontent.com/u/94711072?v=4"
                         alt="#"
                     ></img>
+  
                     <div className="TeamCardDetails">
+                        
                         <h2>John O'Donnell</h2>
                         <p>Software engineer</p>
                         <p>johnodonnell1997@icloud.com</p>

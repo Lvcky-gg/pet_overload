@@ -14,11 +14,9 @@ import { authenticate } from '../../store/session';
 
 import { getQuestionVotes } from '../../store/questionVotes';
 
-
 import { useSelector, useDispatch } from 'react-redux';
 import { getAllUsers } from '../../store/users';
 import session from '../../store/session';
-
 
 import './SpecificQuestion.css';
 
