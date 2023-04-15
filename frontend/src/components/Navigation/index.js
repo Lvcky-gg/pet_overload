@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
@@ -10,10 +10,11 @@ import SearchBar from './SearchBar/SearchBar';
 
 function Navigation({ isLoaded }) {
     const sessionUser = useSelector((state) => state.session.user);
+    const navigate = useNavigate();
 
     return (
         <div className="nav">
-            <div className="nav-img-container">
+            <div className="nav-img-container" onClick={() => navigate('/')}>
                 <img src={logo} alt="#" className="navLogo"></img>
             </div>
             <SearchBar />
