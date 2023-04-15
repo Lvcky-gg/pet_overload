@@ -1,0 +1,32 @@
+.edit-question-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.edit-question-container>* {
+    margin-bottom: 0.75rem;
+}
+
+.edit-question-container .button-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.edit-question-container #save-edit-question-button,
+.edit-question-container #cancel-edit-question-button {
+    align-self: flex-end;
+    background-color: var(--primary-color);
+    color: var(--button-text-color);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+    font-weight: 600;
+    padding: 0.5rem 1.5rem;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    border: none;
+}
+
+.edit-question-container #cancel-edit-question-button {
+    background-color: var(--tertiary-color);
+    align-self: flex-start;
+}

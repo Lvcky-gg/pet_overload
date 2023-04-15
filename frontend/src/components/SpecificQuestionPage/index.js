@@ -107,8 +107,6 @@ const SpecificQuestion = () => {
                         </>
                     )}
 
-                    <h2>Your Answer</h2>
-
                     {/* create answer editor */}
                     {sessionUser && (
                         <>
