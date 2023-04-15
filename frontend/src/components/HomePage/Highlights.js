@@ -6,9 +6,9 @@ import { getAllQuestions } from '../../store/questions';
 import { getAllAnswers } from '../../store/answers';
 import imageTwo from './images/PXL_20230205_182244672~2.jpg';
 import dogImage from '../../image/dog.png';
+// import parse from 'html-react-parser';
 import plainText from '../../utils/plainText';
-
-const Highlight = () => {
+const Highlight = ({ isLoaded }) => {
     const dispatch = useDispatch();
     const questions = useSelector((state) => state.questions.allQuestions);
     const answers = useSelector((state) => state.answers.allAnswers);

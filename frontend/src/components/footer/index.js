@@ -1,6 +1,8 @@
 import React from 'react';
 
 import './footer.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import logo from './petoverload-1__2__720.png';
 
 export const Footer = () => {
     return (

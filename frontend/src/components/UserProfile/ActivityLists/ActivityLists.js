@@ -48,7 +48,7 @@ const ActivityList = ({
         dispatch(getAnswerVotes());
         dispatch(getAllQuestions());
         dispatch(getAllAnswers());
-    }, [dispatch, isDelete, activeTab, getQuestion]);
+    }, [dispatch, isDelete, activeTab]);
 
     const userQuestions = questions.filter((question) => {
         return question.user_id === user.id;
@@ -262,7 +262,6 @@ const ActivityList = ({
                                 >
                                     {getQuestion(answer.questionId).title}
                                 </NavLink>
-
                                 <div id="centerAnswer">
                                     {plainText(answer.details, 50)}
                                 </div>

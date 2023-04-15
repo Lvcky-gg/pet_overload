@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import session from '../../../../store/session';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import RichEditor from '../../../RichTextEditor';
@@ -11,7 +13,6 @@ import { updateAnswerByQuestion } from '../../../../store/answers';
 import { getAllQuestions } from '../../../../store/questions';
 import VotingAnswers from '../../VotingAnswers';
 import dateFormater from '../../../../utils/dateFormater';
-
 const AnswerCard = ({ answer, setVoteClicked, setIsDelete, setIsUpdated }) => {
     const { details, userId, id, answerScore, user, createdAt } = answer;
     const dispatch = useDispatch();
@@ -21,14 +22,12 @@ const AnswerCard = ({ answer, setVoteClicked, setIsDelete, setIsUpdated }) => {
     useEffect(() => {
         dispatch(authenticate());
     }, [dispatch]);
-
     const handleDelete = () => {
         dispatch(deleteAnswer(id));
         dispatch(getAllAnswers());
         dispatch(getAllQuestions());
         setIsDelete((prev) => !prev);
     };
-
     // NEED TO RESET TO EMPTY AFTER SUBMIT
     const handleEditorSubmit = (e, { details, answerId }) => {
         e.preventDefault();
@@ -43,6 +42,7 @@ const AnswerCard = ({ answer, setVoteClicked, setIsDelete, setIsUpdated }) => {
         e.preventDefault();
         setRichTextEditor(!richTextEditor);
     };
+    useEffect(() => {}, [richTextEditor]);
 
     return (
         <div className="answer-editor-container question-card">
@@ -80,11 +80,17 @@ const AnswerCard = ({ answer, setVoteClicked, setIsDelete, setIsUpdated }) => {
                             )}
                         </div>
                         <div className="answer-author-date">
-                            <NavLink to={`/users/${user.id}`}>
-                                {sessionUser &&<p className="author-name">
+                            {sessionUser ? (
+                                <NavLink to={`/users/${user.id}`}>
+                                    <p className="author-name">
+                                        Answered by:{user.username}
+                                    </p>
+                                </NavLink>
+                            ) : (
+                                <p className="author-name">
                                     Answered by:{user.username}
-                                </p>}
-                            </NavLink>
+                                </p>
+                            )}
                             <div
                                 style={{
                                     display: 'flex',

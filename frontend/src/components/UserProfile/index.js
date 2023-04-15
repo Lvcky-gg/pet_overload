@@ -19,7 +19,6 @@ const UserProfile = ({ isLoaded }) => {
     // user with id in url
     const { userId } = useParams();
     const linkUser = allUsers.find((user) => user.id === Number(userId));
-
     let user;
     if (userId) {
         user = currentUser.id === linkUser.id ? currentUser : linkUser;

@@ -13,7 +13,6 @@ const Question = ({ question, setIsDelete }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const currentUser = useSelector((state) => state.session.user);
-    
     const {
         id,
         title,
@@ -34,12 +33,14 @@ const Question = ({ question, setIsDelete }) => {
         setIsDelete((prev) => !prev);
         navigate('/all-questions/');
     };
-
     const handleEditClick = (e) => {
         e.preventDefault();
         dispatch(updateQuestion({ id, title, details }));
     };
-
+    const navigateToAskAQuestionPage = () => {
+        // Navigate to the route '/all-questions/ask-a-question'
+        navigate('/all-questions/ask-a-question');
+    };
     return (
         <div className="question-container">
             <div className="question-header">
@@ -48,7 +49,12 @@ const Question = ({ question, setIsDelete }) => {
                         <h1>{title}</h1>
                     </div>
                     <div className="ask-question-container">
-                        <button id="ask-question-button" className="button">
+                        <button
+                            id="ask-question-button"
+                            className="button"
+                            // onClick={showEditor}
+                            onClick={navigateToAskAQuestionPage}
+                        >
                             Answer question
                         </button>
                     </div>
@@ -96,11 +102,17 @@ const Question = ({ question, setIsDelete }) => {
                                 display: 'flex',
                             }}
                         >
-                            <NavLink to={`/users/${user.id}`}>
-                                {currentUser &&<p className="author-name-date">
+                            {currentUser ? (
+                                <NavLink to={`/users/${user.id}`}>
+                                    <p className="author-name-date">
+                                        Author:{user.username}
+                                    </p>
+                                </NavLink>
+                            ) : (
+                                <p className="author-name-date">
                                     Author:{user.username}
-                                </p>}
-                            </NavLink>
+                                </p>
+                            )}
                             <div
                                 style={{
                                     display: 'flex',

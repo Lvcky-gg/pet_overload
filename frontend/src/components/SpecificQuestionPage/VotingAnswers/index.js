@@ -28,7 +28,6 @@ const VotingAnswers = ({ answerId, answerScore }) => {
     const [currentVoteType, setCurrentVoteType] = useState(
         currentVote ? currentVote.vote_status : voteType.NO_VOTE
     );
-
     useEffect(() => {
         setCurrentVoteType(
             currentVote
@@ -105,7 +104,6 @@ const VotingAnswers = ({ answerId, answerScore }) => {
             updateVoteScore(updatedAnswerVote.payload.answer);
         }
     };
-
     return (
         <div className="voting-score">
             <FontAwesomeIcon

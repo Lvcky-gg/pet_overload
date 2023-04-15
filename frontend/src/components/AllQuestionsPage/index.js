@@ -3,6 +3,7 @@ import { getAllAnswers } from '../../store/answers';
 import { getAllQuestions } from '../../store/questions';
 import QuestionCard from './QuestionCard';
 import { getQuestionVotes } from '../../store/questionVotes';
+import { authenticate } from '../../store/session';
 import { useNavigate } from 'react-router-dom';
 import SortingTabs from './SortingTabs/SortingTabs';
 import { getAllUsers } from '../../store/users';
@@ -26,6 +27,7 @@ const AllQuestionsPage = () => {
         dispatch(getAllQuestions());
         dispatch(getAllAnswers());
         dispatch(getQuestionVotes());
+        dispatch(authenticate());
         dispatch(getAllUsers());
     }, [dispatch, voteClicked]);
 

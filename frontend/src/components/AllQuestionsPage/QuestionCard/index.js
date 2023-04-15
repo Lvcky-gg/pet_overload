@@ -1,13 +1,11 @@
 import { useParams } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import parse from 'html-react-parser';
+import './QuestionCard.css';
 import Voting from '../Voting/Voting';
 import dateFormater from '../../../utils/dateFormater';
-
 import { useSelector } from 'react-redux';
-
-import './QuestionCard.css';
-
+import { useEffect } from 'react';
 const QuestionCard = ({
     id,
     title,
@@ -47,13 +45,17 @@ const QuestionCard = ({
                         </p>
                         <div id="rightside-info">
                             {/* direct to user page */}
-                            <NavLink to={`/users/${user.id}`}>
-                                {sessionUser && (
+                            {sessionUser ? (
+                                <NavLink to={`/users/${user.id}`}>
                                     <p className="author-name">
                                         Author:{user.username}
                                     </p>
-                                )}
-                            </NavLink>
+                                </NavLink>
+                            ) : (
+                                <p className="author-name">
+                                    Author:{user.username}
+                                </p>
+                            )}
                             {!updated_at ? (
                                 <>
                                     <p className="card-date">
