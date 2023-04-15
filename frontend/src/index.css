@@ -45,8 +45,11 @@ h3,
 h4,
 h5,
 h6 {
-    color: var(--primary-color);
+    /* color: var(--primary-color); */
+    color: var(--secondary-color);
     line-height: 1.2;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 150;
 }
 
 .header {
@@ -133,8 +136,9 @@ code {
     /* min-height: 1200px; */
     /* height: 100vh; */
     flex-grow: 1;
-    min-height: 100vh;
+    /* height: 100vh; */
     margin-top: 70px;
+    margin-bottom: 50px;
 }
 .main.container > .sideBar {
     flex: 0.05;
@@ -164,3 +168,15 @@ body::-webkit-scrollbar-thumb {
 /* #root {
     min-height: 100vh;
 } */
+#homepage-bc {
+    background-image: url('./image/goden.png');
+    background-size: cover;
+    background-position: center;
+    /* padding-left: 15%;
+    padding-right: 15%; */
+    margin: 0;
+    padding: 0;
+    /* width: 100vw; */
+    height: 100vh;
+    max-width: 100%;
+}

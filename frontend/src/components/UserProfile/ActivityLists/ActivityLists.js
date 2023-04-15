@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import parse from 'html-react-parser'
-
+import { NavLink } from 'react-router-dom';
+// import parse from 'html-react-parser';
+import plainText from '../../../utils/plainText';
 import dateFormater from '../../../utils/dateFormater';
 import {
     getQuestionVotes,
@@ -10,6 +11,7 @@ import {
 import { getAllQuestions, deleteQuestion } from '../../../store/questions';
 import { getAnswerVotes, deleteAnswerVotes } from '../../../store/answerVotes';
 import { getAllAnswers, deleteAnswer } from '../../../store/answers';
+
 import DeleteButton from './DeleteButton';
 
 import './ActivityLists.css';
@@ -18,6 +20,7 @@ const ActivityList = ({
     activeTab,
     activeSort,
     user,
+    currentUser,
     isDelete,
     setIsDelete,
 }) => {
@@ -131,21 +134,24 @@ const ActivityList = ({
                                 className="user-activity-list list-item"
                                 key={idx}
                             >
-                                <p id="question-title">
+                                <p className="question-title">
                                     {qVote.question.title}
                                 </p>
                                 <p>{qVote.question.votes_score}</p>
                                 <p>{dateFormater(qVote.createdAt)}</p>
                                 <p>{qVote.isLiked ? 'Like' : 'Dislike'}</p>
-                                <div className="activity-button-container">
-                                    <DeleteButton
-                                        className="button activity"
-                                        type="questionVotes"
-                                        id={qVote.id}
-                                        onDelete={handleDelete}
-                                        setIsDelete={setIsDelete}
-                                    />
-                                </div>
+
+                                {user.id === currentUser.id && (
+                                    <div className="activity-button-container">
+                                        <DeleteButton
+                                            className="button activity"
+                                            type="questionVotes"
+                                            id={qVote.id}
+                                            onDelete={handleDelete}
+                                            setIsDelete={setIsDelete}
+                                        />
+                                    </div>
+                                )}
                             </li>
                         ))
                     ) : (
@@ -168,19 +174,24 @@ const ActivityList = ({
                                 {/* <p id="question-title">
                                     {getQuestion(aVote.answer.questionId).title}
                                 </p> */}
-                                <p id="answer-detail">{aVote.answer.details}</p>
+                                {/* <p id="answer-detail">{aVote.answer.details}</p> */}
+                                <p id="answer-detail">
+                                    {plainText(aVote.answer.details, 50)}
+                                </p>
                                 <p>{aVote.answer.answerScore}</p>
                                 <p>{dateFormater(aVote.createdAt)}</p>
                                 <p>{aVote.isLiked ? 'Like' : 'Dislike'}</p>
-                                <div className="activity-button-container">
-                                    <DeleteButton
-                                        className="button activity"
-                                        type="answerVotes"
-                                        id={aVote.id}
-                                        onDelete={handleDelete}
-                                        setIsDelete={setIsDelete}
-                                    />
-                                </div>
+                                {user.id === currentUser.id && (
+                                    <div className="activity-button-container">
+                                        <DeleteButton
+                                            className="button activity"
+                                            type="answerVotes"
+                                            id={aVote.id}
+                                            onDelete={handleDelete}
+                                            setIsDelete={setIsDelete}
+                                        />
+                                    </div>
+                                )}
                             </li>
                         ))
                     ) : (
@@ -203,20 +214,26 @@ const ActivityList = ({
                                 className="user-activity-list list-item"
                                 key={idx}
                             >
-                                <p id="question-title">{question.title}</p>
+                                <NavLink
+                                    className="question-title"
+                                    to={`/all-questions/${question.id}`}
+                                >
+                                    {question.title}
+                                </NavLink>
                                 <p>{question.votes_score}</p>
                                 <p>{dateFormater(question.created_at)}</p>
                                 <p>{question.answers_count}</p>
-
-                                <div className="activity-button-container">
-                                    <DeleteButton
-                                        className="button activity"
-                                        type="question"
-                                        id={question.id}
-                                        onDelete={handleDelete}
-                                        setIsDelete={setIsDelete}
-                                    />
-                                </div>
+                                {user.id === currentUser.id && (
+                                    <div className="activity-button-container">
+                                        <DeleteButton
+                                            className="button activity"
+                                            type="question"
+                                            id={question.id}
+                                            onDelete={handleDelete}
+                                            setIsDelete={setIsDelete}
+                                        />
+                                    </div>
+                                )}
                             </li>
                         ))
                     ) : (
@@ -239,11 +256,22 @@ const ActivityList = ({
                                 className="user-activity-list list-item"
                                 key={idx}
                             >
-                                <p id="question-title">
+                                <NavLink
+                                    className="question-title"
+                                    to={`/all-questions/${answer.questionId}`}
+                                >
                                     {getQuestion(answer.questionId).title}
-                                </p>
+                                </NavLink>
+                                {/* <p id="question-title">
+                                    {getQuestion(answer.questionId).title}
+                                </p> */}
                                 {/* <p>{answer.details}</p> */}
-                                <div id="centerAnswer">{parse(answer.details)}</div>
+                                {/* <div id="centerAnswer">
+                                    {parse(answer.details)}
+                                </div> */}
+                                <div id="centerAnswer">
+                                    {plainText(answer.details, 50)}
+                                </div>
                                 <p>{dateFormater(answer.createdAt)}</p>
                                 <p>{answer.answerScore}</p>
 

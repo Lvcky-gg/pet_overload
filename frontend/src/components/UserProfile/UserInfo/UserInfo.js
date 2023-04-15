@@ -4,7 +4,7 @@ import dogHead from '../../../image/dogHead.jpg';
 import dateFormater from '../../../utils/dateFormater';
 
 import './UserInfo.css';
-const UserInfo = ({ user }) => {
+const UserInfo = ({ user, linkUser }) => {
     const { username, reputation, createdAt } = user;
 
     return (

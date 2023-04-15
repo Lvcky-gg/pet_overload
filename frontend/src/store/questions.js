@@ -63,7 +63,19 @@ export const questionsSlice = createSlice({
             .addCase(filterQuestions.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload.error;
+            })
+            .addCase(updateQuestion.fulfilled, (state, action) => {
+                state.loading = false;
+                const updateQuestion = action.payload;
+                const idx = state.allQuestions.findIndex(
+                    (question) =>
+                        question.questionId === updateQuestion.questionId
+                );
+                state.allQuestions[idx] = updateQuestion;
             });
+
+        //duplicate?
+        //.addCase(deleteQuestion.rejected, (state, action) => {});
     },
 });
 
@@ -121,6 +133,8 @@ export const filterQuestions = createAsyncThunk(
         return data.questions;
     }
 );
+//duplicate?
+//export const deleteQustion = createAsyncThunk(
 
 export const deleteQuestion = createAsyncThunk(
     'questions/deleteQuestion',
@@ -141,7 +155,25 @@ export const deleteQuestion = createAsyncThunk(
         return questionId;
     }
 );
+export const updateQuestion = createAsyncThunk(
+    'questions/updateQuestion',
+    async ({ title, details, questionId }, { rejectWithValue }) => {
+        const response = await fetch(`/api/questions/${questionId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ title, details }),
+        });
+        if (!response.ok) {
+            rejectWithValue(await response.json());
+        }
 
+        const data = await response.json();
+
+        return data;
+    }
+);
 export const {
     sortQuestionsByNewest,
     sortQuestionsByScore,
