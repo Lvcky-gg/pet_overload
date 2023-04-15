@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { getAllQuestions } from '../../../store/questions';
 import { authenticate } from '../../../store/session';
 import Voting from '../../AllQuestionsPage/Voting/Voting';
 import dateFormater from '../../../utils/dateFormater';
