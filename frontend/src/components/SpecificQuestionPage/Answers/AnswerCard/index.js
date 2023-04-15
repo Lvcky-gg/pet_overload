@@ -82,9 +82,9 @@ const AnswerCard = ({ answer, setVoteClicked, setIsDelete, setIsUpdated }) => {
                         </div>
                         <div className="answer-author-date">
                             <NavLink to={`/users/${user.id}`}>
-                                <p className="author-name">
+                                {sessionUser &&<p className="author-name">
                                     Answered by:{user.username}
-                                </p>
+                                </p>}
                             </NavLink>
                             <div
                                 style={{
