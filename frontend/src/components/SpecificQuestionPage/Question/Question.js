@@ -51,6 +51,7 @@ const Question = ({ question, setIsDelete }) => {
         setIsEditorOpen(true);
     };
 
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -74,6 +75,7 @@ const Question = ({ question, setIsDelete }) => {
         setTitle(initialTitle);
         setShowEditError(false);
     };
+
     const navigateToAskAQuestionPage = () => {
         // Navigate to the route '/all-questions/ask-a-question'
         navigate('/all-questions/ask-a-question');

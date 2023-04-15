@@ -20,17 +20,18 @@ const UserProfile = ({ isLoaded }) => {
     const allUsers = useSelector((state) => state.users.allUsers);
     // user with id in url
     const { userId } = useParams();
-    useEffect(()=>{
-         setLinkUser(allUsers.find((user) =>user?.id === Number(userId)));
-    }, [allUsers])
+
+    useEffect(() => {
+        setLinkUser(allUsers.find((user) => user?.id === Number(userId)));
+    }, [allUsers]);
 
     useEffect(()=>{
         if (userId) {
             setUser(currentUser?.id === linkUser?.id ? currentUser : linkUser);
-         } else{
-             setUser(currentUser);
-         }
-    },[linkUser, currentUser, userId])
+        } else {
+            setUser(currentUser);
+        }
+    }, [linkUser, currentUser, userId]);
 
 
     const [activeTab, setActiveTab] = useState('questions');
