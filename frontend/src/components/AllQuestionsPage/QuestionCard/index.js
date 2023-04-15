@@ -4,6 +4,8 @@ import parse from 'html-react-parser';
 import './QuestionCard.css';
 import Voting from '../Voting/Voting';
 import dateFormater from '../../../utils/dateFormater';
+import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
 const QuestionCard = ({
     id,
     title,
@@ -21,7 +23,7 @@ const QuestionCard = ({
     const { questionId } = useParams();
     const answersMessage = answers_count === 1 ? 'answer' : 'answers';
     const className = questionId ? 'answers-msg true' : 'answers-msg';
-
+    const currentUser = useSelector((state) => state.session.user);
     return (
         <div className="question-card">
             <div className="row">
@@ -44,11 +46,17 @@ const QuestionCard = ({
                         </p>
                         <div id="rightside-info">
                             {/* direct to user page */}
-                            <NavLink to={`/users/${user.id}`}>
+                            {currentUser ? (
+                                <NavLink to={`/users/${user.id}`}>
+                                    <p className="author-name">
+                                        Author:{user.username}
+                                    </p>
+                                </NavLink>
+                            ) : (
                                 <p className="author-name">
                                     Author:{user.username}
                                 </p>
-                            </NavLink>
+                            )}
                             {!updated_at ? (
                                 <>
                                     <p className="card-date">

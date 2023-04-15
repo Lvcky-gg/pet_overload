@@ -81,11 +81,17 @@ const AnswerCard = ({ answer, setVoteClicked, setIsDelete, setIsUpdated }) => {
                             )}
                         </div>
                         <div className="answer-author-date">
-                            <NavLink to={`/users/${user.id}`}>
+                            {sessionUser ? (
+                                <NavLink to={`/users/${user.id}`}>
+                                    <p className="author-name">
+                                        Answered by:{user.username}
+                                    </p>
+                                </NavLink>
+                            ) : (
                                 <p className="author-name">
                                     Answered by:{user.username}
                                 </p>
-                            </NavLink>
+                            )}
                             <div
                                 style={{
                                     display: 'flex',

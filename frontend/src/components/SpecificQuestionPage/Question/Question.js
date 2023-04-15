@@ -36,7 +36,10 @@ const Question = ({ question, setIsDelete }) => {
         e.preventDefault();
         dispatch(updateQuestion({ id, title, details }));
     };
-
+    const navigateToAskAQuestionPage = () => {
+        // Navigate to the route '/all-questions/ask-a-question'
+        navigate('/all-questions/ask-a-question');
+    };
     return (
         <div className="question-container">
             <div className="question-header">
@@ -49,6 +52,7 @@ const Question = ({ question, setIsDelete }) => {
                             id="ask-question-button"
                             className="button"
                             // onClick={showEditor}
+                            onClick={navigateToAskAQuestionPage}
                         >
                             Answer question
                         </button>
@@ -97,11 +101,17 @@ const Question = ({ question, setIsDelete }) => {
                                 display: 'flex',
                             }}
                         >
-                            <NavLink to={`/users/${user.id}`}>
+                            {currentUser ? (
+                                <NavLink to={`/users/${user.id}`}>
+                                    <p className="author-name-date">
+                                        Author:{user.username}
+                                    </p>
+                                </NavLink>
+                            ) : (
                                 <p className="author-name-date">
                                     Author:{user.username}
                                 </p>
-                            </NavLink>
+                            )}
                             <div
                                 style={{
                                     display: 'flex',

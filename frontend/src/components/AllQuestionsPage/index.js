@@ -4,9 +4,9 @@ import { getAllQuestions } from '../../store/questions';
 import QuestionCard from './QuestionCard';
 import './AllQuestionsPage.css';
 import { getQuestionVotes } from '../../store/questionVotes';
+import { authenticate } from '../../store/session';
 import { useNavigate } from 'react-router-dom';
 import SortingTabs from './SortingTabs/SortingTabs';
-
 
 const { useSelector, useDispatch } = require('react-redux');
 
@@ -23,6 +23,7 @@ const AllQuestionsPage = () => {
         dispatch(getAllQuestions());
         dispatch(getAllAnswers());
         dispatch(getQuestionVotes());
+        dispatch(authenticate());
     }, [dispatch, voteClicked]);
 
     const navigateToAskAQuestionPage = () => {

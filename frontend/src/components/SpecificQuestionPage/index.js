@@ -10,7 +10,7 @@ import { createAnswerByQuestion } from '../../store/answers';
 import Question from './Question/Question';
 import Answers from './Answers';
 import { getAnswerVotes } from '../../store/answerVotes';
-
+import { authenticate } from '../../store/session';
 /*
 import { getQuestionVotes } from '../../store/questionVotes';
 import session from '../../store/session';
@@ -44,6 +44,7 @@ const SpecificQuestion = () => {
         dispatch(getAllQuestions());
         dispatch(getAllAnswers());
         dispatch(getAnswerVotes());
+        dispatch(authenticate());
 
         // if (answers.length === 0) {
         //     setHidden(false);
