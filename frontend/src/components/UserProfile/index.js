@@ -6,25 +6,31 @@ import UserInfo from './UserInfo/UserInfo';
 import ActivityTabs from './ActivityTabs/ActivityTabs';
 import SortingTabs from './SortingTabs/SortingTabs';
 import ActivityList from './ActivityLists/ActivityLists';
-import { Navigate, useParams } from 'react-router-dom';
+import { Navigate, redirect, useParams } from 'react-router-dom';
 import { getAllUsers } from '../../store/users';
 
 import './UserProfile.css';
 
 const UserProfile = ({ isLoaded }) => {
     const dispatch = useDispatch();
+    const [linkUser, setLinkUser] = useState(null);
+    const [user, setUser] = useState(null);
     // current user
     const currentUser = useSelector((state) => state.session.user);
     const allUsers = useSelector((state) => state.users.allUsers);
     // user with id in url
     const { userId } = useParams();
-    const linkUser = allUsers.find((user) => user.id === Number(userId));
-    let user;
-    if (userId) {
-        user = currentUser.id === linkUser.id ? currentUser : linkUser;
-    } else {
-        user = currentUser;
-    }
+    useEffect(() => {
+        setLinkUser(allUsers.find((user) => user?.id === Number(userId)));
+    }, [allUsers]);
+
+    useEffect(() => {
+        if (userId) {
+            setUser(currentUser?.id === linkUser?.id ? currentUser : linkUser);
+        } else {
+            setUser(currentUser);
+        }
+    }, [linkUser, currentUser, userId]);
 
     const [activeTab, setActiveTab] = useState('questions');
     const [activeSort, setActiveSort] = useState('newest');
@@ -43,7 +49,7 @@ const UserProfile = ({ isLoaded }) => {
             </>
         );
     }
-
+    if (!user) return null;
     return (
         <div id="userProfile-container">
             <UserInfo user={user} />
