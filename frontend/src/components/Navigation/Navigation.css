@@ -13,6 +13,7 @@
     border-radius: 5px;
     font-size: 14px;
 }
+
 .profile-dropdown button {
     /* position: relative;
     right: 20px; */
@@ -24,10 +25,12 @@
     margin: 5px 0;
     width: 75%;
 }
+
 .profile-dropdown .button-container {
     display: flex;
     justify-content: center;
 }
+
 .profile-dropdown li {
     overflow: hidden;
     width: 100%;
@@ -37,11 +40,13 @@
     /* margin: auto; */
     box-sizing: border-box;
 }
+
 .nav-img-container {
     height: 70px;
     overflow: hidden;
     justify-self: flex-start;
 }
+
 .navLogo {
     height: 150px;
     position: relative;
@@ -67,6 +72,7 @@
     height: 70px;
     align-items: center;
 }
+
 .navDrop {
     /* position: relative;
   top: 2.9rem; */
@@ -80,7 +86,12 @@
     width: 200px;
     align-items: center;
 }
+
 /* overhang the icon */
 /* .navDrop li {
     padding-left: 50%;
 } */
+
+.nav-img-container:hover {
+    cursor: pointer;
+}
