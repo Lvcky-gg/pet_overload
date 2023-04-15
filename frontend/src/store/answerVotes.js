@@ -39,6 +39,22 @@ export const answerVotesSlice = createSlice({
             .addCase(updateAnswerVotes.rejected, (state, action) => {
                 console.log('Rejected with value:', action.payload);
                 state.loading = false;
+            })
+            .addCase(createAnswerVote.fulfilled, (state, action) => {
+                state.answerVotes.push(action.payload);
+            })
+            .addCase(createAnswerVote.rejected, (state, action) => {
+                console.log('Rejected with value:', action.payload);
+                state.loading = false;
+            })
+            .addCase(deleteAnswerVoteById.fulfilled, (state, action) => {
+                state.answerVotes = state.answerVotes.filter(
+                    (vote) => vote.id !== action.payload
+                );
+            })
+            .addCase(deleteAnswerVoteById.rejected, (state, action) => {
+                console.log('Rejected with value:', action.payload);
+                state.loading = false;
             });
     },
 });
@@ -79,21 +95,70 @@ export const deleteAnswerVotes = createAsyncThunk(
 
 export const updateAnswerVotes = createAsyncThunk(
     'answerVotes/updateAnswerVotes',
-    async (answerId, isLiked, { rejectWithValue }) => {
-        const response = await fetch(`/api/answer_votes/${answerId}`, {
+    async ({ answerVoteId, isLiked }, { rejectWithValue }) => {
+        isLiked = isLiked === 1 ? true : false;
+        const response = await fetch(`/api/answer_votes/${answerVoteId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ isLiked }),
         });
-        if (!response.ok) {
-            const errData = await response.json();
-            return rejectWithValue(errData);
-        }
         const data = await response.json();
+        if (!response.ok) {
+            return rejectWithValue(data);
+        }
+
         return data;
     }
 );
+export const createAnswerVote = createAsyncThunk(
+    'answerVotes/createAnswerVote',
+    async ({ answerId, isLiked }, { rejectWithValue }) => {
+        isLiked = isLiked === 1 ? true : false;
 
+        const response = await fetch(`/api/answers/${answerId}/votes`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ answerId, isLiked }),
+        });
+        const data = await response.json();
+        if (!response.ok) {
+            return rejectWithValue(data);
+        }
+        return data;
+    }
+);
+export const deleteAnswerVoteById = createAsyncThunk(
+    'answerVotes/deleteAnswerVoteById',
+    async ({ answerVoteId }) => {
+        const response = await fetch(`/api/answer_votes/${answerVoteId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        const data = await response.json();
+        console.log('Delete Answer Vote Response:', data);
+
+        if (!response.ok) {
+            return false;
+        }
+        return answerVoteId;
+    }
+);
+export const answerVoteStatus = (state, answerId) => {
+    const answerVotes = state.answerVotes;
+    const answerVote = answerVotes.find(
+        (answerVote) => answerVote.answerId === answerId
+    );
+
+    if (!answerVote) {
+        return null;
+    }
+
+    return answerVote;
+};
 export default answerVotesSlice.reducer;

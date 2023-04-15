@@ -124,7 +124,7 @@ export const updateQuestionVotes = createAsyncThunk(
 
 export const deleteQuestionVoteById = createAsyncThunk(
     'questionVotes/deleteQuestionVoteById',
-    async ({questionVoteId}) => {
+    async ({ questionVoteId }) => {
         const response = await fetch(`/api/question_votes/${questionVoteId}`, {
             method: 'DELETE',
             headers: {
@@ -133,7 +133,7 @@ export const deleteQuestionVoteById = createAsyncThunk(
         });
 
         const data = await response.json();
-        console.log('Delete Question Vote Response:', data)
+        console.log('Delete Question Vote Response:', data);
 
         if (!response.ok) {
             return false;
@@ -178,9 +178,9 @@ export const createQuestionVote = createAsyncThunk(
             },
             body: JSON.stringify({ questionId, isLiked }),
         });
-        
+
         const data = await response.json();
-        
+
         if (!response.ok) {
             return rejectWithValue(data);
         }

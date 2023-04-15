@@ -38,13 +38,17 @@ function App() {
         location.pathname.startsWith('/all-questions') ||
         location.pathname.startsWith('/all-questions/search') ||
         location.pathname.startsWith('/user/profile') ||
-        location.pathname.startsWith('/all-users');
+        location.pathname.startsWith('/all-users') ||
+        location.pathname.startsWith('/users/');
 
     return (
         <>
             <Navigation isLoaded={isLoaded} />
             <Loader />
-            <div className="main container">
+            <div
+                className={`main container`}
+                id={location.pathname === '/' ? 'homepage-bc' : ''}
+            >
                 {showSidebar && <Sidebar />}
                 {isLoaded && (
                     <Routes>
@@ -75,7 +79,13 @@ function App() {
                             element={<SearchResults />}
                         />
                         <Route
+                            exact
                             path="/user/profile"
+                            element={<UserProfile isLoaded={isLoaded} />}
+                        />
+                        <Route
+                            exact
+                            path="/users/:userId"
                             element={<UserProfile isLoaded={isLoaded} />}
                         />
 

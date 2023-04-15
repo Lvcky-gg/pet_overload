@@ -5,7 +5,17 @@ export const answerSlice = createSlice({
     initialState: {
         allAnswers: [],
     },
-    reducers: {},
+    reducers: {
+        updateAnswerAfterVote(state, action) {
+            const updatedAnswer = action.payload;
+            console.log('line11', updatedAnswer);
+            const idx = state.allAnswers.findIndex(
+                (answer) => answer.id === updatedAnswer.id
+            );
+            console.log('answer', updatedAnswer);
+            state.allAnswers[idx] = updatedAnswer;
+        },
+    },
     extraReducers: (builder) => {
         builder
             .addCase(getAllAnswers.fulfilled, (state, action) => {
@@ -141,5 +151,5 @@ export const deleteAnswer = createAsyncThunk(
         return data.Answers;
     }
 );
-
+export const { updateAnswerAfterVote } = answerSlice.actions;
 export default answerSlice.reducer;

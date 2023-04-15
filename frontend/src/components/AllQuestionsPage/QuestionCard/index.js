@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
-
+import parse from 'html-react-parser';
 import './QuestionCard.css';
 import Voting from '../Voting/Voting';
 import dateFormater from '../../../utils/dateFormater';
@@ -18,11 +18,10 @@ const QuestionCard = ({
     updated_at,
     setVoteClicked,
 }) => {
-    console.log(id)
     const { questionId } = useParams();
     const answersMessage = answers_count === 1 ? 'answer' : 'answers';
     const className = questionId ? 'answers-msg true' : 'answers-msg';
-    console.log('update', updated_at);
+
     return (
         <div className="question-card">
             <div className="row">
@@ -37,15 +36,15 @@ const QuestionCard = ({
                         <h2>{title}</h2>
                     </NavLink>
 
-                    <p>{details}</p>
+                    <div>{parse(details)}</div>
 
-                    <div id="card-bottom-container">
+                    <div className="card-bottom-container">
                         <p className={className} onClick={showAnswers}>
                             {answers_count} {answersMessage}
                         </p>
                         <div id="rightside-info">
                             {/* direct to user page */}
-                            <NavLink to={`users/${user.id}`}>
+                            <NavLink to={`/users/${user.id}`}>
                                 <p className="author-name">
                                     Author:{user.username}
                                 </p>
