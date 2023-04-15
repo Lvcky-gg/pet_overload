@@ -11,6 +11,7 @@
     font-size: 12px;
     position: fixed;
     bottom: 0;
+    z-index: 1000;
 }
 .footer-img-container {
     height: 50px;
