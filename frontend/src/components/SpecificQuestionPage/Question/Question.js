@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { getAllQuestions } from '../../../store/questions';
 import { authenticate } from '../../../store/session';

@@ -25,7 +25,7 @@
 .user-activity-list-container {
     padding: 0;
 }
-#question-title,
+.question-title,
 #answer-detail {
     text-align: left;
     white-space: pre-wrap;
@@ -33,7 +33,9 @@
     overflow-wrap: break-word;
     margin-left: 10px;
 }
-#centerAnswer{
+
+#centerAnswer {
+    text-align: left;
     display: block;
     margin-block-start: 1em;
     margin-block-end: 1em;
@@ -43,6 +45,7 @@
 .user-activity-list.list-item {
     background-color: #ffffff;
     margin-top: 10px;
+    align-items: center;
 }
 #no-record-msg {
     text-align: left;

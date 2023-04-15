@@ -44,7 +44,7 @@ const QuestionCard = ({
                         </p>
                         <div id="rightside-info">
                             {/* direct to user page */}
-                            <NavLink to={`users/${user.id}`}>
+                            <NavLink to={`/users/${user.id}`}>
                                 <p className="author-name">
                                     Author:{user.username}
                                 </p>

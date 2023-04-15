@@ -45,7 +45,10 @@ function App() {
         <>
             <Navigation isLoaded={isLoaded} />
             <Loader />
-            <div className="main container">
+            <div
+                className={`main container`}
+                id={location.pathname === '/' ? 'homepage-bc' : ''}
+            >
                 {showSidebar && <Sidebar />}
                 {isLoaded && (
                     <Routes>
