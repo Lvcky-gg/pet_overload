@@ -15,7 +15,7 @@
 
 
 ## Intro
-Welcome to Pet Overload, a question/answer app for pets based off of stack ofverflow.
+Welcome to Pet Overload, a question/answer app for pets based off of stack overflow.
 
 ## Documentation
 

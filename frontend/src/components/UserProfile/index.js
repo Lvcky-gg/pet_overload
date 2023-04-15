@@ -50,7 +50,7 @@ const UserProfile = ({ isLoaded }) => {
             </>
         );
     }
-    if (!user)return null
+    if (!user) return null;
     return (
         <div id="userProfile-container">
              <UserInfo user={user} />
