@@ -48,7 +48,7 @@ const ActivityList = ({
         dispatch(getAnswerVotes());
         dispatch(getAllQuestions());
         dispatch(getAllAnswers());
-    }, [dispatch, isDelete, activeTab, getQuestion]);
+    }, [dispatch, isDelete, activeTab]);
 
     const userQuestions = questions.filter((question) => {
         return question.user_id === user.id;
