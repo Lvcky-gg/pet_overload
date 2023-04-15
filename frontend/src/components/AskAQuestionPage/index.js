@@ -8,9 +8,10 @@ import { createQuestion } from '../../store/questions';
 import { useNavigate } from 'react-router-dom';
 
 import ErrorList from './ErrorList';
-import Redirect from './Redirect';
+import Redirect from '../Redirect';
 
 import './AskAQuestionPage.css';
+import { setRedirectMessage } from '../../store/session';
 
 const DEFAULT_DETAILS_STATE = '<p></p>';
 
@@ -26,6 +27,7 @@ const AskAQuestionPage = () => {
 
     useEffect(() => {
         if (!user) {
+            dispatch(setRedirectMessage('ask a question.'));
             setShowRedirectMessage(true);
         }
     }, [user]);
@@ -75,9 +77,12 @@ const AskAQuestionPage = () => {
 
     const handlePreview = () => setShowPreview((prev) => !prev);
 
-    if (showRedirectMessage) {
-        return <Redirect />;
-    }
+    useEffect(() => {
+        if (!showRedirectMessage) return;
+
+        dispatch(setRedirectMessage('ask a question.'));
+        navigate('/redirect-page');
+    }, [showRedirectMessage]);
 
     return (
         <div className="ask-question-page-container">

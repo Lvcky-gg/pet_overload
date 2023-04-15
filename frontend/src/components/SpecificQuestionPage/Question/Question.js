@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { authenticate } from '../../../store/session';
 import Voting from '../../AllQuestionsPage/Voting/Voting';
@@ -6,6 +6,11 @@ import dateFormater from '../../../utils/dateFormater';
 import DeleteButton from '../../UserProfile/ActivityLists/DeleteButton';
 import parse from 'html-react-parser';
 import { deleteQuestion, updateQuestion } from '../../../store/questions';
+import RichEditor from '../../RichTextEditor';
+import QuestionRichEditor from '../../AskAQuestionPage/QuestionForm/QuestionRichEditor';
+import Button from '../../Button';
+
+import './Question.css';
 
 const { useSelector, useDispatch } = require('react-redux');
 
@@ -13,16 +18,22 @@ const Question = ({ question, setIsDelete }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const currentUser = useSelector((state) => state.session.user);
+
     const {
         id,
-        title,
-        details,
+        title: initialTitle,
+        details: initialDetails,
         votes_score: voteScore,
         user,
         created_at,
         updated_at,
         setVoteClicked,
     } = question;
+
+    const [details, setDetails] = useState(initialDetails);
+    const [title, setTitle] = useState(initialTitle);
+    const [isEditorOpen, setIsEditorOpen] = useState(false);
+    const [showEditError, setShowEditError] = useState(false);
 
     useEffect(() => {
         dispatch(authenticate());
@@ -35,8 +46,36 @@ const Question = ({ question, setIsDelete }) => {
     };
     const handleEditClick = (e) => {
         e.preventDefault();
-        dispatch(updateQuestion({ id, title, details }));
+
+        // Render the rich text editor
+        setIsEditorOpen(true);
     };
+
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const updateQuestionResult = await dispatch(
+            updateQuestion({ questionId: id, title, details })
+        );
+
+        // If not fulfilled, revert to initial details
+        if (!updateQuestionResult.meta.requestStatus === 'fulfilled') {
+            setShowEditError(true);
+            setDetails(initialDetails);
+        } else {
+            setShowEditError(false);
+            setIsEditorOpen(false);
+        }
+    };
+
+    const handleCancel = () => {
+        setIsEditorOpen(false);
+        setDetails(initialDetails);
+        setTitle(initialTitle);
+        setShowEditError(false);
+    };
+
     const navigateToAskAQuestionPage = () => {
         // Navigate to the route '/all-questions/ask-a-question'
         navigate('/all-questions/ask-a-question');
@@ -102,6 +141,7 @@ const Question = ({ question, setIsDelete }) => {
                                 display: 'flex',
                             }}
                         >
+
                             {currentUser ? (
                                 <NavLink to={`/users/${user.id}`}>
                                     <p className="author-name-date">
@@ -113,6 +153,7 @@ const Question = ({ question, setIsDelete }) => {
                                     Author:{user.username}
                                 </p>
                             )}
+
                             <div
                                 style={{
                                     display: 'flex',
@@ -133,6 +174,40 @@ const Question = ({ question, setIsDelete }) => {
                     </div>
                 </div>
             </div>
+            {isEditorOpen && (
+                <div className="edit-question-container">
+                    <h2>Edit Question</h2>
+                    {showEditError && (
+                        <p className="error">
+                            We are unable to process your edit request. Please
+                            try again later.
+                        </p>
+                    )}
+                    <label htmlFor="title">Title</label>
+                    <input
+                        type="text"
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                    />
+                    <p>Details</p>
+                    <QuestionRichEditor
+                        details={details}
+                        setDetails={setDetails}
+                    />
+                    <div className="button-row">
+                        <Button
+                            id={'cancel-edit-question-button'}
+                            onClickHandler={handleCancel}
+                            text={'Cancel'}
+                        />
+                        <Button
+                            id={'save-edit-question-button'}
+                            onClickHandler={handleSubmit}
+                            text={'Save changes'}
+                        />
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
