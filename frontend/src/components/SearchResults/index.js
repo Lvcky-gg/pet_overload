@@ -16,7 +16,7 @@ const SearchResults = () => {
     const dispatch = useDispatch();
     const questions = useSelector((state) => state.questions.allQuestions);
     const loading = useSelector((state) => state.questions.loading);
-
+    const error = useSelector((state) => state.questions.error);
     useEffect(() => {
         dispatch(filterQuestions(parameter));
     }, [dispatch, parameter]);
@@ -54,29 +54,32 @@ const SearchResults = () => {
                 </div>
             </div>
             <div id="question-list">
-                {!questions.length && <p>No Result Found.</p>}
-                {questions.map(
-                    ({
-                        id,
-                        title,
-                        details,
-                        votes_score,
-                        answers_count,
-                        user,
-                        created_at,
-                        updated_at,
-                    }) => (
-                        <QuestionCard
-                            key={id}
-                            id={id}
-                            title={title}
-                            details={details}
-                            votes_score={votes_score}
-                            answers_count={answers_count}
-                            user={user}
-                            created_at={created_at}
-                            updated_at={updated_at}
-                        />
+                {!questions.length || error ? (
+                    <p>No Result Found.</p>
+                ) : (
+                    questions.map(
+                        ({
+                            id,
+                            title,
+                            details,
+                            votes_score,
+                            answers_count,
+                            user,
+                            created_at,
+                            updated_at,
+                        }) => (
+                            <QuestionCard
+                                key={id}
+                                id={id}
+                                title={title}
+                                details={details}
+                                votes_score={votes_score}
+                                answers_count={answers_count}
+                                user={user}
+                                created_at={created_at}
+                                updated_at={updated_at}
+                            />
+                        )
                     )
                 )}
             </div>

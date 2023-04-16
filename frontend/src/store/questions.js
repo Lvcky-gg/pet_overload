@@ -63,6 +63,7 @@ export const questionsSlice = createSlice({
             .addCase(filterQuestions.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload.error;
+                state.allQuestions = [];
             })
             .addCase(updateQuestion.fulfilled, (state, action) => {
                 state.loading = false;
