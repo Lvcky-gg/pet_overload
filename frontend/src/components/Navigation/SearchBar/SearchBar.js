@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import './SearchBar.css';
 
@@ -9,10 +8,7 @@ const SearchBar = () => {
     const [searchInput, setSearchInput] = useState('');
     const [showDropdown, setShowDropdown] = useState(false);
     const [searchUrl, setSearchUrl] = useState('');
-    const error = useSelector((state) => state.questions.error);
-    const [errorMsg, setErrorMsg] = useState('');
 
-    const [initialRender, setInitialRender] = useState(true);
     const onSearch = (input) => {
         if (input[0] === "'" || input[0] === '"') {
             //search by keyword
@@ -36,7 +32,6 @@ const SearchBar = () => {
 
     const handleFocus = () => {
         setSearchInput('');
-        setErrorMsg('');
         setShowDropdown(true);
     };
 
@@ -53,25 +48,6 @@ const SearchBar = () => {
         }
     }, [searchUrl, navigate]);
 
-    useEffect(() => {
-        if (error) {
-            setErrorMsg(error);
-        }
-        if (!error) setErrorMsg('');
-    }, [error]);
-
-    useEffect(() => {
-        if (initialRender) {
-            setInitialRender(false);
-        } else {
-            if (!errorMsg) {
-                searchInputRef.current.focus();
-            } else {
-                searchInputRef.current.blur();
-            }
-        }
-    }, [errorMsg, initialRender]);
-
     return (
         <div className="search-bar-container">
             <form onSubmit={handleSearchSubmit} className="search-bar-form">
@@ -79,8 +55,7 @@ const SearchBar = () => {
                     <input
                         type="text"
                         placeholder="Search..."
-                        value={errorMsg ? errorMsg : searchInput}
-                        // value={searchInput}
+                        value={searchInput}
                         onChange={(e) => setSearchInput(e.target.value)}
                         onFocus={handleFocus}
                         onBlur={handleBlur}
