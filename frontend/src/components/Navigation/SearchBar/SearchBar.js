@@ -9,6 +9,7 @@ const SearchBar = () => {
     const [showDropdown, setShowDropdown] = useState(false);
     const [searchUrl, setSearchUrl] = useState('');
 
+    const [initialRender, setInitialRender] = useState(true);
     const onSearch = (input) => {
         if (input[0] === "'" || input[0] === '"') {
             //search by keyword
