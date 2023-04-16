@@ -51,7 +51,6 @@ const Question = ({ question, setIsDelete }) => {
         setIsEditorOpen(true);
     };
 
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -136,12 +135,7 @@ const Question = ({ question, setIsDelete }) => {
                                 </div>
                             )}
                         </div>
-                        <div
-                            style={{
-                                display: 'flex',
-                            }}
-                        >
-
+                        <div className="author-name-date">
                             {currentUser ? (
                                 <NavLink to={`/users/${user.id}`}>
                                     <p className="author-name-date">
@@ -154,21 +148,9 @@ const Question = ({ question, setIsDelete }) => {
                                 </p>
                             )}
 
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    marginRight: '5px',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                }}
-                            >
-                                <i
-                                    className="fas fa-crown"
-                                    style={{ color: 'gold' }}
-                                ></i>
-                                <p style={{ color: '#0e67b4' }}>
-                                    {user.reputation}
-                                </p>
+                            <div className="author-name-date">
+                                <i className="fas fa-crown"></i>
+                                <p>{user.reputation}</p>
                             </div>
                         </div>
                     </div>
