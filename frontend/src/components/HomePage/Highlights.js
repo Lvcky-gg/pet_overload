@@ -53,7 +53,7 @@ const Highlight = ({ isLoaded }) => {
             <div className="post-card top">
                 <h2>What's new ?</h2>
 
-                <div className="image-card">
+                <div className="homePageCard">
                     <img
                         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2GIk9okRZWlkvlHqA1VD1LBeLSiNlCLhDmC_mWPPuoPMlxc-vU8GZmFrJqzMerJpaWrY&usqp=CAU"
                         alt="#"
@@ -76,7 +76,7 @@ const Highlight = ({ isLoaded }) => {
             {dog && (
                 <div className="post-card mid">
                     <h2>Dog</h2>
-                    <div className="image-card">
+                    <div className="homePageCard">
                         <img
                             src={dogImage}
                             alt="#"
@@ -92,7 +92,7 @@ const Highlight = ({ isLoaded }) => {
             {cat && (
                 <div className="post-card bottom">
                     <h2>Cat</h2>
-                    <div className="image-card">
+                    <div className="homePageCard">
                         <img
                             src={imageTwo}
                             alt="#"

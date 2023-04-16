@@ -12,6 +12,7 @@ const SearchBar = () => {
     const error = useSelector((state) => state.questions.error);
     const [errorMsg, setErrorMsg] = useState('');
 
+    const [initialRender, setInitialRender] = useState(true);
     const onSearch = (input) => {
         if (input[0] === "'" || input[0] === '"') {
             //search by keyword
@@ -40,29 +41,36 @@ const SearchBar = () => {
     };
 
     const handleBlur = () => {
-        if (!errorMsg) setShowDropdown(false);
+        setSearchInput('');
+        setShowDropdown(false);
     };
     useEffect(() => {
         if (searchUrl) {
             navigate(`/all-questions/search?${searchUrl}`, { replace: true });
             setSearchInput('');
             setSearchUrl('');
+            setShowDropdown(false);
         }
+    }, [searchUrl, navigate]);
+
+    useEffect(() => {
         if (error) {
             setErrorMsg(error);
         }
         if (!error) setErrorMsg('');
-    }, [searchUrl, navigate, error]);
+    }, [error]);
 
     useEffect(() => {
-        if (searchInputRef.current) {
+        if (initialRender) {
+            setInitialRender(false);
+        } else {
             if (!errorMsg) {
                 searchInputRef.current.focus();
             } else {
                 searchInputRef.current.blur();
             }
         }
-    }, [errorMsg]);
+    }, [errorMsg, initialRender]);
 
     return (
         <div className="search-bar-container">
@@ -78,6 +86,7 @@ const SearchBar = () => {
                         onBlur={handleBlur}
                         className="search-bar-input"
                         ref={searchInputRef}
+                        autoFocus={false}
                     />
 
                     <i className="fas fa-search"></i>
