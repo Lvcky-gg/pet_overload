@@ -105,7 +105,8 @@ Search functionality is available on all pages based on three parameters:
 
 ### Build Script
 
-npm install --prefix frontend && npm run build --prefix frontend && cd backend && ls && pip install -r requirements.txt && pip install psycopg2 && flask db upgrade && flask seed all
+
+`npm install --prefix frontend && npm run build --prefix frontend && cd backend && ls && pip install -r requirements.txt && pip install psycopg2 && flask db upgrade && flask seed all`
 
 ### Troubleshooting
 
