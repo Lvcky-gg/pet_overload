@@ -29,9 +29,10 @@ const Voting = ({ questionId, voteScore }) => {
         DOWNVOTE: -1,
         NO_VOTE: 0,
     };
+
     const dispatch = useDispatch();
     const [currentVoteType, setCurrentVoteType] = useState(
-        currentVote ? currentVote.vote_status : voteType.NO_VOTE
+        currentVote ? currentVote.voteStatus : voteType.NO_VOTE
     );
 
     useEffect(() => {
@@ -82,7 +83,9 @@ const Voting = ({ questionId, voteScore }) => {
 
         const updateVoteScore = (updatedQuestion) => {
             dispatch(updateQuestionAfterVote(updatedQuestion));
-            setCurrentVoteScore(updatedQuestion.votes_score);
+            const newVoteScore =
+                updatedQuestion.votesScore || updatedQuestion.votes_score;
+            setCurrentVoteScore(newVoteScore);
         };
 
         if (!currentVote || currentVote.voteStatus === NO_VOTE) {
