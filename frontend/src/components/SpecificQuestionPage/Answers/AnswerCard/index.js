@@ -13,9 +13,11 @@ import { updateAnswerByQuestion } from '../../../../store/answers';
 import { getAllQuestions } from '../../../../store/questions';
 import VotingAnswers from '../../VotingAnswers';
 import dateFormater from '../../../../utils/dateFormater';
+import ErrorList from '../../../AskAQuestionPage/ErrorList';
 const AnswerCard = ({ answer, setVoteClicked, setIsDelete, setIsUpdated }) => {
     const { details, userId, id, answerScore, user, createdAt } = answer;
     const dispatch = useDispatch();
+    const [errors, setErrors] = useState([]);
     const sessionUser = useSelector((state) => state.session.user);
     const [richTextEditor, setRichTextEditor] = useState(false);
 
@@ -29,11 +31,34 @@ const AnswerCard = ({ answer, setVoteClicked, setIsDelete, setIsUpdated }) => {
         setIsDelete((prev) => !prev);
     };
     // NEED TO RESET TO EMPTY AFTER SUBMIT
-    const handleEditorSubmit = (e, { details, answerId }) => {
+    const handleEditorSubmit = async (e, { details, answerId }) => {
         e.preventDefault();
-        const val = dispatch(
+
+        setErrors([]);
+
+        if (!details.trim().length) {
+            setErrors((prevErrors) => [
+                ...prevErrors,
+                'Your answer cannot be empty.',
+            ]);
+
+            setRichTextEditor(true);
+            return;
+        }
+
+        const val = await dispatch(
             updateAnswerByQuestion({ details: details, answerId: answerId })
         );
+
+        if (val?.meta?.requestStatus !== 'fulfilled') {
+            setErrors((prevErrors) => [
+                ...prevErrors,
+                'We are unable to submit your answer at this time due to an unknown error. Please wait a few minutes, then try again.',
+            ]);
+
+            return;
+        }
+
         setIsUpdated((prev) => !prev);
         return val;
     };
@@ -129,6 +154,7 @@ const AnswerCard = ({ answer, setVoteClicked, setIsDelete, setIsUpdated }) => {
                         richTextEditor={richTextEditor}
                         setRichTextEditor={setRichTextEditor}
                     ></RichEditor>
+                    <ErrorList errors={errors} />
                 </div>
             )}
         </div>

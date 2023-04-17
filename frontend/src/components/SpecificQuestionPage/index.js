@@ -14,13 +14,12 @@ import { authenticate } from '../../store/session';
 
 import { getQuestionVotes } from '../../store/questionVotes';
 
-
 import { useSelector, useDispatch } from 'react-redux';
 import { getAllUsers } from '../../store/users';
 import session from '../../store/session';
 
-
 import './SpecificQuestion.css';
+import ErrorList from '../AskAQuestionPage/ErrorList';
 
 const SpecificQuestion = () => {
     const dispatch = useDispatch();
@@ -39,6 +38,7 @@ const SpecificQuestion = () => {
     const [voteClicked, setVoteClicked] = useState(false);
     const [isCreated, setIsCreated] = useState(false);
     const [isUpdated, setIsUpdated] = useState(false);
+    const [errors, setErrors] = useState([]);
 
     useEffect(() => {
         dispatch(getAllQuestions());
@@ -53,11 +53,33 @@ const SpecificQuestion = () => {
         dispatch(getAllUsers());
     }, [isDelete, richTextEditor, voteClicked, dispatch, isCreated, isUpdated]);
 
-    const handleEditorSubmit = (e, { details, questionId }) => {
+    const handleEditorSubmit = async (e, { details, questionId }) => {
         e.preventDefault();
-        const val = dispatch(
+
+        setErrors([]);
+
+        if (!details.trim().length) {
+            setErrors((prevErrors) => [
+                ...prevErrors,
+                'Your answer cannot be empty.',
+            ]);
+
+            return;
+        }
+
+        const val = await dispatch(
             createAnswerByQuestion({ details: details, questionId: questionId })
         );
+
+        if (val?.meta?.requestStatus !== 'fulfilled') {
+            setErrors((prevErrors) => [
+                ...prevErrors,
+                'We are unable to submit your answer at this time due to an unknown error. Please wait a few minutes, then try again.',
+            ]);
+
+            return;
+        }
+
         setIsCreated((prev) => !prev);
         dispatch(getAllAnswers());
         return val;
@@ -117,6 +139,7 @@ const SpecificQuestion = () => {
                                 setRichTextEditor={setRichTextEditor}
                                 richTextEditor={richTextEditor}
                             />
+                            <ErrorList errors={errors} />
                         </>
                     )}
                 </div>
