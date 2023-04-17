@@ -26,9 +26,7 @@ def seed_answer_votes():
         answer_id=3,
     )
 
-    db.session.add(vote1)
-    db.session.add(vote2)
-    db.session.add(vote3)
+    db.session.add_all([vote1, vote2, vote3])
     db.session.commit()
 
 

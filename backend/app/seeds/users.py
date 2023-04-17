@@ -6,23 +6,23 @@ from datetime import datetime
 # Adds a demo user, you can add other users here if you want
 def seed_users():
     demo = User(
-        username="Demo",
+        username="Demo User",
         email="demo@aa.io",
         password="password",
         created_at=datetime.now(),
         updated_at=datetime.now(),
     )
     marnie = User(
-        username="marnie",
+        username="Marnie",
         email="marnie@aa.io",
-        password="password",
+        password="marnieisawesome",
         created_at=datetime.now(),
         updated_at=datetime.now(),
     )
     bobbie = User(
-        username="bobbie",
+        username="Bobbie",
         email="bobbie@aa.io",
-        password="password",
+        password="ilovepets1234",
         created_at=datetime.now(),
         updated_at=datetime.now(),
     )
