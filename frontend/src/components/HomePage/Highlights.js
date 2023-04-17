@@ -47,13 +47,16 @@ const Highlight = ({ isLoaded }) => {
     const question = items.question;
     const dog = items.dog;
     const cat = items.cat;
-
+    const maxTitle = (str, length) => {
+        const res = str.length <= length ? str : `${str.slice(1, length)}...`;
+        return res;
+    };
     return (
         <div className="highlight-container homePageCards">
             <div className="post-card top">
                 <h2>What's new ?</h2>
 
-                <div className="image-card">
+                <div className="homePageCard">
                     <img
                         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2GIk9okRZWlkvlHqA1VD1LBeLSiNlCLhDmC_mWPPuoPMlxc-vU8GZmFrJqzMerJpaWrY&usqp=CAU"
                         alt="#"
@@ -61,10 +64,13 @@ const Highlight = ({ isLoaded }) => {
                     />
                     {question ? (
                         <>
-                            <NavLink to={`/all-questions/${question.id}`}>
+                            {/* <NavLink to={`/all-questions/${question.id}`}>
                                 {question.title
                                     ? question.title
                                     : question.details}
+                            </NavLink> */}
+                            <NavLink to={`/all-questions/${question.id}`}>
+                                {maxTitle(question.title, 20)}
                             </NavLink>
                             <p>{plainText(question.details, 45)}</p>
                         </>
@@ -76,32 +82,32 @@ const Highlight = ({ isLoaded }) => {
             {dog && (
                 <div className="post-card mid">
                     <h2>Dog</h2>
-                    <div className="image-card">
+                    <div className="homePageCard">
                         <img
                             src={dogImage}
                             alt="#"
                             className="placeHolderImageHome"
                         />
                         <NavLink to={`/all-questions/search?keyword=dog`}>
-                            {dog.title ? dog.title : dog.details}
+                            {maxTitle(dog.title, 20)}
                         </NavLink>
-                        <p>{plainText(dog.details, 45)}</p>
+                        <p>{plainText(dog.details, 30)}</p>
                     </div>
                 </div>
             )}
             {cat && (
                 <div className="post-card bottom">
                     <h2>Cat</h2>
-                    <div className="image-card">
+                    <div className="homePageCard">
                         <img
                             src={imageTwo}
                             alt="#"
                             className="placeHolderImageHome"
                         />
                         <NavLink to={`/all-questions/search?keyword=cat`}>
-                            {cat.title ? cat.title : cat.details}
+                            {maxTitle(cat.details, 20)}
                         </NavLink>
-                        <p>{plainText(cat.details, 45)}</p>
+                        <p>{plainText(cat.details, 30)}</p>
                     </div>
                 </div>
             )}

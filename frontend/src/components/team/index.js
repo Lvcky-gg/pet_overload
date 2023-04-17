@@ -8,12 +8,26 @@ const Team = () => {
         <div className="teamHome">
             <div className="TeamCard">
                 <div className="TeamCardContainer">
-                    <img src="" alt="insert photo"></img>
+                    <img
+                        src="https://avatars.githubusercontent.com/u/100994372?v=4"
+                        alt="insert photo"
+                    ></img>
                     <div className="TeamCardDetails">
                         <h2>Iris Wang</h2>
                         <p>Software engineer</p>
-                        <p>email here</p>
-                        {/* <ul className="socials"> 
+                        <ul className="socials">
+                            <li>
+                                <a href="https://www.linkedin.com/in/iris-wsy/">
+                                    <FontAwesomeIcon icon="fa-brands fa-linkedin-in"></FontAwesomeIcon>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/Iris06-cs">
+                                    <FontAwesomeIcon icon="fa-brands fa-square-github"></FontAwesomeIcon>
+                                </a>
+                            </li>
+                        </ul>
+                        {/* <ul className="socials">
             <li>
             <a href="https://www.facebook.com/john.odonnell.96/">
                 <FontAwesomeIcon icon="fa-brands fa-facebook"  >
@@ -73,13 +87,12 @@ const Team = () => {
 
             <div className="TeamCard">
                 <div className="TeamCardContainer">
-                <img
+                    <img
                         src="https://avatars.githubusercontent.com/u/94711072?v=4"
                         alt="#"
                     ></img>
-  
+
                     <div className="TeamCardDetails">
-                        
                         <h2>John O'Donnell</h2>
                         <p>Software engineer</p>
                         <p>johnodonnell1997@icloud.com</p>

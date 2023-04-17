@@ -50,6 +50,8 @@ h6 {
     line-height: 1.2;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: 150;
+    overflow-wrap: break-word;
+    word-break: break-all;
 }
 
 .header {
@@ -179,4 +181,11 @@ body::-webkit-scrollbar-thumb {
     /* width: 100vw; */
     height: 100vh;
     max-width: 100%;
+    /* margin-top: 70px; */
+}
+p,
+a {
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
 }

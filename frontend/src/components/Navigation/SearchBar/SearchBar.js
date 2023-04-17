@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import './SearchBar.css';
 
@@ -9,9 +8,8 @@ const SearchBar = () => {
     const [searchInput, setSearchInput] = useState('');
     const [showDropdown, setShowDropdown] = useState(false);
     const [searchUrl, setSearchUrl] = useState('');
-    const error = useSelector((state) => state.questions.error);
-    const [errorMsg, setErrorMsg] = useState('');
 
+    const [initialRender, setInitialRender] = useState(true);
     const onSearch = (input) => {
         if (input[0] === "'" || input[0] === '"') {
             //search by keyword
@@ -35,34 +33,21 @@ const SearchBar = () => {
 
     const handleFocus = () => {
         setSearchInput('');
-        setErrorMsg('');
         setShowDropdown(true);
     };
 
     const handleBlur = () => {
-        if (!errorMsg) setShowDropdown(false);
+        setSearchInput('');
+        setShowDropdown(false);
     };
     useEffect(() => {
         if (searchUrl) {
             navigate(`/all-questions/search?${searchUrl}`, { replace: true });
             setSearchInput('');
             setSearchUrl('');
+            setShowDropdown(false);
         }
-        if (error) {
-            setErrorMsg(error);
-        }
-        if (!error) setErrorMsg('');
-    }, [searchUrl, navigate, error]);
-
-    useEffect(() => {
-        if (searchInputRef.current) {
-            if (!errorMsg) {
-                searchInputRef.current.focus();
-            } else {
-                searchInputRef.current.blur();
-            }
-        }
-    }, [errorMsg]);
+    }, [searchUrl, navigate]);
 
     return (
         <div className="search-bar-container">
@@ -71,13 +56,13 @@ const SearchBar = () => {
                     <input
                         type="text"
                         placeholder="Search..."
-                        value={errorMsg ? errorMsg : searchInput}
-                        // value={searchInput}
+                        value={searchInput}
                         onChange={(e) => setSearchInput(e.target.value)}
                         onFocus={handleFocus}
                         onBlur={handleBlur}
                         className="search-bar-input"
                         ref={searchInputRef}
+                        autoFocus={false}
                     />
 
                     <i className="fas fa-search"></i>

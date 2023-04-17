@@ -13,8 +13,8 @@ import './UserProfile.css';
 
 const UserProfile = ({ isLoaded }) => {
     const dispatch = useDispatch();
-    const [linkUser, setLinkUser] = useState(null);
-    const [user, setUser] = useState(null);
+    const [linkUser, setLinkUser] = useState(null)
+    const [user, setUser] = useState(null)
     // current user
     const currentUser = useSelector((state) => state.session.user);
     const allUsers = useSelector((state) => state.users.allUsers);
@@ -25,7 +25,7 @@ const UserProfile = ({ isLoaded }) => {
         setLinkUser(allUsers.find((user) => user?.id === Number(userId)));
     }, [allUsers]);
 
-    useEffect(() => {
+    useEffect(()=>{
         if (userId) {
             setUser(currentUser?.id === linkUser?.id ? currentUser : linkUser);
         } else {
@@ -40,7 +40,7 @@ const UserProfile = ({ isLoaded }) => {
 
     useEffect(() => {
         dispatch(authenticate());
-        dispatch(getAllUsers());
+        dispatch(getAllUsers())
     }, [dispatch, isDelete]);
 
     if (!currentUser) {
@@ -54,14 +54,14 @@ const UserProfile = ({ isLoaded }) => {
     if (!user) return null;
     return (
         <div id="userProfile-container">
-            <UserInfo user={user} />
+             <UserInfo user={user} />
             <p id="activity-title">Activity</p>
             <ActivityTabs activeTab={activeTab} setActiveTab={setActiveTab} />
             <SortingTabs
                 activeSort={activeSort}
                 setActiveSort={setActiveSort}
             />
-            <ActivityList
+           <ActivityList
                 activeTab={activeTab}
                 activeSort={activeSort}
                 user={user}
@@ -70,6 +70,7 @@ const UserProfile = ({ isLoaded }) => {
                 setIsDelete={setIsDelete}
             />
         </div>
+        
     );
 };
 
