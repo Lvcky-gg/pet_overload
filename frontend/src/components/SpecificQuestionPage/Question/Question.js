@@ -93,7 +93,7 @@ const Question = ({ question, setIsDelete }) => {
                             // onClick={showEditor}
                             onClick={navigateToAskAQuestionPage}
                         >
-                            Edit question
+                            Ask question
                         </button>
                     </div>
                 </div>
