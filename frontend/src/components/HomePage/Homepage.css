@@ -75,7 +75,9 @@ h3 {
     max-width: 30%;
     padding-bottom: 5px;
 }
-
+.homePageCard p {
+    margin-top: 0;
+}
 .post-card {
     box-sizing: border-box;
     align-self: baseline;

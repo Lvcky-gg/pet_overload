@@ -9,9 +9,13 @@ import {
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { updateAnswerAfterVote } from '../../../store/answers';
-
+import { setRedirectMessage } from '../../../store/session';
+import { useNavigate } from 'react-router-dom';
 const VotingAnswers = ({ answerId, answerScore }) => {
     const [currentVoteScore, setCurrentVoteScore] = useState(answerScore);
+    const [shouldRedirect, setShouldRedirect] = useState(false);
+    const currentUser = useSelector((state) => state.session.user);
+    const navigate = useNavigate();
 
     const upvoteArrowRef = useRef(null);
     const downvoteArrowRef = useRef(null);
@@ -43,6 +47,12 @@ const VotingAnswers = ({ answerId, answerScore }) => {
         voteType.NO_VOTE,
         setCurrentVoteType,
     ]);
+    useEffect(() => {
+        if (!currentUser) {
+            upvoteArrowRef.current.classList.remove('selected');
+            downvoteArrowRef.current.classList.remove('selected');
+        }
+    }, [currentUser]);
 
     useEffect(() => {
         if (currentVoteType === voteType.UPVOTE) {
@@ -58,6 +68,10 @@ const VotingAnswers = ({ answerId, answerScore }) => {
     }, [currentVoteType, voteType.UPVOTE, voteType.DOWNVOTE]);
 
     const handleVoteArrowClick = async (arrowRef) => {
+        if (!currentUser) {
+            setShouldRedirect(true);
+            return;
+        }
         const { current } = arrowRef;
         const { UPVOTE, DOWNVOTE, NO_VOTE } = voteType;
 
@@ -104,6 +118,12 @@ const VotingAnswers = ({ answerId, answerScore }) => {
             updateVoteScore(updatedAnswerVote.payload.answer);
         }
     };
+    useEffect(() => {
+        if (!shouldRedirect) return;
+
+        dispatch(setRedirectMessage('vote.'));
+        navigate('/redirect-page');
+    }, [shouldRedirect]);
     return (
         <div className="voting-score">
             <FontAwesomeIcon
