@@ -258,3 +258,6 @@
     margin-bottom: 2rem;
     padding: 1rem 0.5rem 0;
 }
+.ask-question-container {
+    min-width: 142.5px;
+}
