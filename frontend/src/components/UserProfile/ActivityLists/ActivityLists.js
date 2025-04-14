@@ -103,29 +103,29 @@ const ActivityList = ({
     };
 
     return (
-        <div id="activity-list-container">
-            <div className="total-number-container">
+        <div id='activity-list-container'>
+            <div className='total-number-container'>
                 <span>
                     Total <span>{activeTab}</span> number:
                 </span>
                 {activeTab === 'questions' && (
-                    <span id="user-activity-number">
+                    <span id='user-activity-number'>
                         {userQuestions.length}
                     </span>
                 )}
                 {activeTab === 'answers' && (
-                    <span id="user-activity-number"> {userAnswers.length}</span>
+                    <span id='user-activity-number'> {userAnswers.length}</span>
                 )}
                 {activeTab === 'votes' && (
-                    <span id="user-activity-number">
+                    <span id='user-activity-number'>
                         {userQVotes.length + userAVotes.length}
                     </span>
                 )}
             </div>
 
             {activeTab === 'votes' && (
-                <ul className="user-activity-list-container">
-                    <li className="user-activity-list column-title">
+                <ul className='user-activity-list-container'>
+                    <li className='user-activity-list column-title'>
                         <p>Question</p>
                         <p>Question Score</p>
                         <p>VotedOn</p>
@@ -135,10 +135,10 @@ const ActivityList = ({
                     {userQVotes.length ? (
                         sortList(userQVotes).map((qVote, idx) => (
                             <li
-                                className="user-activity-list list-item"
+                                className='user-activity-list list-item'
                                 key={idx}
                             >
-                                <p className="question-title">
+                                <p className='question-title'>
                                     {qVote.question.title}
                                 </p>
                                 <p>{qVote.question.votes_score}</p>
@@ -146,10 +146,10 @@ const ActivityList = ({
                                 <p>{qVote.isLiked ? 'Like' : 'Dislike'}</p>
 
                                 {user.id === currentUser.id && (
-                                    <div className="activity-button-container">
+                                    <div className='activity-button-container'>
                                         <DeleteButton
-                                            className="button activity"
-                                            type="questionVotes"
+                                            className='button activity'
+                                            type='questionVotes'
                                             id={qVote.id}
                                             onDelete={handleDelete}
                                             setIsDelete={setIsDelete}
@@ -159,9 +159,9 @@ const ActivityList = ({
                             </li>
                         ))
                     ) : (
-                        <li id="no-record-msg">No Recorded Questions Voted</li>
+                        <li id='no-record-msg'>No Recorded Questions Voted</li>
                     )}
-                    <li className="user-activity-list column-title">
+                    <li className='user-activity-list column-title'>
                         {/* <p>Question</p> */}
                         <p>Answer</p>
                         <p>Answer Score</p>
@@ -172,20 +172,20 @@ const ActivityList = ({
                     {userAVotes.length ? (
                         sortList(userAVotes).map((aVote, idx) => (
                             <li
-                                className="user-activity-list list-item"
+                                className='user-activity-list list-item'
                                 key={idx}
                             >
-                                <p id="answer-detail">
+                                <p id='answer-detail'>
                                     {plainText(aVote.answer.details, 50)}
                                 </p>
                                 <p>{aVote.answer.answerScore}</p>
                                 <p>{dateFormater(aVote.createdAt)}</p>
                                 <p>{aVote.isLiked ? 'Like' : 'Dislike'}</p>
                                 {user.id === currentUser.id && (
-                                    <div className="activity-button-container">
+                                    <div className='activity-button-container'>
                                         <DeleteButton
-                                            className="button activity"
-                                            type="answerVotes"
+                                            className='button activity'
+                                            type='answerVotes'
                                             id={aVote.id}
                                             onDelete={handleDelete}
                                             setIsDelete={setIsDelete}
@@ -195,13 +195,13 @@ const ActivityList = ({
                             </li>
                         ))
                     ) : (
-                        <li id="no-record-msg">No Recorded Answers Voted</li>
+                        <li id='no-record-msg'>No Recorded Answers Voted</li>
                     )}
                 </ul>
             )}
             {activeTab === 'questions' && (
-                <ul className="user-activity-list-container">
-                    <li className="user-activity-list column-title">
+                <ul className='user-activity-list-container'>
+                    <li className='user-activity-list column-title'>
                         <p>Question</p>
                         <p>Question Score</p>
                         <p>Asked On</p>
@@ -211,11 +211,11 @@ const ActivityList = ({
                     {userQuestions.length ? (
                         sortList(userQuestions).map((question, idx) => (
                             <li
-                                className="user-activity-list list-item"
+                                className='user-activity-list list-item'
                                 key={idx}
                             >
                                 <NavLink
-                                    className="question-title"
+                                    className='question-title'
                                     to={`/all-questions/${question.id}`}
                                 >
                                     {question.title}
@@ -224,10 +224,10 @@ const ActivityList = ({
                                 <p>{dateFormater(question.created_at)}</p>
                                 <p>{question.answers_count}</p>
                                 {user.id === currentUser.id && (
-                                    <div className="activity-button-container">
+                                    <div className='activity-button-container'>
                                         <DeleteButton
-                                            className="button activity"
-                                            type="question"
+                                            className='button activity'
+                                            type='question'
                                             id={question.id}
                                             onDelete={handleDelete}
                                             setIsDelete={setIsDelete}
@@ -237,13 +237,13 @@ const ActivityList = ({
                             </li>
                         ))
                     ) : (
-                        <li id="no-record-msg">No Questions Asked</li>
+                        <li id='no-record-msg'>No Questions Asked</li>
                     )}
                 </ul>
             )}
             {activeTab === 'answers' && (
-                <ul className="user-activity-list-container">
-                    <li className="user-activity-list column-title">
+                <ul className='user-activity-list-container'>
+                    <li className='user-activity-list column-title'>
                         <p>Question</p>
                         <p>Answer</p>
                         <p>Answered On</p>
@@ -253,25 +253,25 @@ const ActivityList = ({
                     {userAnswers.length ? (
                         sortList(userAnswers).map((answer, idx) => (
                             <li
-                                className="user-activity-list list-item"
+                                className='user-activity-list list-item'
                                 key={idx}
                             >
                                 <NavLink
-                                    className="question-title"
+                                    className='question-title'
                                     to={`/all-questions/${answer.questionId}`}
                                 >
                                     {getQuestion(answer.questionId).title}
                                 </NavLink>
-                                <div id="centerAnswer">
+                                <div id='centerAnswer'>
                                     {plainText(answer.details, 50)}
                                 </div>
                                 <p>{dateFormater(answer.createdAt)}</p>
                                 <p>{answer.answerScore}</p>
 
-                                <div className="activity-button-container">
+                                <div className='activity-button-container'>
                                     <DeleteButton
-                                        className="button activity"
-                                        type="answer"
+                                        className='button activity'
+                                        type='answer'
                                         id={answer.id}
                                         onDelete={handleDelete}
                                         setIsDelete={setIsDelete}
@@ -280,7 +280,7 @@ const ActivityList = ({
                             </li>
                         ))
                     ) : (
-                        <li id="no-record-msg">No Recorded Answers Asked</li>
+                        <li id='no-record-msg'>No Recorded Answers Asked</li>
                     )}
                 </ul>
             )}

@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 export const answerSlice = createSlice({
     name: 'answers',
     initialState: {
-        allAnswers: [],
+        allAnswers: [] as { id: number; [key: string]: any }[],
     },
     reducers: {
         updateAnswerAfterVote(state, action) {
@@ -80,7 +80,10 @@ export const getAnswersByQuestion = createAsyncThunk(
 
 export const createAnswerByQuestion = createAsyncThunk(
     'answers/createAnswerByQuestion',
-    async ({ details, questionId }, { rejectWithValue }) => {
+    async (
+        { details, questionId }: { details: any; questionId: number },
+        { rejectWithValue }
+    ) => {
         const response = await fetch(`/api/questions/${questionId}/answers`, {
             method: 'POST',
             headers: {
@@ -101,7 +104,10 @@ export const createAnswerByQuestion = createAsyncThunk(
 
 export const updateAnswerByQuestion = createAsyncThunk(
     'answers/updateAnswerByQuestion',
-    async ({ details, answerId }, { rejectWithValue }) => {
+    async (
+        { details, answerId }: { details: any; answerId: number },
+        { rejectWithValue }
+    ) => {
         const response = await fetch(`/api/answers/${answerId}`, {
             method: 'PUT',
             headers: {
@@ -118,9 +124,10 @@ export const updateAnswerByQuestion = createAsyncThunk(
         return data;
     }
 );
+
 export const deleteAnswer = createAsyncThunk(
     'answers/deleteAnswer',
-    async (answerId, { rejectWithValue }) => {
+    async (answerId : number, { rejectWithValue }) => {
         const response = await fetch(`/api/answers/${answerId}`, {
             method: 'DELETE',
             headers: {

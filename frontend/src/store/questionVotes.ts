@@ -1,6 +1,15 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-const initialState = {
+interface QuestionVote {
+    id: number;
+    questionId: number;
+    isLiked: boolean;
+}
+
+const initialState: {
+    questionVotes: QuestionVote[];
+    loading: boolean;
+} = {
     questionVotes: [],
     loading: false,
 };
@@ -25,7 +34,7 @@ export const questionVotesSlice = createSlice({
             .addCase(deleteQuestionVotes.fulfilled, (state, action) => {
                 state.loading = false;
                 state.questionVotes = state.questionVotes.filter(
-                    (vote) => vote.id === action.payload
+                    (vote) => vote.id !== action.payload
                 );
             })
             .addCase(deleteQuestionVotes.rejected, (state, action) => {
@@ -83,7 +92,7 @@ export const getQuestionVotes = createAsyncThunk(
 
 export const deleteQuestionVotes = createAsyncThunk(
     'questionVotes/deleteQuestionVotes',
-    async (questionId, { rejectWithValue }) => {
+    async (questionId: number, { rejectWithValue }) => {
         const response = await fetch(`/api/question_votes/${questionId}`, {
             method: 'DELETE',
             headers: {
@@ -97,13 +106,31 @@ export const deleteQuestionVotes = createAsyncThunk(
             return rejectWithValue(errData);
         }
 
-        return questionId;
+        return Number(questionId);
     }
 );
 
-export const updateQuestionVotes = createAsyncThunk(
+interface UpdateQuestionVotesPayload {
+    questionId: number;
+    isLiked: boolean;
+}
+
+interface UpdateQuestionVotesResponse {
+    id: number;
+    questionId: number;
+    isLiked: boolean;
+}
+
+export const updateQuestionVotes = createAsyncThunk<
+    UpdateQuestionVotesResponse,
+    UpdateQuestionVotesPayload,
+    { rejectValue: any }
+>(
     'questionVotes/updateQuestionVotes',
-    async (questionId, isLiked, { rejectWithValue }) => {
+    async (
+        { questionId, isLiked }: { questionId: number; isLiked: boolean },
+        { rejectWithValue }
+    ) => {
         const response = await fetch(`/api/question_votes/${questionId}`, {
             method: 'PUT',
             headers: {
@@ -112,7 +139,7 @@ export const updateQuestionVotes = createAsyncThunk(
             body: JSON.stringify({ isLiked }),
         });
 
-        const data = await response.json();
+        const data: UpdateQuestionVotesResponse = await response.json();
 
         if (!response.ok) {
             const errData = await response.json();
@@ -123,9 +150,16 @@ export const updateQuestionVotes = createAsyncThunk(
     }
 );
 
-export const deleteQuestionVoteById = createAsyncThunk(
+export const deleteQuestionVoteById = createAsyncThunk<
+    number, // Return type
+    { questionVoteId: number }, // Parameter type
+    { rejectValue: any } // Rejection type
+>(
     'questionVotes/deleteQuestionVoteById',
-    async ({ questionVoteId }) => {
+    async (
+        { questionVoteId }: { questionVoteId: number },
+        { rejectWithValue }
+    ) => {
         const response = await fetch(`/api/question_votes/${questionVoteId}`, {
             method: 'DELETE',
             headers: {
@@ -136,18 +170,26 @@ export const deleteQuestionVoteById = createAsyncThunk(
         const data = await response.json();
 
         if (!response.ok) {
-            return false;
+            return rejectWithValue(data);
         }
 
         return questionVoteId;
     }
 );
 
-export const updateQuestionVoteById = createAsyncThunk(
+export const updateQuestionVoteById = createAsyncThunk<
+    QuestionVote, // Return type
+    { questionVoteId: number; isLiked: boolean }, // Parameter type
+    { rejectValue: any } // Rejection type
+>(
     'questionVotes/updateQuestionVoteById',
-    async ({ questionVoteId, isLiked }, { rejectWithValue }) => {
-        isLiked = isLiked === 1 ? true : false;
-
+    async (
+        {
+            questionVoteId,
+            isLiked,
+        }: { questionVoteId: number; isLiked: boolean },
+        { rejectWithValue }
+    ) => {
         const response = await fetch(`/api/question_votes/${questionVoteId}`, {
             method: 'PUT',
             headers: {
@@ -156,7 +198,7 @@ export const updateQuestionVoteById = createAsyncThunk(
             body: JSON.stringify({ isLiked }),
         });
 
-        const data = await response.json();
+        const data: QuestionVote = await response.json();
 
         if (!response.ok) {
             return rejectWithValue(data);
@@ -166,11 +208,21 @@ export const updateQuestionVoteById = createAsyncThunk(
     }
 );
 
-export const createQuestionVote = createAsyncThunk(
-    'questionVotes/createQuestionVote',
-    async ({ questionId, isLiked }, { rejectWithValue }) => {
-        isLiked = isLiked === 1 ? true : false;
+interface CreateQuestionVotePayload {
+    questionId: number;
+    isLiked: boolean;
+}
 
+export const createQuestionVote = createAsyncThunk<
+    QuestionVote, // Return type
+    CreateQuestionVotePayload, // Parameter type
+    { rejectValue: any } // Rejection type
+>(
+    'questionVotes/createQuestionVote',
+    async (
+        { questionId, isLiked }: CreateQuestionVotePayload,
+        { rejectWithValue }
+    ) => {
         const response = await fetch(`/api/questions/${questionId}/votes`, {
             method: 'POST',
             headers: {
@@ -189,12 +241,18 @@ export const createQuestionVote = createAsyncThunk(
     }
 );
 
-// Selector that that returns the current vote status for a question
-// Returns 1 if the user upvoted the question
-// Returns 0 if the user hasn't voted on the question
-// Returns -1 if the user downvoted the question
-export const selectVoteStatus = (state, questionId) => {
-    const questionVotes = state.questionVotes;
+interface RootState {
+    questionVotes: {
+        questionVotes: QuestionVote[];
+        loading: boolean;
+    };
+}
+
+export const selectVoteStatus = (
+    state: RootState,
+    questionId: number
+): QuestionVote | null => {
+    const questionVotes = state.questionVotes.questionVotes;
     const questionVote = questionVotes.find(
         (questionVote) => questionVote.questionId === questionId
     );

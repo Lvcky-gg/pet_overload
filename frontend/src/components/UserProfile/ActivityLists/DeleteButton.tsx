@@ -1,36 +1,42 @@
 import React, { useState } from 'react';
 
-const DeleteButton = ({ type, id, onDelete, setIsDelete }) => {
+const DeleteButton = ({ type, id, onDelete, setIsDelete }: any) => {
     const [showConfirmation, setShowConfirmation] = useState(false);
 
-    const handleDelete = (e) => {
+    interface HandleDeleteEvent extends React.MouseEvent<HTMLButtonElement> {}
+
+    const handleDelete = (e: HandleDeleteEvent) => {
         e.preventDefault();
         setShowConfirmation(true);
     };
-    const handleConfirm = (e) => {
+    interface HandleConfirmEvent extends React.MouseEvent<HTMLButtonElement> {}
+
+    const handleConfirm = (e: HandleConfirmEvent) => {
         e.preventDefault();
         onDelete(type, id);
         setShowConfirmation(false);
-        setIsDelete((prev) => !prev);
+        setIsDelete((prev: boolean) => !prev);
     };
-    const handleCancel = (e) => {
+    interface HandleCancelEvent extends React.MouseEvent<HTMLButtonElement> {}
+
+    const handleCancel = (e: HandleCancelEvent) => {
         e.preventDefault();
         setShowConfirmation(false);
     };
     return (
         <>
             {!showConfirmation ? (
-                <button className="button" onClick={handleDelete}>
+                <button className='button' onClick={handleDelete}>
                     Delete
                 </button>
             ) : (
                 <div>
                     <span>Are you sure?</span>
                     <div>
-                        <button className="button" onClick={handleConfirm}>
+                        <button className='button' onClick={handleConfirm}>
                             Confirm
                         </button>
-                        <button className="button" onClick={handleCancel}>
+                        <button className='button' onClick={handleCancel}>
                             Cancel
                         </button>
                     </div>

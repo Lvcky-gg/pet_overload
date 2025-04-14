@@ -4,8 +4,8 @@ export const sessionSlice = createSlice({
     name: 'session',
     initialState: {
         user: null,
-        error: null,
-        validationErrors: null,
+        error: null as string | null,
+        validationErrors: null as Record<string, string> | null | undefined,
         redirectMessage: null,
     },
     reducers: {
@@ -35,8 +35,9 @@ export const sessionSlice = createSlice({
                 state.validationErrors = null;
             })
             .addCase(login.rejected, (state, action) => {
-                state.error = action.payload.message;
-                state.validationErrors = action.payload.errors;
+                state.error =
+                    (action.payload as LoginRejectedValue).message ?? null;
+                state.validationErrors = action.payload?.errors ?? null;
                 state.user = null;
             })
             .addCase(logout.fulfilled, (state) => {
@@ -52,8 +53,11 @@ export const sessionSlice = createSlice({
                 state.validationErrors = null;
             })
             .addCase(signUp.rejected, (state, action) => {
-                state.error = action.payload.message;
-                state.validationErrors = action.payload.errors;
+                state.error =
+                    (action.payload as LoginRejectedValue).message ?? null;
+                state.validationErrors = (
+                    action.payload as LoginRejectedValue
+                ).errors;
                 state.user = null;
             });
     },
@@ -80,35 +84,48 @@ export const authenticate = createAsyncThunk(
     }
 );
 
-export const login = createAsyncThunk(
-    'session/login',
-    async ({ email, password }, { rejectWithValue }) => {
-        try {
-            const response = await fetch('/api/auth/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    email,
-                    password,
-                }),
-            });
+interface LoginPayload {
+    email: string;
+    password: string;
+}
 
-            const data = await response.json();
+interface LoginRejectedValue {
+    message?: string;
+    errors?: Record<string, string>;
+}
 
-            if (!response.ok) {
-                if (data.errors) {
-                    return rejectWithValue({ errors: data.errors });
-                }
+export const login = createAsyncThunk<
+    any, // Replace with the actual user type if known
+    LoginPayload,
+    { rejectValue: LoginRejectedValue }
+>('session/login', async ({ email, password }, { rejectWithValue }) => {
+    try {
+        const response = await fetch('/api/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email,
+                password,
+            }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            if (data.errors) {
+                return rejectWithValue({ errors: data.errors });
             }
+        }
 
-            return data.user;
-        } catch (error) {
-            return rejectWithValue({ message: error.message });
+        return data.user;
+    } catch (error) {
+        if (error instanceof Error) {
+            return rejectWithValue({ message: 'An unknown error occurred' });
         }
     }
-);
+});
 
 export const logout = createAsyncThunk('session/logout', async () => {
     const response = await fetch('/api/auth/logout', {
@@ -122,9 +139,22 @@ export const logout = createAsyncThunk('session/logout', async () => {
     }
 });
 
-export const signUp = createAsyncThunk(
+interface SignUpPayload {
+    username: string;
+    email: string;
+    password: string;
+}
+
+export const signUp = createAsyncThunk<
+    any, // Replace with the actual user type if known
+    SignUpPayload,
+    { rejectValue: LoginRejectedValue }
+>(
     'session/signUp',
-    async ({ username, email, password }, { rejectWithValue }) => {
+    async (
+        { username, email, password }: SignUpPayload,
+        { rejectWithValue }
+    ) => {
         try {
             const response = await fetch('/api/auth/signup', {
                 method: 'POST',
@@ -148,7 +178,7 @@ export const signUp = createAsyncThunk(
 
             return data.user;
         } catch (error) {
-            return rejectWithValue({ message: error.message });
+            return rejectWithValue({ message: (error as Error)?.message });
         }
     }
 );

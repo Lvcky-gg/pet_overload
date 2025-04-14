@@ -1,10 +1,17 @@
-const validateInput = (inputData) => {
+interface InputData {
+    email?: string;
+    username?: string;
+    password?: string;
+    confirmPassword?: string;
+}
+
+const validateInput = (inputData: InputData): string[] => {
     const email = inputData['email'];
     const username = inputData['username'];
     const password = inputData['password'];
     const confirmPassword = inputData['confirmPassword'];
 
-    let errors = [];
+    let errors: string[] = [];
 
     if (email !== undefined) {
         if (!email.includes('@')) errors.push('Please enter a valid email');

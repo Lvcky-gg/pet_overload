@@ -2,28 +2,36 @@ import React from 'react';
 
 import './ActivityTabs.css';
 
-const ActivityTabs = ({ activeTab, setActiveTab }) => {
-    const handleTabClick = (tab) => {
+interface ActivityTabsProps {
+    activeTab: string;
+    setActiveTab: (tab: string) => void;
+}
+
+const ActivityTabs: React.FC<ActivityTabsProps> = ({
+    activeTab,
+    setActiveTab,
+}) => {
+    const handleTabClick = (tab: string): void => {
         setActiveTab(tab);
     };
 
     return (
-        <div id="activity-tabs-container">
-            <nav className="header-menu">
+        <div id='activity-tabs-container'>
+            <nav className='header-menu'>
                 <span
-                    className="button activity-tab"
+                    className='button activity-tab'
                     onClick={() => handleTabClick('questions')}
                 >
                     Questions
                 </span>
                 <span
-                    className="button activity-tab"
+                    className='button activity-tab'
                     onClick={() => handleTabClick('answers')}
                 >
                     Answers
                 </span>
                 <span
-                    className="button activity-tab"
+                    className='button activity-tab'
                     onClick={() => handleTabClick('votes')}
                 >
                     Votes

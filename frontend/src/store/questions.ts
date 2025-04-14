@@ -3,14 +3,28 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 export const questionsSlice = createSlice({
     name: 'questions',
     initialState: {
-        allQuestions: [],
-        error: null,
-        displayedQuestions: [],
+        allQuestions: [] as {
+            id: number;
+            created_at: string;
+            votes_score: number;
+            answers_count: number;
+        }[],
+        error: null as string | null,
+        displayedQuestions: [] as {
+            id: number;
+            created_at: string;
+            votes_score: number;
+            answers_count: number;
+        }[],
+        loading: false,
     },
     reducers: {
         sortQuestionsByNewest(state) {
             state.displayedQuestions = [...state.allQuestions].sort((a, b) => {
-                return new Date(b.created_at) - new Date(a.created_at);
+                return (
+                    new Date(b.created_at).getTime() -
+                    new Date(a.created_at).getTime()
+                );
             });
         },
         sortQuestionsByScore(state) {
@@ -47,13 +61,13 @@ export const questionsSlice = createSlice({
             .addCase(deleteQuestion.fulfilled, (state, action) => {
                 state.loading = false;
                 state.allQuestions = state.allQuestions.filter(
-                    (vote) => vote.id === action.payload
+                    (vote) => vote.id !== action.payload
                 );
                 state.error = null;
             })
             .addCase(deleteQuestion.rejected, (state, action) => {
                 state.loading = false;
-                state.error = action.payload.error;
+                state.error = (action.payload as { error: string }).error;
             })
             .addCase(filterQuestions.fulfilled, (state, action) => {
                 state.loading = false;
@@ -62,15 +76,14 @@ export const questionsSlice = createSlice({
             })
             .addCase(filterQuestions.rejected, (state, action) => {
                 state.loading = false;
-                state.error = action.payload.error;
+                state.error = (action.payload as { error: string }).error;
                 state.allQuestions = [];
             })
             .addCase(updateQuestion.fulfilled, (state, action) => {
                 state.loading = false;
                 const updateQuestion = action.payload;
                 const idx = state.allQuestions.findIndex(
-                    (question) =>
-                        question.questionId === updateQuestion.questionId
+                    (question) => question.id === updateQuestion.id
                 );
                 state.allQuestions[idx] = updateQuestion;
             });
@@ -102,7 +115,10 @@ export const getAllQuestions = createAsyncThunk(
 
 export const createQuestion = createAsyncThunk(
     'questions/createQuestion',
-    async ({ title, details }, { rejectWithValue }) => {
+    async (
+        { title, details }: { title: string; details: string },
+        { rejectWithValue }
+    ) => {
         const response = await fetch('/api/questions/', {
             method: 'POST',
             headers: {
@@ -138,7 +154,7 @@ export const filterQuestions = createAsyncThunk(
 
 export const deleteQuestion = createAsyncThunk(
     'questions/deleteQuestion',
-    async (questionId, { rejectWithValue }) => {
+    async (questionId: number, { rejectWithValue }) => {
         const response = await fetch(`/api/questions/${questionId}`, {
             method: 'DELETE',
             headers: {
@@ -158,7 +174,14 @@ export const deleteQuestion = createAsyncThunk(
 
 export const updateQuestion = createAsyncThunk(
     'questions/updateQuestion',
-    async ({ title, details, questionId }, { rejectWithValue }) => {
+    async (
+        {
+            title,
+            details,
+            questionId,
+        }: { title: string; details: string; questionId: number },
+        { rejectWithValue }
+    ) => {
         const response = await fetch(`/api/questions/${questionId}`, {
             method: 'PUT',
             headers: {

@@ -2,14 +2,22 @@ import React from 'react';
 
 import './SortingTabs.css';
 
-const SortingTabs = ({ activeSort, setActiveSort }) => {
-    const handleTabClick = (tab) => {
-        setActiveSort(tab);
+interface SortingTabsProps {
+    activeSort: 'newest' | 'score';
+    setActiveSort: React.Dispatch<React.SetStateAction<'newest' | 'score'>>;
+}
+
+const SortingTabs: React.FC<SortingTabsProps> = ({
+    activeSort,
+    setActiveSort,
+}) => {
+    const handleTabClick = (tab: string): void => {
+        setActiveSort(tab as 'newest' | 'score');
     };
 
     return (
-        <div id="sorting-tabs-container">
-            <nav className="header-menu">
+        <div id='sorting-tabs-container'>
+            <nav className='header-menu'>
                 <span
                     className={`sort-tab${
                         activeSort === 'newest' ? ' active' : ''
