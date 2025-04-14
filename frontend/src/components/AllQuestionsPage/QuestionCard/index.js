@@ -5,7 +5,7 @@ import './QuestionCard.css';
 import Voting from '../Voting/Voting';
 import dateFormater from '../../../utils/dateFormater';
 import { useSelector } from 'react-redux';
-import { useEffect } from 'react';
+
 const QuestionCard = ({
     id,
     title,

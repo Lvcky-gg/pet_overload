@@ -1,4 +1,8 @@
-const dateFormater = (dateString) => {
+interface DateFormatter {
+    (dateString: string): string;
+}
+
+const dateFormater: DateFormatter = (dateString) => {
     const date = new Date(dateString);
     const day = date.getDate();
     const month = date.getMonth() + 1;

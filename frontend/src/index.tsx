@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 
@@ -9,25 +9,24 @@ import App from './App';
 
 import './index.css';
 
-// Wrap the application with the Modal provider and render the Modal component
-// after the App component so that all the Modal content will be layered as
-// HTML elements on top of the all the other HTML elements:
-function Root() {
+function Root () {
     return (
         <ModalProvider>
             <Provider store={store}>
                 <BrowserRouter>
                     <App />
-                    <Modal />
                 </BrowserRouter>
             </Provider>
+            <Modal />
         </ModalProvider>
     );
 }
 
-ReactDOM.render(
+const root = ReactDOM.createRoot(
+    document.getElementById('root') as HTMLElement
+);
+root.render(
     <React.StrictMode>
         <Root />
-    </React.StrictMode>,
-    document.getElementById('root')
+    </React.StrictMode>
 );

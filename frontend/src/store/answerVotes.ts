@@ -1,6 +1,15 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-const initialState = {
+interface AnswerVote {
+    id: number;
+    answerId: number;
+    isLiked: boolean;
+}
+
+const initialState: {
+    answerVotes: AnswerVote[];
+    loading: boolean;
+} = {
     answerVotes: [],
     loading: false,
 };
@@ -75,7 +84,7 @@ export const getAnswerVotes = createAsyncThunk(
     }
 );
 
-export const deleteAnswerVotes = createAsyncThunk(
+export const deleteAnswerVotes = createAsyncThunk<number, number>(
     'answerVotes/deleteAnswerVotes',
     async (answerId, { rejectWithValue }) => {
         const response = await fetch(`/api/answer_votes/${answerId}`, {
@@ -92,10 +101,15 @@ export const deleteAnswerVotes = createAsyncThunk(
     }
 );
 
-export const updateAnswerVotes = createAsyncThunk(
+export const updateAnswerVotes = createAsyncThunk<
+    AnswerVote,
+    { answerVoteId: number; isLiked: boolean }
+>(
     'answerVotes/updateAnswerVotes',
     async ({ answerVoteId, isLiked }, { rejectWithValue }) => {
-        isLiked = isLiked === 1 ? true : false;
+        if (typeof isLiked !== 'boolean') {
+            throw new Error('Invalid type for isLiked. Expected boolean.');
+        }
         const response = await fetch(`/api/answer_votes/${answerVoteId}`, {
             method: 'PUT',
             headers: {
@@ -111,10 +125,13 @@ export const updateAnswerVotes = createAsyncThunk(
         return data;
     }
 );
-export const createAnswerVote = createAsyncThunk(
+export const createAnswerVote = createAsyncThunk<
+    AnswerVote,
+    { answerId: number; isLiked: boolean }
+>(
     'answerVotes/createAnswerVote',
     async ({ answerId, isLiked }, { rejectWithValue }) => {
-        isLiked = isLiked === 1 ? true : false;
+        isLiked = Boolean(isLiked);
 
         const response = await fetch(`/api/answers/${answerId}/votes`, {
             method: 'POST',
@@ -130,9 +147,12 @@ export const createAnswerVote = createAsyncThunk(
         return data;
     }
 );
-export const deleteAnswerVoteById = createAsyncThunk(
+export const deleteAnswerVoteById = createAsyncThunk<
+    number,
+    { answerVoteId: number }
+>(
     'answerVotes/deleteAnswerVoteById',
-    async ({ answerVoteId }) => {
+    async ({ answerVoteId }, { rejectWithValue }) => {
         const response = await fetch(`/api/answer_votes/${answerVoteId}`, {
             method: 'DELETE',
             headers: {
@@ -142,15 +162,18 @@ export const deleteAnswerVoteById = createAsyncThunk(
         const data = await response.json();
 
         if (!response.ok) {
-            return false;
+            return rejectWithValue(data);
         }
         return answerVoteId;
     }
 );
-export const answerVoteStatus = (state, answerId) => {
+export const answerVoteStatus = (
+    state: { answerVotes: AnswerVote[] },
+    answerId: number
+): AnswerVote | null => {
     const answerVotes = state.answerVotes;
     const answerVote = answerVotes.find(
-        (answerVote) => answerVote.answerId === answerId
+        (answerVote: AnswerVote) => answerVote.answerId === answerId
     );
 
     if (!answerVote) {

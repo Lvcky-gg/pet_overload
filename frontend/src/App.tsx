@@ -32,12 +32,13 @@ import AllUsersPage from './components/allUsersPage';
 import AskAQuestionPage from './components/AskAQuestionPage';
 import Redirect from './components/Redirect';
 
-function App() {
+function App () {
     const dispatch = useDispatch();
     const [isLoaded, setIsLoaded] = useState(false);
     const location = useLocation();
     useEffect(() => {
-        dispatch(authenticate()).then(() => setIsLoaded(true));
+        dispatch(authenticate());
+        setIsLoaded(true);
     }, [dispatch]);
 
     // FontAwesome icons to be installed globally.
@@ -70,12 +71,11 @@ function App() {
                 {showSidebar && <Sidebar />}
                 {isLoaded && (
                     <Routes>
-                        <Route path="/login" element={<LoginFormPage />} />
-                        <Route path="/signup" element={<SignupFormPage />} />
-                        <Route path="/" element={<HomePage />} />
+                        <Route path='/login' element={<LoginFormPage />} />
+                        <Route path='/signup' element={<SignupFormPage />} />
+                        <Route path='/' element={<HomePage />} />
                         <Route
-                            exact
-                            path="/all-questions"
+                            path='/all-questions'
                             element={<AllQuestionsPage />}
                         />
                         <Route
@@ -83,36 +83,23 @@ function App() {
                             element={<SpecificQuestion />}
                         />
                         <Route
-                            path="/all-questions/ask-a-question"
-                            exact
+                            path='/all-questions/ask-a-question'
                             element={<AskAQuestionPage />}
                         />
-                        <Route path="/team" element={<Team />} />
+                        <Route path='/all-users/' element={<AllUsersPage />} />
                         <Route
-                            exact
-                            path="/all-users/"
-                            element={<AllUsersPage />}
-                        />
-                        <Route
-                            path="/all-questions/search"
+                            path='/all-questions/search'
                             element={<SearchResults />}
                         />
                         <Route
-                            exact
-                            path="/user/profile"
+                            path='/user/profile'
                             element={<UserProfile isLoaded={isLoaded} />}
                         />
                         <Route
-                            exact
-                            path="/users/:userId"
+                            path='/users/:userId'
                             element={<UserProfile isLoaded={isLoaded} />}
                         />
-                        <Route
-                            exact
-                            path="/redirect-page"
-                            element={<Redirect />}
-                        />
-                        <Route path="/team" element={<Team />} />
+                        <Route path='/redirect-page' element={<Redirect />} />
                     </Routes>
                 )}
             </div>
