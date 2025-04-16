@@ -25,5 +25,5 @@
   ],
   "include": [
     "./src/**/*.tsx"
-, "src/components/UserProfile/SortingTabs/SortingTabs.tsx", "src/components/UserProfile/ActivityLists/ActivityLists.js"  ]
+, "src/components/UserProfile/SortingTabs/SortingTabs.tsx", "src/components/UserProfile/ActivityLists/ActivityLists.js", "src/components/SpecificQuestionPage/VotingAnswers/index.js", "src/components/AllQuestionsPage/Voting/Voting.js", "src/components/AllQuestionsPage/QuestionCard/index.js"  ]
 }

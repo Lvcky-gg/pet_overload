@@ -10,7 +10,11 @@ const SearchBar = () => {
     const [searchUrl, setSearchUrl] = useState('');
 
     const [initialRender, setInitialRender] = useState(true);
-    const onSearch = (input) => {
+    interface SearchBarProps {
+        input: string;
+    }
+
+    const onSearch = (input: string): void => {
         if (input[0] === "'" || input[0] === '"') {
             //search by keyword
             setSearchUrl(`keyword=${input.slice(1, -1)}`);
@@ -26,7 +30,7 @@ const SearchBar = () => {
         }
         setShowDropdown(false);
     };
-    const handleSearchSubmit = (e) => {
+    const handleSearchSubmit = (e: any) => {
         e.preventDefault();
         onSearch(searchInput);
     };
@@ -50,44 +54,44 @@ const SearchBar = () => {
     }, [searchUrl, navigate]);
 
     return (
-        <div className="search-bar-container">
-            <form onSubmit={handleSearchSubmit} className="search-bar-form">
-                <div className="searchbar-wrapper">
+        <div className='search-bar-container'>
+            <form onSubmit={handleSearchSubmit} className='search-bar-form'>
+                <div className='searchbar-wrapper'>
                     <input
-                        type="text"
-                        placeholder="Search..."
+                        type='text'
+                        placeholder='Search...'
                         value={searchInput}
                         onChange={(e) => setSearchInput(e.target.value)}
                         onFocus={handleFocus}
                         onBlur={handleBlur}
-                        className="search-bar-input"
+                        className='search-bar-input'
                         ref={searchInputRef}
                         autoFocus={false}
                     />
 
-                    <i className="fas fa-search"></i>
+                    <i className='fas fa-search'></i>
                 </div>
                 {showDropdown && (
-                    <div className="search-dropdown">
-                        <p className="search-intro title">
+                    <div className='search-dropdown'>
+                        <p className='search-intro title'>
                             Follow the following format to search
                         </p>
                         <ul>
-                            <li className="search-field">
+                            <li className='search-field'>
                                 author:username{' '}
-                                <span className="search-intro">
+                                <span className='search-intro'>
                                     search by author
                                 </span>
                             </li>
-                            <li className="search-field">
+                            <li className='search-field'>
                                 score:3{' '}
-                                <span className="search-intro">
+                                <span className='search-intro'>
                                     search post with 3+ score
                                 </span>
                             </li>
-                            <li className="search-field">
+                            <li className='search-field'>
                                 "keyword in quote"{' '}
-                                <span className="search-intro">
+                                <span className='search-intro'>
                                     search keyword in title
                                 </span>
                             </li>

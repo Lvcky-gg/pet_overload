@@ -9,11 +9,16 @@ import { login } from '../../store/session';
 import { clearQuestionVotes } from '../../store/questionVotes';
 import { clearAnswerVotes } from '../../store/answerVotes';
 
-function ProfileButton({ user }) {
+interface User {
+    username: string;
+    email: string;
+}
+
+function ProfileButton ({ user }: { user: User | null }) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [showMenu, setShowMenu] = useState(false);
-    const ulRef = useRef();
+    const ulRef = useRef<HTMLUListElement | null>(null);
 
     const openMenu = () => {
         if (showMenu) return;
@@ -23,8 +28,8 @@ function ProfileButton({ user }) {
     useEffect(() => {
         if (!showMenu) return;
 
-        const closeMenu = (e) => {
-            if (!ulRef.current.contains(e.target)) {
+        const closeMenu = (e: any) => {
+            if (ulRef.current && !ulRef.current.contains(e.target)) {
                 setShowMenu(false);
             }
         };
@@ -34,7 +39,7 @@ function ProfileButton({ user }) {
         return () => document.removeEventListener('click', closeMenu);
     }, [showMenu]);
 
-    const handleLogout = (e) => {
+    const handleLogout = (e: any) => {
         e.preventDefault();
 
         dispatch(logout());
@@ -59,8 +64,8 @@ function ProfileButton({ user }) {
 
     return (
         <>
-            <button onClick={openMenu} className="modalButton">
-                <i className="fas fa-user-circle" />
+            <button onClick={openMenu} className='modalButton'>
+                <i className='fas fa-user-circle' />
             </button>
             <ul className={ulClassName} ref={ulRef}>
                 {user ? (
@@ -68,13 +73,13 @@ function ProfileButton({ user }) {
                         <li>{user.username}</li>
                         <li>{user.email}</li>
                         <li>
-                            <NavLink onClick={closeMenu} to="/user/profile">
+                            <NavLink onClick={closeMenu} to='/user/profile'>
                                 Profile
                             </NavLink>
                         </li>
-                        <li className="button-container">
+                        <li className='button-container'>
                             <button
-                                className="modalButton"
+                                className='modalButton'
                                 onClick={handleLogout}
                             >
                                 Log Out
@@ -83,27 +88,27 @@ function ProfileButton({ user }) {
                     </>
                 ) : (
                     <>
-                        <li className="button-container">
+                        <li className='button-container'>
                             <OpenModalButton
-                                buttonText="Log In"
+                                buttonText='Log In'
                                 // onItemClick={closeMenu}
                                 onModalClose={closeMenu}
                                 modalComponent={<LoginFormModal />}
                             />
                         </li>
 
-                        <li className="button-container">
+                        <li className='button-container'>
                             <OpenModalButton
-                                buttonText="Sign Up"
+                                buttonText='Sign Up'
                                 // onItemClick={closeMenu}
                                 onModalClose={closeMenu}
                                 modalComponent={<SignupFormModal />}
                             />
                         </li>
 
-                        <li className="button-container">
+                        <li className='button-container'>
                             <button
-                                className="modalButton"
+                                className='modalButton'
                                 onClick={demoUserLogin}
                             >
                                 DemoUser
