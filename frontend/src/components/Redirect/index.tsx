@@ -8,7 +8,8 @@ const Redirect = () => {
     const [redirectTimer, setRedirectTimer] = useState(5);
     const navigate = useNavigate();
     const redirectMessage = useSelector(
-        (state) => state.session.redirectMessage
+        (state: { session: { redirectMessage: string } }) =>
+            state.session.redirectMessage
     );
 
     useEffect(() => {
@@ -29,20 +30,20 @@ const Redirect = () => {
     }, []);
 
     return (
-        <div className="ask-question-page-container">
+        <div className='ask-question-page-container'>
             <h1>
                 You must be logged in to{' '}
                 {redirectMessage ?? 'perform this action.'}
             </h1>
-            <h2 className="redirect-timer-message">Redirecting you...</h2>
+            <h2 className='redirect-timer-message'>Redirecting you...</h2>
 
-            <div className="spinner">
-                <div className="inner-spinner"></div>
+            <div className='spinner'>
+                <div className='inner-spinner'></div>
                 <span>{redirectTimer}</span>
             </div>
 
             <button
-                className="button redirect-button"
+                className='button redirect-button'
                 onClick={() => {
                     navigate('/login');
                 }}

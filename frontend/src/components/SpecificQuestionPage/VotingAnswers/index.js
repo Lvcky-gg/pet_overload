@@ -125,17 +125,17 @@ const VotingAnswers = ({ answerId, answerScore }) => {
         navigate('/redirect-page');
     }, [shouldRedirect]);
     return (
-        <div className="voting-score">
+        <div className='voting-score'>
             <FontAwesomeIcon
-                className="upvote-arrow"
-                icon="fa-up-long"
+                className='upvote-arrow'
+                icon='fa-up-long'
                 ref={upvoteArrowRef}
                 onClick={() => handleVoteArrowClick(upvoteArrowRef)}
             />
-            <p className="voting-score-value">{currentVoteScore}</p>
+            <p className='voting-score-value'>{currentVoteScore}</p>
             <FontAwesomeIcon
-                className="downvote-arrow"
-                icon="fa-down-long"
+                className='downvote-arrow'
+                icon='fa-down-long'
                 ref={downvoteArrowRef}
                 onClick={() => handleVoteArrowClick(downvoteArrowRef)}
             />

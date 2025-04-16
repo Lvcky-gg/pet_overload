@@ -5,18 +5,20 @@ import { useSelector } from 'react-redux';
 import './Sidebar.css';
 
 const Sidebar = () => {
-    const sessionUser = useSelector((state) => state.session.user);
+    const sessionUser = useSelector(
+        (state: { session: { user: any } }) => state.session.user
+    );
 
     return (
-        <div className="sideBar">
-            <NavLink className="sidebar-link" to="/">
+        <div className='sideBar'>
+            <NavLink className='sidebar-link' to='/'>
                 Home
             </NavLink>
-            <NavLink className="sidebar-link" to="/all-questions">
+            <NavLink className='sidebar-link' to='/all-questions'>
                 Questions
             </NavLink>
             {sessionUser && (
-                <NavLink className="sidebar-link" to="/all-users">
+                <NavLink className='sidebar-link' to='/all-users'>
                     Users
                 </NavLink>
             )}
