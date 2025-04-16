@@ -1,9 +1,9 @@
 import React from 'react';
-import { EditorState, ContentState } from 'draft-js';
+import { EditorState, ContentState, RawDraftContentState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import draftToMarkdown from 'draftjs-to-markdown';
+// import draftToMarkdown from 'draftjs-to-markdown';
 import { convertToRaw } from 'draft-js';
 import htmlToDraft from 'html-to-draftjs';
 
@@ -30,7 +30,8 @@ const RichEditor: React.FC<RichEditorProps> = ({
     richTextEditor,
     setRichTextEditor,
 }) => {
-    const [contentState, setcontentState] = useState(details);
+    const [contentState, setcontentState] =
+        useState<RawDraftContentState | null>(null);
     const [editorState, setEditorState] = useState(() =>
         EditorState.createEmpty()
     );
@@ -58,7 +59,7 @@ const RichEditor: React.FC<RichEditorProps> = ({
     };
 
     const rawContentState = convertToRaw(editorState.getCurrentContent());
-    const markup = draftToMarkdown(contentState, hashConfig, config);
+    // const markup = draftToMarkdown(contentState, hashConfig, config);
 
     interface MarkdownParser {
         (markup: string): string;
@@ -78,7 +79,7 @@ const RichEditor: React.FC<RichEditorProps> = ({
     };
 
     //HTML STRING CAN BE PASSED TO BACKEND
-    const htmlString = markdownParser(markup);
+    // const htmlString = markdownParser(markup);
     //THIS IS HOW WE PARSE
 
     interface SubmitMeParams {
@@ -122,7 +123,7 @@ const RichEditor: React.FC<RichEditorProps> = ({
             <button
                 className='modalButton'
                 type='submit'
-                onClick={(e) => submitMe(e, htmlString, questionId, answerId)}
+                // onClick={(e) => submitMe(e, htmlString, questionId, answerId)}
             >
                 Submit
             </button>

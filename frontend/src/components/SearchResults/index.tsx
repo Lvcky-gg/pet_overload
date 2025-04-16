@@ -64,17 +64,17 @@ const SearchResults = () => {
                     <Button
                         id='newest-button'
                         text='Newest'
-                        onClickHandler={undefined}
+                        onClickHandler={() => {}}
                     />
                     <Button
                         id='unanswered-button'
                         text='Unanswered'
-                        onClickHandler={undefined}
+                        onClickHandler={() => {}}
                     />
                     <Button
                         id='score-button'
                         text='Score'
-                        onClickHandler={undefined}
+                        onClickHandler={() => {}}
                     />
                 </div>
             </div>

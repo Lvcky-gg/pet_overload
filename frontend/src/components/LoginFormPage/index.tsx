@@ -7,17 +7,20 @@ import validateInput from '../../utils/validateInput';
 import { clearErrors } from '../../store/session';
 import { useEffect } from 'react';
 
-function LoginFormPage() {
+function LoginFormPage () {
     const dispatch = useDispatch();
-    const sessionUser = useSelector((state) => state.session.user);
+    const sessionUser = useSelector(
+        (state: { session: { user: any } }) => state.session.user
+    );
     const validationErrors = useSelector(
-        (state) => state.session.validationErrors
+        (state: { session: { validationErrors: string[] } }) =>
+            state.session.validationErrors
     );
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [inputValidate, setInputValidate] = useState([]);
+    const [inputValidate, setInputValidate] = useState<string[]>([]);
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: any) => {
         e.preventDefault();
         const errors = validateInput({ email, password });
         if (errors.length) {
@@ -29,23 +32,23 @@ function LoginFormPage() {
     };
 
     useEffect(() => {
-        // Login successful?
-        if (sessionUser) {
-            return <Navigate to="/" />;
-        }
         // clean errors if modal closed
         const clearErrorMessages = () => {
             dispatch(clearErrors());
         };
 
         return () => clearErrorMessages();
-    }, [sessionUser, dispatch]);
+    }, [dispatch]);
 
-    if (sessionUser) return <Navigate to="/" />;
-    let errorObject = [];
+    if (sessionUser) {
+        return <Navigate to='/' />;
+    }
+
+    if (sessionUser) return <Navigate to='/' />;
+    let errorObject: string[] = [];
     if (validationErrors) {
         errorObject = Object.values(
-            validationErrors.reduce((acc, error) => {
+            validationErrors.reduce((acc: { [key: string]: string }, error) => {
                 const [key, value] = error.split(' : ');
                 acc[key] = value;
                 return acc;
@@ -54,39 +57,39 @@ function LoginFormPage() {
     }
 
     return (
-        <div className="loginPage">
+        <div className='loginPage'>
             <h1>Log In</h1>
             <form onSubmit={handleSubmit}>
-                <div className="handleLoginBox">
+                <div className='handleLoginBox'>
                     <label>Email</label>
                     <input
-                        type="text"
+                        type='text'
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
                     />
                 </div>
-                <div className="handleLoginBox">
+                <div className='handleLoginBox'>
                     <label>Password</label>
                     <input
-                        type="password"
+                        type='password'
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
                     />
                 </div>
-                <div className="handleLoginBox">
-                    <button type="submit" className="modalButton">
+                <div className='handleLoginBox'>
+                    <button type='submit' className='modalButton'>
                         Log In
                     </button>
                 </div>
             </form>
-            <ul className="modal-form-list-err">
+            <ul className='modal-form-list-err'>
                 {inputValidate &&
                     inputValidate.map((error, idx) => (
                         <li key={idx}>
                             <span style={{ color: 'red', padding: '5px' }}>
-                                <i className="fas fa-exclamation-circle"></i>
+                                <i className='fas fa-exclamation-circle'></i>
                             </span>
                             {error}
                         </li>
@@ -95,7 +98,7 @@ function LoginFormPage() {
                     errorObject.map((error, idx) => (
                         <li key={idx}>
                             <span style={{ color: 'red', padding: '5px' }}>
-                                <i className="fas fa-exclamation-circle"></i>
+                                <i className='fas fa-exclamation-circle'></i>
                             </span>
                             {error}
                         </li>

@@ -11,7 +11,7 @@ import { updateQuestionAfterVote } from '../../../store/questions';
 import { setRedirectMessage } from '../../../store/session';
 import { useNavigate } from 'react-router-dom';
 
-const Voting = ({ questionId, voteScore }) => {
+const Voting = ({ questionId, voteScore, onCLick }) => {
     const navigate = useNavigate();
     const [currentVoteScore, setCurrentVoteScore] = useState(voteScore);
     const [shouldRedirect, setShouldRedirect] = useState(false);
@@ -125,17 +125,17 @@ const Voting = ({ questionId, voteScore }) => {
     }, [shouldRedirect]);
 
     return (
-        <div className="voting-score">
+        <div className='voting-score'>
             <FontAwesomeIcon
-                className="upvote-arrow"
-                icon="fa-up-long"
+                className='upvote-arrow'
+                icon='fa-up-long'
                 ref={upvoteArrowRef}
                 onClick={() => handleVoteArrowClick(upvoteArrowRef)}
             />
-            <p className="voting-score-value">{currentVoteScore}</p>
+            <p className='voting-score-value'>{currentVoteScore}</p>
             <FontAwesomeIcon
-                className="downvote-arrow"
-                icon="fa-down-long"
+                className='downvote-arrow'
+                icon='fa-down-long'
                 ref={downvoteArrowRef}
                 onClick={() => handleVoteArrowClick(downvoteArrowRef)}
             />

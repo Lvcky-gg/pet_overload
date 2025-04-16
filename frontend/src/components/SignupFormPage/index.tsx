@@ -5,22 +5,24 @@ import { signUp } from '../../store/session';
 
 import './SignupForm.css';
 
-function SignupFormPage() {
+function SignupFormPage () {
     const dispatch = useDispatch();
-    const sessionUser = useSelector((state) => state.session.user);
+    const sessionUser = useSelector(
+        (state: { session: { user: any } }) => state.session.user
+    );
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [errors, setErrors] = useState([]);
+    const [errors, setErrors] = useState<string[]>([]);
 
-    if (sessionUser) return <Navigate to="/" />;
+    if (sessionUser) return <Navigate to='/' />;
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: any) => {
         e.preventDefault();
         if (password === confirmPassword) {
-            const data = await dispatch(signUp(username, email, password));
-            if (data) {
+            const data = await dispatch(signUp({ username, email, password }));
+            if (Array.isArray(data)) {
                 setErrors(data);
             }
         } else {
@@ -42,7 +44,7 @@ function SignupFormPage() {
                 <label>
                     Email
                     <input
-                        type="text"
+                        type='text'
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
@@ -51,7 +53,7 @@ function SignupFormPage() {
                 <label>
                     Username
                     <input
-                        type="text"
+                        type='text'
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                         required
@@ -60,7 +62,7 @@ function SignupFormPage() {
                 <label>
                     Password
                     <input
-                        type="password"
+                        type='password'
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
@@ -69,13 +71,13 @@ function SignupFormPage() {
                 <label>
                     Confirm Password
                     <input
-                        type="password"
+                        type='password'
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         required
                     />
                 </label>
-                <button type="submit">Sign Up</button>
+                <button type='submit'>Sign Up</button>
             </form>
         </>
     );

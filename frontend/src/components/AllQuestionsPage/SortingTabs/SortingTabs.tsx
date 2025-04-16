@@ -6,7 +6,16 @@ import {
 import Button from '../../Button';
 const { useDispatch } = require('react-redux');
 
-const SortingTabs = ({ questions }) => {
+interface SortingTabsProps {
+    questions: {
+        id: number;
+        text: string;
+        score: number;
+        isAnswered: boolean;
+    }[];
+}
+
+const SortingTabs = ({ questions }: SortingTabsProps) => {
     const dispatch = useDispatch();
 
     const sortByNewest = () => {
@@ -22,24 +31,24 @@ const SortingTabs = ({ questions }) => {
     };
 
     return (
-        <div className="filter-row">
-            <div className="question-count-container">
-                <p className="question-count">{questions.length} questions</p>
+        <div className='filter-row'>
+            <div className='question-count-container'>
+                <p className='question-count'>{questions.length} questions</p>
             </div>
-            <div className="filter-options">
+            <div className='filter-options'>
                 <Button
-                    id="newest-button"
-                    text="Newest"
+                    id='newest-button'
+                    text='Newest'
                     onClickHandler={sortByNewest}
                 />
                 <Button
-                    id="unanswered-button"
-                    text="Unanswered"
+                    id='unanswered-button'
+                    text='Unanswered'
                     onClickHandler={filterByUnanswered}
                 />
                 <Button
-                    id="score-button"
-                    text="Score"
+                    id='score-button'
+                    text='Score'
                     onClickHandler={sortByScore}
                 />
             </div>
