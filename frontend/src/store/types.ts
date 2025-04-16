@@ -1,4 +1,11 @@
+export type AnswerVotesState = {
+    answerId: number;
+    vote_status: number;
+    isLiked: boolean;
+    isDisliked: boolean;
+};
 export type RootState = {
+    answerVotes: AnswerVotesState[];
     session: {
         user: {
             id: number;

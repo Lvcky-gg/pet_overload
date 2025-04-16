@@ -4,20 +4,20 @@ import './Search.css';
 
 const SearchBar = () => {
     const [searchInput, setSearchInput] = useState('');
-    const handleChange = (e) => {
+    const handleChange = (e: any) => {
         e.preventDefault();
         setSearchInput(e.target.value);
     };
 
     return (
-        <div className="search">
+        <div className='search'>
             <input
-                type="text"
-                placeholder="Search here"
+                type='text'
+                placeholder='Search here'
                 onChange={handleChange}
                 value={searchInput}
             />
-            <button className="modalButton">Search</button>
+            <button className='modalButton'>Search</button>
         </div>
     );
 };

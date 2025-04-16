@@ -10,7 +10,19 @@ import htmlToDraft from 'html-to-draftjs';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import './Editor.css';
 
-const RichEditor = ({
+interface RichEditorProps {
+    handleEditorSubmit: (
+        e: React.MouseEvent<HTMLButtonElement>,
+        data: { details: string; questionId: string; answerId: string }
+    ) => void;
+    details: string;
+    questionId: string;
+    answerId: string;
+    richTextEditor: boolean;
+    setRichTextEditor: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const RichEditor: React.FC<RichEditorProps> = ({
     handleEditorSubmit,
     details,
     questionId,
@@ -48,7 +60,11 @@ const RichEditor = ({
     const rawContentState = convertToRaw(editorState.getCurrentContent());
     const markup = draftToMarkdown(contentState, hashConfig, config);
 
-    const markdownParser = (markup) => {
+    interface MarkdownParser {
+        (markup: string): string;
+    }
+
+    const markdownParser: MarkdownParser = (markup) => {
         const toHTML = markup
             .replace(/^###### (.*$)/gim, '<h6>$1</h6>') // h4 tag
             .replace(/^##### (.*$)/gim, '<h5>$1</h5>') // h5 tag
@@ -65,7 +81,19 @@ const RichEditor = ({
     const htmlString = markdownParser(markup);
     //THIS IS HOW WE PARSE
 
-    const submitMe = (e, htmlString, questionId, answerId) => {
+    interface SubmitMeParams {
+        e: React.MouseEvent<HTMLButtonElement>;
+        htmlString: string;
+        questionId: string;
+        answerId: string;
+    }
+
+    const submitMe = (
+        e: SubmitMeParams['e'],
+        htmlString: SubmitMeParams['htmlString'],
+        questionId: SubmitMeParams['questionId'],
+        answerId: SubmitMeParams['answerId']
+    ): void => {
         setRichTextEditor(!richTextEditor);
 
         const result = handleEditorSubmit(e, {
@@ -80,20 +108,20 @@ const RichEditor = ({
 
     useEffect(() => {
         setcontentState(rawContentState);
-    }, [editorState]);
+    }, [editorState, rawContentState]);
 
     return (
-        <div className="editor">
+        <div className='editor'>
             <Editor
                 editorState={editorState}
                 onEditorStateChange={setEditorState}
-                wrapperClassName="wrapper-class"
-                editorClassName="editor-class"
-                toolbarClassName="toolbar-class"
+                wrapperClassName='wrapper-class'
+                editorClassName='editor-class'
+                toolbarClassName='toolbar-class'
             />
             <button
-                className="modalButton"
-                type="submit"
+                className='modalButton'
+                type='submit'
                 onClick={(e) => submitMe(e, htmlString, questionId, answerId)}
             >
                 Submit

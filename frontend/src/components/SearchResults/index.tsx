@@ -14,11 +14,24 @@ const SearchResults = () => {
     const location = useLocation();
     const parameter = location.search;
     const dispatch = useDispatch();
-    const questions = useSelector((state) => state.questions.allQuestions);
-    const loading = useSelector((state) => state.questions.loading);
-    const error = useSelector((state) => state.questions.error);
+    interface Question {
+        id: number;
+        title: string;
+        details: string;
+        votes_score: number;
+        answers_count: number;
+        user: string;
+        created_at: string | null;
+        updated_at: string;
+    }
+
+    const questions = useSelector(
+        (state: any): Question[] => state.questions.allQuestions
+    );
+    const loading = useSelector((state: any) => state.questions.loading);
+    const error = useSelector((state: any) => state.questions.error);
     useEffect(() => {
-        dispatch(filterQuestions(parameter));
+        dispatch(filterQuestions());
     }, [dispatch, parameter]);
 
     const navigateToAskAQuestionPage = () => {
@@ -30,35 +43,47 @@ const SearchResults = () => {
     }
 
     return (
-        <div className="container" id="all-questions-container">
-            <div className="all-questions-header">
+        <div className='container' id='all-questions-container'>
+            <div className='all-questions-header'>
                 <h1>Search Results</h1>
-                <div className="ask-question-container">
+                <div className='ask-question-container'>
                     <button
-                        id="ask-question-button"
-                        className="button"
+                        id='ask-question-button'
+                        className='button'
                         onClick={navigateToAskAQuestionPage}
                     >
                         Ask a question
                     </button>
                 </div>
             </div>
-            <div className="filter-row">
-                <div className="question-count-container">
-                    <p className="question-count">{questions.length} results</p>
+            <div className='filter-row'>
+                <div className='question-count-container'>
+                    <p className='question-count'>{questions.length} results</p>
                 </div>
-                <div className="filter-options">
-                    <Button id="newest-button" text="Newest" />
-                    <Button id="unanswered-button" text="Unanswered" />
-                    <Button id="score-button" text="Score" />
+                <div className='filter-options'>
+                    <Button
+                        id='newest-button'
+                        text='Newest'
+                        onClickHandler={undefined}
+                    />
+                    <Button
+                        id='unanswered-button'
+                        text='Unanswered'
+                        onClickHandler={undefined}
+                    />
+                    <Button
+                        id='score-button'
+                        text='Score'
+                        onClickHandler={undefined}
+                    />
                 </div>
             </div>
-            <div id="question-list">
+            <div id='question-list'>
                 {!questions.length || error ? (
                     <p>No Result Found.</p>
                 ) : (
-                    questions.map(
-                        ({
+                    questions.map((question: Question) => {
+                        const {
                             id,
                             title,
                             details,
@@ -67,7 +92,8 @@ const SearchResults = () => {
                             user,
                             created_at,
                             updated_at,
-                        }) => (
+                        } = question;
+                        return (
                             <QuestionCard
                                 key={id}
                                 id={id}
@@ -78,9 +104,11 @@ const SearchResults = () => {
                                 user={user}
                                 created_at={created_at}
                                 updated_at={updated_at}
+                                showAnswers={undefined}
+                                setVoteClicked={undefined}
                             />
-                        )
-                    )
+                        );
+                    })
                 )}
             </div>
         </div>
